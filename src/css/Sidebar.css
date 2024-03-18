@@ -1,0 +1,211 @@
+/*
+    DEMO STYLE
+*/
+
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+body {
+  font-family: "Poppins", sans-serif;
+  background: #fafafa;
+}
+
+p {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1em;
+  font-weight: 300;
+  line-height: 1.7em;
+  color: #999;
+}
+
+a,
+a:hover,
+a:focus {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.navbar {
+  padding: 3vh 3vh;
+  background: #fff;
+  border: none;
+  border-radius: 0;
+  box-shadow: 1vh 1vh 3vh rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+  box-shadow: none;
+  outline: none !important;
+  border: none;
+}
+
+.line {
+  width: 100%;
+  height: 1vh;
+  border-bottom: 1px dashed #ddd;
+  margin: 10vh 0;
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+.sidebar {
+  width: 60vh;
+  transition: width 0.3s ease-in-out;
+}
+
+.sidebar.collapsed {
+  width: 20vh;
+}
+
+#sidebar {
+  background: #7386d5;
+  color: #fff;
+  transition: all 0.3s;
+}
+
+#sidebar.active {
+  margin-left: -40vh;
+}
+
+#sidebar .sidebar-header {
+  padding: 3vh;
+  background: #6d7fcc;
+  display: flex !important;
+}
+
+#sidebar ul.components {
+  padding: 3vh 0;
+  border-bottom: 0.1vh solid #47748b;
+}
+
+#sidebar ul p {
+  color: #fff;
+  padding: 2vh;
+}
+
+#sidebar ul li a {
+  padding: 2vh;
+  font-size: 1.1em;
+  display: block;
+}
+
+#sidebar ul li a:hover {
+  color: #7386d5;
+  background: #fff;
+}
+
+#sidebar ul li.active > a,
+a[aria-expanded="true"] {
+  color: #fff;
+  background: #6d7fcc;
+}
+
+a[data-toggle="collapse"] {
+  position: relative;
+}
+
+.dropdown-toggle::after {
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 5vh;
+  transform: translateY(-50%);
+}
+
+ul ul a {
+  font-size: 0.9em !important;
+  padding-left: 5vh !important;
+  background: #6d7fcc;
+}
+
+ul.CTAs {
+  padding: 5vh;
+}
+
+ul.CTAs a {
+  text-align: center;
+  font-size: 0.9em !important;
+  display: block;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+a.download {
+  background: #fff;
+  color: #7386d5;
+}
+
+a.article,
+a.article:hover {
+  background: #6d7fcc !important;
+  color: #fff !important;
+}
+
+#content {
+  width: 100%;
+  padding: 20px;
+  min-height: 100vh;
+  transition: all 0.3s;
+}
+
+@media (max-width: 768px) {
+  #sidebar {
+    margin-left: -250px;
+  }
+  #sidebar.active {
+    margin-left: 0;
+  }
+  #sidebarCollapse span {
+    display: none;
+  }
+}
+
+#sidebar-menu {
+  padding: 0 !important;
+}
+
+#user-profile-img {
+  width: 15vh;
+  height: 15vh;
+  border-radius: 50%;
+  border: 0.5vh solid #6d7fcc;
+  margin-left: 5%;
+}
+
+.profile-info {
+  text-align: left;
+  margin-left: 3vh;
+  width: 30vh;
+}
+
+.profile-username-txt {
+  font-size: 3vh;
+  margin-top: 2vh;
+  color: #fafafa;
+}
+
+.profile-info-txt {
+  font-size: 2vh;
+  color: greenyellow;
+}
+
+#collapse-btn {
+  cursor: pointer;
+  width: 6vh;
+  height: 6vh;
+}
+
+.collapsed-field {
+  display: none;
+}
+
+#collapsed-field {
+  display: none;
+}
+
+#link-profile {
+  display: flex;
+}

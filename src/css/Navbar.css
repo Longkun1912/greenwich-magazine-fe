@@ -1,0 +1,33 @@
+.web-brand {
+  flex-basis: 20%;
+}
+
+.left-bar {
+  flex-basis: 90%;
+  align-items: center;
+  display: flex;
+}
+
+.right-bar {
+  display: flex !important;
+  flex-basis: 10%;
+}
+
+#login-option {
+  display: flex;
+  align-items: center;
+}
+
+#authenticated-options {
+  display: flex;
+}
+
+.profile-img {
+  border-radius: 50%;
+  width: 8vh;
+  height: 8vh;
+  border: 0.1vh solid;
+}
+
+#logout-option {
+}
