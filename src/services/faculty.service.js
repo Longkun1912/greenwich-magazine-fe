@@ -9,10 +9,9 @@ const getAllFaculties = () => {
 // create faculty 
 const createFaculty = async (facultyForm, imageFile) => {
         const formData = new FormData();
-        formData.append('name', facultyForm.name);
+        formData.append('name',facultyForm.name);
         formData.append('description', facultyForm.description);
         formData.append('imageFile', imageFile);
-
         const response = await axios.post(publicApi.faculty + "create", formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -20,7 +19,6 @@ const createFaculty = async (facultyForm, imageFile) => {
         });
         return  response.data;
 };
-
 
 // update faculty
 const updateFaculty = async (id, facultyForm, imageFile) => {

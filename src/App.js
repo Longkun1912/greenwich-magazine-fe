@@ -12,8 +12,7 @@ import GreenwichNavBar from "./global/Navbar";
 import Sidebar from "./global/Sidebar";
 import AuthService from "./services/auth.service";
 import FacultyIndex from "./components/faculty/index";
-import CreateFaculty from './components/faculty/CreateFaculty';
-import EditFaculty from "./components/faculty/EditFaculty";
+import ContribbutionIndex from "./components/contribution/index";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -58,8 +57,7 @@ function App() {
               />
               <Route path="/register" element={<Register />} />
               <Route path="/faculty" element={<FacultyIndex />} />
-              <Route path="/faculty/create" element={<CreateFaculty/>} />
-              <Route path="/faculty/update/:id" element={<EditFaculty/>} />
+              <Route path="/contributionIndex" element={<ContribbutionIndex/>} />
               <Route
                 path="/user-management"
                 element={<UserIndex currentUser={currentUser} />}

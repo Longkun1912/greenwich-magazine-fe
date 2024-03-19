@@ -2,8 +2,9 @@ import React, { useEffect, useMemo, useState, useCallback } from "react";
 import { MaterialReactTable, useMaterialReactTable } from "material-react-table";
 import FacultyService from "../../services/faculty.service";
 import { MdEdit, MdDelete } from "react-icons/md";
-import { Link } from 'react-router-dom';
 import "../../css/Faculty.css";
+import ModalcreateFaculty from './CreateFaculty';
+import ModalEditFaculty from './EditFaculty';
 
 
 const Faculty = () => {
@@ -65,7 +66,7 @@ const Faculty = () => {
         size: 150,
         Cell: ({ row }) => (
           <div>
-            <Link to={`/faculty/update/${row.original._id}`}><MdEdit /></Link>
+            <button onClick={() => setIsShowModalEditFaculty(row.original._id)}><MdEdit /></button>
             <button onClick={() => confirmDelete(row.original._id)}><MdDelete /></button>
           </div>
         ),
@@ -80,13 +81,30 @@ const Faculty = () => {
     data: faculties,
   });
 
+  //test
+  const [isShowModalcreateFaculty, setIsShowModalcreateFaculty] = useState(false);
+  const handleClose = () => {
+    setIsShowModalcreateFaculty(false);
+    setIsShowModalEditFaculty(false);
+
+  }
+
+  const [isShowModalEditFaculty, setIsShowModalEditFaculty] = useState(false);
+
   return (
     <div className="content-container">
       <h1>Faculty Management</h1>
       <div className="faculty-index">
-        <button  className="create-button">
-          <Link to="/faculty/create">Create Faculty</Link>
-        </button>
+        <button className="btn btn-scuccess" onClick={() =>setIsShowModalcreateFaculty(true)}>
+        Add New Faculty</button>
+        <ModalcreateFaculty
+          show = {isShowModalcreateFaculty}
+          handleClose = {handleClose}
+        />
+         <ModalEditFaculty
+          show={isShowModalEditFaculty}
+          handleClose={() => setIsShowModalEditFaculty(false)}
+        />
         <MaterialReactTable table={table} />
       </div>
     </div>

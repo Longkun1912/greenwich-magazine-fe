@@ -29,6 +29,7 @@ const Sidebar = ({ currentUser }) => {
 
       <ul class="list-unstyled components" id="sidebar-menu">
         <li class="active"></li>
+        {/* admin */}
         {currentUser.role === "admin" && (
           <li>
             <Link to="/user-management">Manage Users</Link>
@@ -39,18 +40,44 @@ const Sidebar = ({ currentUser }) => {
             <Link to="/Faculty">Manage Faculty</Link>
           </li>
         )}
+        {currentUser.role === "admin" && (
+          <li>
+            <Link to="/contributionIndex">Manage Contribution</Link>
+          </li>
+        )}
+        {currentUser.role === "admin" && (
+          <li>
+            <Link to="#">Manage Event</Link>
+          </li>
+        )}
+
+        {/* manager */}
         {currentUser.role === "manager" && (
           <li>
             <Link to="/contribution">Manage Contribution 1</Link>
           </li>
         )}
-
+        
+        {/* coordinator */}
+        {currentUser.role === "coordinator" && (
+          <li>
+            <Link to="#">Manage User</Link>
+          </li>
+        )}
         {currentUser.role === "coordinator" && (
           <li>
             <Link to="/contribution">Manage Contribution 2</Link>
           </li>
         )}
-        <li>
+        
+        {/* Student */}
+        {currentUser.role === "student" && (
+          <li>
+            <Link to="/contribution">Manage Contribution 2</Link>
+          </li>
+        )}
+        
+        {/* <li>
           <a href="#">About</a>
         </li>
         <li>
@@ -63,7 +90,7 @@ const Sidebar = ({ currentUser }) => {
         </li>
         <li>
           <a href="#">Contact</a>
-        </li>
+        </li> */}
       </ul>
     </nav>
   );
