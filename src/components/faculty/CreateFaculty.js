@@ -1,5 +1,6 @@
 import {Modal, Button} from 'react-bootstrap';
 import { useState } from 'react';
+import { postCreateFaculty } from '../../services/faculty.service';
 
 const CreateFaculty = (props) => {
   const {show, handleClose} = props;
@@ -7,8 +8,19 @@ const CreateFaculty = (props) => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
 
-  const handleSaveFaculty = () =>{
-    console.log("name = ", name, "description", description, "image", image);
+  const handleSaveFaculty = async () =>{
+    let res = await postCreateFaculty(name,description,image);
+    console.log(">>check res", res)
+    window.location.reload();
+    if (res && res.id) {
+      handleClose()
+      //success
+      setName('');
+      setDescription('');
+      setImage('');
+    }else{
+      //erro
+    }
   }
 
   // Function to handle image upload

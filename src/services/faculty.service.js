@@ -7,18 +7,22 @@ const getAllFaculties = () => {
 };
 
 // create faculty 
-const createFaculty = async (facultyForm, imageFile) => {
-        const formData = new FormData();
-        formData.append('name',facultyForm.name);
-        formData.append('description', facultyForm.description);
-        formData.append('imageFile', imageFile);
-        const response = await axios.post(publicApi.faculty + "create", formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
-        return  response.data;
-};
+// const createFaculty = async (facultyForm, imageFile) => {
+//         const formData = new FormData();
+//         formData.append('name',facultyForm.name);
+//         formData.append('description', facultyForm.description);
+//         formData.append('imageFile', imageFile);
+//         const response = await axios.post(publicApi.faculty + "create", formData, {
+//             headers: {
+//                 'Content-Type': 'multipart/form-data',
+//             },
+//         });
+//         return  response.data;
+// };
+
+export const postCreateFaculty  = (name, description, image) => {
+    return axios.post(publicApi.faculty + "create", {name, description, image})
+}
 
 // update faculty
 const updateFaculty = async (id, facultyForm, imageFile) => {
@@ -67,7 +71,7 @@ const getFacultyById = async (id) => {
 };
 
 const facultyService = {
-    createFaculty,
+    postCreateFaculty,
     getAllFaculties,
     updateFaculty,
     deleteFaculty,
