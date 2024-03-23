@@ -10,6 +10,14 @@ const viewSystemUsers = async (req, res) => {
   });
 };
 
+const editUser = async (userForm, avatar_image) => {
+  return axios.put(publicApi.user + "update-user", userForm, avatar_image, {
+    headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
+    },
+  });
+};
+
 const UserService = {
   viewSystemUsers,
 };

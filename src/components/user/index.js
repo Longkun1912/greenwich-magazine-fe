@@ -3,14 +3,46 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import { useEffect, useMemo, useState } from "react";
+import { AiFillEdit } from "react-icons/ai";
+import { GrView } from "react-icons/gr";
+import { MdDelete } from "react-icons/md";
+import "../../css/User.css";
+import EditUserForm from "../../modals/edit.user";
+import UserInfo from "../../modals/view.user";
 import UserService from "../../services/user.service";
 
 const UserIndex = () => {
   const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+
   const fetchUsers = async () => {
     await UserService.viewSystemUsers().then((response) => {
       setUsers(response.data);
     });
+  };
+
+  // Handle view user details
+  const [openUserDetails, setOpenUserDetails] = useState(false);
+
+  const handleViewUserDetails = (user) => {
+    setSelectedUser(user);
+    setOpenUserDetails(true);
+  };
+
+  const handleCloseUserDetails = () => {
+    setOpenUserDetails(false);
+  };
+
+  // Handle edit user
+  const [openEditUser, setOpenEditUser] = useState(false);
+
+  const handleEditUser = (user) => {
+    setSelectedUser(user);
+    setOpenEditUser(true);
+  };
+
+  const handleCloseEditUser = () => {
+    setOpenEditUser(false);
   };
 
   useEffect(() => {
@@ -47,6 +79,19 @@ const UserIndex = () => {
       {
         header: "Actions",
         size: 150,
+        Cell: ({ cell }) => (
+          <div className="action-buttons">
+            <GrView
+              className="act-btn"
+              onClick={() => handleViewUserDetails(cell.row.original)}
+            />
+            <AiFillEdit
+              className="act-btn"
+              onClick={() => handleEditUser(cell.row.original)}
+            />
+            <MdDelete className="act-btn" />
+          </div>
+        ),
       },
     ],
     []
@@ -54,7 +99,7 @@ const UserIndex = () => {
 
   const table = useMaterialReactTable({
     columns,
-    data: users, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    data: users,
   });
 
   return (
@@ -63,6 +108,20 @@ const UserIndex = () => {
       <div className="user-index">
         <MaterialReactTable table={table} />
       </div>
+      {selectedUser && openUserDetails && (
+        <UserInfo
+          open={openUserDetails}
+          close={handleCloseUserDetails}
+          user={selectedUser}
+        />
+      )}
+      {selectedUser && openEditUser && (
+        <EditUserForm
+          open={openEditUser}
+          close={handleCloseEditUser}
+          user={selectedUser}
+        />
+      )}
     </div>
   );
 };
