@@ -7,43 +7,14 @@ const getAllFaculties = () => {
 };
 
 // create faculty 
-// const createFaculty = async (facultyForm, imageFile) => {
-//         const formData = new FormData();
-//         formData.append('name',facultyForm.name);
-//         formData.append('description', facultyForm.description);
-//         formData.append('imageFile', imageFile);
-//         const response = await axios.post(publicApi.faculty + "create", formData, {
-//             headers: {
-//                 'Content-Type': 'multipart/form-data',
-//             },
-//         });
-//         return  response.data;
-// };
-
 export const postCreateFaculty  = (name, description, image) => {
     return axios.post(publicApi.faculty + "create", {name, description, image})
 }
 
 // update faculty
-const updateFaculty = async (id, facultyForm, imageFile) => {
-    try {
-        const formData = new FormData();
-        formData.append('name', facultyForm.name);
-        formData.append('description', facultyForm.description);
-        formData.append('imageFile', imageFile);
-
-        const response = await axios.put(publicApi.faculty + `update/${id}`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
-        return response.data;
-    } catch (error) {
-        console.error('Error updating faculty:', error);
-        throw error;
-    }
-};
-
+export const putUpdateFaculty  = (id, name, description, image) => {
+    return axios.put(publicApi.faculty + `update/${id}`, {name, description, image})
+}
 
 // delete faculty
 const deleteFaculty = async (id) => {
@@ -60,7 +31,7 @@ const deleteFaculty = async (id) => {
 
 
 // get faculty by ID
-const getFacultyById = async (id) => {
+export const getFacultyById = async (id) => {
     try {
         const response = await axios.get(`${publicApi.faculty}/${id}`);
         return response.data;
@@ -73,7 +44,7 @@ const getFacultyById = async (id) => {
 const facultyService = {
     postCreateFaculty,
     getAllFaculties,
-    updateFaculty,
+    putUpdateFaculty,
     deleteFaculty,
     getFacultyById, 
 };

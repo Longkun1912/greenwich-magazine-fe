@@ -47,7 +47,7 @@ const Sidebar = ({ currentUser }) => {
         )}
         {currentUser.role === "admin" && (
           <li>
-            <Link to="#">Manage Event</Link>
+            <Link to="/eventIndex">Manage Event</Link>
           </li>
         )}
 

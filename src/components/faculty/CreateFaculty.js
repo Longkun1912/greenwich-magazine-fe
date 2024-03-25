@@ -1,6 +1,9 @@
 import {Modal, Button} from 'react-bootstrap';
 import { useState } from 'react';
 import { postCreateFaculty } from '../../services/faculty.service';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const CreateFaculty = (props) => {
   const {show, handleClose} = props;
@@ -8,21 +11,26 @@ const CreateFaculty = (props) => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
 
-  const handleSaveFaculty = async () =>{
-    let res = await postCreateFaculty(name,description,image);
-    console.log(">>check res", res)
-    window.location.reload();
-    if (res && res.id) {
-      handleClose()
-      //success
-      setName('');
-      setDescription('');
-      setImage('');
-    }else{
-      //erro
+  const handleSaveFaculty = async () => {
+    try {
+      let res = await postCreateFaculty(name, description, image);
+      console.log(">>check res", res);
+      if (res && res.id) {
+        handleClose();
+        setName('');
+        setDescription('');
+        setImage('');
+      }
+      toast.success("Faculty created successfully"); // Hiển thị thông báo sau khi tạo thành công và đóng modal
+        setTimeout(() => {
+          window.location.reload();
+      }, 2500);
+    } catch (error) {
+      console.error("Error creating faculty:", error);
+      toast.error("Failed to create faculty");
     }
   }
-
+  
   // Function to handle image upload
   const handleImageChange = (event) => {
     const file = event.target.files[0]; // Assuming only one file is selected
@@ -77,6 +85,7 @@ const CreateFaculty = (props) => {
             Save Changes
           </Button>
         </Modal.Footer>
+        <ToastContainer />
       </Modal>
     </>
   );

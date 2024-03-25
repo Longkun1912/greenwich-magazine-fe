@@ -9,6 +9,7 @@ import Register from "./components/Register";
 import UnAuthorizedPage from "./components/Unauthorized";
 import ContribbutionIndex from "./components/contribution/index";
 import FacultyIndex from "./components/faculty/index";
+import EventIndex from "./components/event/index";
 import UserIndex from "./components/user/index";
 import GreenwichNavBar from "./global/Navbar";
 import Sidebar from "./global/Sidebar";
@@ -65,6 +66,11 @@ function App() {
                 path="/contributionIndex"
                 element={<ContribbutionIndex />}
               />
+              <Route
+                path="/eventIndex"
+                element={<EventIndex/>}
+              />
+  
               <Route
                 path="/user-management"
                 element={<UserIndex currentUser={currentUser} />}
