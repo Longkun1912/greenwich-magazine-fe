@@ -38,6 +38,9 @@
       "react-app/jest"
     ]
   },
+  "devDependencies": {
+    "serve": "^11.3.2"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
