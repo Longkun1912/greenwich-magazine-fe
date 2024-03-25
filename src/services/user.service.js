@@ -10,16 +10,18 @@ const viewSystemUsers = async (req, res) => {
   });
 };
 
-const editUser = async (userForm, avatar_image) => {
-  return axios.put(publicApi.user + "update-user", userForm, avatar_image, {
+const editUser = async (userForm) => {
+  return axios.put(publicApi.user + "user", userForm, {
     headers: {
       "x-access-token": auth.getCurrentAccessToken(),
+      "Content-Type": "multipart/form-data",
     },
   });
 };
 
 const UserService = {
   viewSystemUsers,
+  editUser,
 };
 
 export default UserService;

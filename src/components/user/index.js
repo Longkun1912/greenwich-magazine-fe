@@ -120,6 +120,7 @@ const UserIndex = () => {
           open={openEditUser}
           close={handleCloseEditUser}
           user={selectedUser}
+          refreshUsers={fetchUsers}
         />
       )}
     </div>

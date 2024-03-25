@@ -1,3 +1,8 @@
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
@@ -5,7 +10,7 @@ import FacultyService from "../services/faculty.service";
 import RoleService from "../services/role.service";
 import UserService from "../services/user.service";
 
-const EditUserForm = ({ user, open, close }) => {
+const EditUserForm = ({ user, open, close, refreshUsers }) => {
   const [facultyOptions, setFacultyOptions] = useState([]);
   const [roleOptions, setRoleOptions] = useState([]);
   const [selectedRole, setSelectedRole] = useState("");
@@ -13,54 +18,111 @@ const EditUserForm = ({ user, open, close }) => {
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [userForm, setUserForm] = useState({
+    username: user.username,
+    mobile: user.mobile,
+    password: "",
+    avatar: null,
+    confirmPassword: "",
+    role: user.role,
+    faculty: user.faculty,
+  });
+
   const fetchFaculty = async () => {
-    await FacultyService.getAllFaculties().then((response) => {
-      setFacultyOptions(response.data.name);
-    });
+    try {
+      await FacultyService.getAllFaculties().then((response) => {
+        localStorage.setItem("faculties", JSON.stringify(response.data));
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   const fetchRoles = async () => {
-    await RoleService.viewRoles().then((response) => {
-      setRoleOptions(response.data.name);
-    });
+    try {
+      await RoleService.viewRoles().then((response) => {
+        localStorage.setItem("roles", JSON.stringify(response.data));
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    fetchFaculty();
-    fetchRoles();
-  });
+    const initializeData = async () => {
+      await fetchFaculty().then(() => {
+        setFacultyOptions(JSON.parse(localStorage.getItem("faculties")));
+      });
+      await fetchRoles().then(() => {
+        setRoleOptions(JSON.parse(localStorage.getItem("roles")));
+      });
+    };
+    initializeData();
+  }, []);
 
   const handleSelectRole = (e) => {
     setSelectedRole(e.target.value);
+
+    setUserForm((prevData) => ({
+      ...prevData,
+      role: e.target.value,
+    }));
   };
 
-  const handleSelectedFaculty = (e) => {
+  const handleSelectFaculty = (e) => {
     setSelectedFaculty(e.target.value);
+
+    setUserForm((prevData) => ({
+      ...prevData,
+      faculty: e.target.value,
+    }));
   };
 
   // Handle image upload
-  const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageChange = (e) => {
-    setSelectedImage(e.target.files[0]);
+    console.log("Lock 2");
+    const selectedFile = e.target.files[0];
+
+    setUserForm((prevData) => ({
+      ...prevData,
+      avatar: selectedFile,
+    }));
+  };
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+
+    setUserForm((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (value) => {
-    const updatedUser = {
-      id: user.id,
-      username: value.username,
-      mobile: value.mobile,
-      password: value.password,
-      role: selectedRole,
-      faculty: selectedFaculty,
-    };
+    value.preventDefault();
+    setIsSubmitting(true);
+
+    console.log("User form data: ", userForm);
+
+    const updatedUser = new FormData();
+    updatedUser.append("id", user._id);
+    updatedUser.append("email", user.email);
+    updatedUser.append("username", userForm.username);
+    updatedUser.append("mobile", userForm.mobile);
+    updatedUser.append("avatar_image", userForm.avatar);
+    updatedUser.append("role", userForm.role);
+    updatedUser.append("faculty", userForm.faculty);
+    updatedUser.append("password", userForm.password);
 
     try {
-      setIsSubmitting(true);
-      await UserService.updateUser(updatedUser, selectedImage);
+      await UserService.editUser(updatedUser).then(() => {
+        refreshUsers();
+      });
 
       close();
     } catch (error) {
-      setError(error.response.data.message);
+      setError("Error updating user. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -75,11 +137,108 @@ const EditUserForm = ({ user, open, close }) => {
       backdrop="static"
       keyboard={false}
     >
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Modal.Header closeButton>
           <Modal.Title>Update User: {user.email}</Modal.Title>
         </Modal.Header>
-        <Modal.Body></Modal.Body>
+        <Modal.Body>
+          <div className="input-row">
+            <div className="left-input">
+              <TextField
+                label="Username"
+                onChange={handleFormChange}
+                value={userForm.username}
+                variant="outlined"
+              />
+            </div>
+            <div className="right-input">
+              <TextField
+                label="Mobile"
+                onChange={handleFormChange}
+                value={userForm.mobile}
+                variant="outlined"
+              />
+            </div>
+          </div>
+          <div className="avatar-field">
+            <h5>Upload avatar</h5>
+            <input
+              type="file"
+              className="avatar-input"
+              accept="image/*"
+              onChange={(e) => handleImageChange(e)}
+              name="avatar"
+              sx={{ gridColumn: "span 2" }}
+            />
+          </div>
+          <div className="input-row">
+            <div className="left-select">
+              {roleOptions && (
+                <FormControl fullWidth>
+                  <InputLabel>Role</InputLabel>
+                  <Select
+                    label="Role"
+                    value={userForm.role}
+                    onChange={(e) => handleSelectRole(e)}
+                  >
+                    <MenuItem value="" disabled>
+                      <em>Select role</em>
+                    </MenuItem>
+                    {roleOptions.map((role) => (
+                      <MenuItem key={role._id} value={role.name}>
+                        {role.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
+            </div>
+
+            <div className="right-select">
+              {facultyOptions && (
+                <FormControl fullWidth>
+                  <InputLabel>Faculty</InputLabel>
+                  <Select
+                    label="Faculty"
+                    value={userForm.faculty}
+                    onChange={(e) => handleSelectFaculty(e)}
+                  >
+                    <MenuItem value="" disabled>
+                      <em>Select faculty</em>
+                    </MenuItem>
+                    {facultyOptions.map((faculty) => (
+                      <MenuItem key={faculty._id} value={faculty.name}>
+                        {faculty.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
+            </div>
+          </div>
+
+          <div className="input-row">
+            <div className="left-input">
+              <TextField
+                label="Password"
+                name="password"
+                type="password"
+                // autoComplete="current-password"
+                onChange={handleFormChange}
+                value={userForm.password}
+              />
+            </div>
+            <div className="right-input">
+              <TextField
+                label="Confirm Password"
+                name="confirmPassword"
+                type="password"
+                onChange={handleFormChange}
+                value={userForm.confirmPassword}
+              />
+            </div>
+          </div>
+        </Modal.Body>
         <Modal.Footer>
           <button className="btn btn-primary" type="submit">
             {isSubmitting ? "Updating..." : "Save changes"}

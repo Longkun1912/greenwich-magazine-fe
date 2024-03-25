@@ -7,3 +7,25 @@
   height: 10vh;
   border-radius: 50%;
 }
+
+.input-row {
+  display: flex;
+  margin-bottom: 2vh;
+}
+
+.right-input {
+  margin-left: 5%;
+}
+
+.left-select {
+  flex-basis: 30%;
+}
+
+.right-select {
+  margin-left: 5%;
+  flex-basis: 65%;
+}
+
+.avatar-field {
+  margin-bottom: 2vh;
+}
