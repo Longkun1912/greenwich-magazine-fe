@@ -1,3 +1,4 @@
+import Alert from "@mui/material/Alert";
 import {
   MDBBtn,
   MDBCard,
@@ -134,7 +135,17 @@ const Register = () => {
     } else {
       const formData = new FormData();
       formData.append("username", first_name + " " + last_name);
-      formData.append("avatar_image", selectedImage);
+
+      if (selectedImage) {
+        formData.append("avatar_image", selectedImage);
+      } else {
+        setState((prevState) => ({
+          ...prevState,
+          avatarError: "Please upload an avatar.",
+        }));
+        return;
+      }
+
       formData.append("email", email);
       formData.append("mobile", mobile);
       formData.append("password", password);
@@ -317,7 +328,7 @@ const Register = () => {
                         onChange={handleImageChange}
                       />
                       {avatarError && (
-                        <div className="error-message">{avatarError}</div>
+                        <Alert severity="error">{avatarError}</Alert>
                       )}
                     </MDBCol>
 

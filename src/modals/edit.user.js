@@ -116,11 +116,9 @@ const EditUserForm = ({ user, open, close, refreshUsers }) => {
     updatedUser.append("password", userForm.password);
 
     try {
-      await UserService.editUser(updatedUser).then(() => {
-        refreshUsers();
-      });
-
-      close();
+      await UserService.editUser(updatedUser);
+      await refreshUsers();
+      await close();
     } catch (error) {
       setError("Error updating user. Please try again.");
     } finally {

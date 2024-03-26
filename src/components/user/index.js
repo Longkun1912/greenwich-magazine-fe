@@ -14,10 +14,13 @@ import UserService from "../../services/user.service";
 const UserIndex = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const fetchUsers = async () => {
+    setLoading(true);
     await UserService.viewSystemUsers().then((response) => {
       setUsers(response.data);
+      setLoading(false);
     });
   };
 
@@ -41,8 +44,16 @@ const UserIndex = () => {
     setOpenEditUser(true);
   };
 
-  const handleCloseEditUser = () => {
+  const handleCloseEditUser = async () => {
+    await fetchUsers();
     setOpenEditUser(false);
+    setSelectedUser(null);
+  };
+
+  // Handle delete user
+  const handleDeleteUser = async (userId) => {
+    await UserService.deleteUser(userId);
+    await fetchUsers();
   };
 
   useEffect(() => {
@@ -89,7 +100,16 @@ const UserIndex = () => {
               className="act-btn"
               onClick={() => handleEditUser(cell.row.original)}
             />
-            <MdDelete className="act-btn" />
+            <MdDelete
+              className="act-btn"
+              onClick={() => {
+                if (
+                  window.confirm("Are you sure you want to delete this user?")
+                ) {
+                  handleDeleteUser(cell.row.original._id);
+                }
+              }}
+            />
           </div>
         ),
       },
@@ -106,7 +126,13 @@ const UserIndex = () => {
     <div className="content-container">
       <h1>User Management</h1>
       <div className="user-index">
-        <MaterialReactTable table={table} />
+        {loading ? (
+          <div className="loading">
+            <div className="loader"></div>
+          </div>
+        ) : (
+          <MaterialReactTable table={table} />
+        )}
       </div>
       {selectedUser && openUserDetails && (
         <UserInfo

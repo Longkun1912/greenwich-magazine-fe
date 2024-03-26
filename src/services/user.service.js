@@ -19,9 +19,18 @@ const editUser = async (userForm) => {
   });
 };
 
+const deleteUser = async (userId) => {
+  return axios.delete(publicApi.user + "user/" + userId, {
+    headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
+    },
+  });
+};
+
 const UserService = {
   viewSystemUsers,
   editUser,
+  deleteUser,
 };
 
 export default UserService;
