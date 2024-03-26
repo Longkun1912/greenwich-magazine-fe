@@ -8,8 +8,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import UserService from "../services/user.service";
 
-const EditUserForm = ({
-  user,
+const UserAddingForm = ({
   open,
   close,
   closeDefault,
@@ -23,13 +22,14 @@ const EditUserForm = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [userForm, setUserForm] = useState({
-    username: user.username,
-    mobile: user.mobile,
+    username: "",
+    email: "",
+    mobile: "",
     password: "",
     avatar: null,
     confirmPassword: "",
-    role: user.role,
-    faculty: user.faculty,
+    role: null,
+    faculty: null,
   });
 
   const handleSelectRole = (e) => {
@@ -53,11 +53,10 @@ const EditUserForm = ({
   // Handle image upload
 
   const handleImageChange = (e) => {
-    const selectedFile = e.target.files[0];
-
+    const file = e.target.files[0];
     setUserForm((prevData) => ({
       ...prevData,
-      avatar: selectedFile,
+      avatar: file,
     }));
   };
 
@@ -70,28 +69,24 @@ const EditUserForm = ({
     }));
   };
 
-  const handleSubmit = async (value) => {
-    value.preventDefault();
+  const handleSubmit = async () => {
     setIsSubmitting(true);
 
-    console.log("User form data: ", userForm);
-
-    const updatedUser = new FormData();
-    updatedUser.append("id", user._id);
-    updatedUser.append("email", user.email);
-    updatedUser.append("username", userForm.username);
-    updatedUser.append("mobile", userForm.mobile);
-    updatedUser.append("avatar_image", userForm.avatar);
-    updatedUser.append("role", userForm.role);
-    updatedUser.append("faculty", userForm.faculty);
-    updatedUser.append("password", userForm.password);
+    const user = new FormData();
+    user.append("email", userForm.email);
+    user.append("username", userForm.username);
+    user.append("mobile", userForm.mobile);
+    user.append("avatar_image", userForm.avatar);
+    user.append("role", userForm.role);
+    user.append("faculty", userForm.faculty);
+    user.append("password", userForm.password);
 
     try {
-      await UserService.editUser(updatedUser);
+      await UserService.createUser(user);
       await refreshUsers();
       await close();
     } catch (error) {
-      setError("Error updating user. Please try again.");
+      setError("Error creating user. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -108,7 +103,7 @@ const EditUserForm = ({
     >
       <Form onSubmit={handleSubmit}>
         <Modal.Header closeButton>
-          <Modal.Title>Update User: {user.email}</Modal.Title>
+          <Modal.Title>Create New User</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="input-row">
@@ -131,17 +126,29 @@ const EditUserForm = ({
               />
             </div>
           </div>
-          <div className="avatar-field">
-            <h5>Upload avatar</h5>
-            <input
-              type="file"
-              className="avatar-input"
-              accept="image/*"
-              onChange={(e) => handleImageChange(e)}
-              name="avatar"
-              sx={{ gridColumn: "span 2" }}
-            />
+          <div className="input-row">
+            <div className="avatar-field">
+              <h5>Upload avatar</h5>
+              <input
+                type="file"
+                className="avatar-input"
+                accept="image/*"
+                onChange={(e) => handleImageChange(e)}
+                name="avatar"
+                sx={{ gridColumn: "span 2" }}
+              />
+            </div>
+            <div>
+              <TextField
+                label="Email"
+                name="email"
+                onChange={handleFormChange}
+                value={userForm.email}
+                variant="outlined"
+              />
+            </div>
           </div>
+
           <div className="input-row">
             <div className="left-select">
               {roleOptions && (
@@ -222,4 +229,5 @@ const EditUserForm = ({
     </Modal>
   );
 };
-export default EditUserForm;
+
+export default UserAddingForm;

@@ -10,6 +10,15 @@ const viewSystemUsers = async (req, res) => {
   });
 };
 
+const createUser = async (userForm) => {
+  return axios.post(publicApi.user + "user", userForm, {
+    headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
 const editUser = async (userForm) => {
   return axios.put(publicApi.user + "user", userForm, {
     headers: {
@@ -29,6 +38,7 @@ const deleteUser = async (userId) => {
 
 const UserService = {
   viewSystemUsers,
+  createUser,
   editUser,
   deleteUser,
 };

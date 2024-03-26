@@ -8,8 +8,8 @@ import Profile from "./components/Profile";
 import Register from "./components/Register";
 import UnAuthorizedPage from "./components/Unauthorized";
 import ContribbutionIndex from "./components/contribution/index";
-import FacultyIndex from "./components/faculty/index";
 import EventIndex from "./components/event/index";
+import FacultyIndex from "./components/faculty/index";
 import UserIndex from "./components/user/index";
 import GreenwichNavBar from "./global/Navbar";
 import Sidebar from "./global/Sidebar";
@@ -48,7 +48,13 @@ function App() {
             <Routes>
               <Route
                 path="/"
-                element={<Login onLoginSuccess={handleLoginSuccess} />}
+                element={
+                  currentUser ? (
+                    <Profile currentUser={currentUser} />
+                  ) : (
+                    <Login onLoginSuccess={handleLoginSuccess} />
+                  )
+                }
               />
               <Route
                 path="/profile"
@@ -66,11 +72,8 @@ function App() {
                 path="/contributionIndex"
                 element={<ContribbutionIndex />}
               />
-              <Route
-                path="/eventIndex"
-                element={<EventIndex/>}
-              />
-  
+              <Route path="/eventIndex" element={<EventIndex />} />
+
               <Route
                 path="/user-management"
                 element={<UserIndex currentUser={currentUser} />}
