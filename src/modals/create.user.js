@@ -8,14 +8,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import UserService from "../services/user.service";
 
-const UserAddingForm = ({
-  open,
-  close,
-  closeDefault,
-  refreshUsers,
-  roleOptions,
-  facultyOptions,
-}) => {
+const UserAddingForm = ({ open, close, roleOptions, facultyOptions }) => {
   const [selectedRole, setSelectedRole] = useState("");
   const [selectedFaculty, setSelectedFaculty] = useState("");
   const [error, setError] = useState("");
@@ -83,8 +76,7 @@ const UserAddingForm = ({
 
     try {
       await UserService.createUser(user);
-      await refreshUsers();
-      await close();
+      await window.location.reload();
     } catch (error) {
       setError("Error creating user. Please try again.");
     } finally {
@@ -97,7 +89,7 @@ const UserAddingForm = ({
       aria-labelledby="contained-modal-title-vcenter"
       centered
       show={open}
-      onHide={closeDefault}
+      onHide={close}
       backdrop="static"
       keyboard={false}
     >
@@ -221,7 +213,7 @@ const UserAddingForm = ({
           <button className="btn btn-primary" type="submit">
             {isSubmitting ? "Updating..." : "Save changes"}
           </button>
-          <button className="btn btn-secondary" onClick={closeDefault}>
+          <button className="btn btn-secondary" onClick={close}>
             Close
           </button>
         </Modal.Footer>

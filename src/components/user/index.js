@@ -80,12 +80,7 @@ const UserIndex = () => {
     setOpenCreateUser(true);
   };
 
-  const handleCloseCreateUser = async () => {
-    await fetchUsers();
-    setOpenCreateUser(false);
-  };
-
-  const handleCloseDefaultCreateUser = () => {
+  const handleCloseCreateUser = () => {
     setOpenCreateUser(false);
   };
 
@@ -110,9 +105,7 @@ const UserIndex = () => {
 
   // Handle delete user
   const handleDeleteUser = async (userId) => {
-    await UserService.deleteUser(userId);
-    await fetchUsers();
-    await fetchUsers();
+    await UserService.deleteUser(userId).then(() => window.location.reload());
   };
 
   useEffect(() => {
@@ -200,8 +193,6 @@ const UserIndex = () => {
         <UserAddingForm
           open={openCreateUser}
           close={handleCloseCreateUser}
-          closeDefault={handleCloseDefaultCreateUser}
-          refreshUsers={fetchUsers}
           roleOptions={roleOptions}
           facultyOptions={facultyOptions}
         />
