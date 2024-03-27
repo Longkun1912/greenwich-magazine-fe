@@ -62,7 +62,8 @@ const UserAddingForm = ({ open, close, roleOptions, facultyOptions }) => {
     }));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setIsSubmitting(true);
 
     const user = new FormData();

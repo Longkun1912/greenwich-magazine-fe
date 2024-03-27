@@ -1,34 +1,169 @@
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-// import { useState } from 'react';
+import Form from "react-bootstrap/Form";
+import auth from "../../services/auth.service";
+import contributionService from "../../services/contribution.service";
+import eventService from "../../services/event.service";
+
+const statusOptions = ["pending", "approved", "rejected", "modified"];
+
+const currentAuthenticatedUser = auth.getCurrentUser();
 
 const CreateContribution = (props) => {
   const { show, handleClose } = props;
+  const [events, setEvents] = useState([]);
+
+  const fetchEvents = async () => {
+    try {
+      const response = await eventService.getAllEvent();
+      setEvents(response.data);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const [contributionForm, setContributionForm] = useState({
+    title: "",
+    content: "",
+    status: "",
+    event: null,
+    image: null,
+    document: null,
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setContributionForm((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSelectStatus = (e) => {
+    setContributionForm((prevData) => ({
+      ...prevData,
+      status: e.target.value,
+    }));
+  };
+
+  const handleSelectEvent = (e) => {
+    setContributionForm((prevData) => ({
+      ...prevData,
+      event: e.target.value,
+    }));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setContributionForm((prevData) => ({
+      ...prevData,
+      image: file,
+    }));
+  };
+
+  const handleDocumentChange = (e) => {
+    const file = e.target.files[0];
+    setContributionForm((prevData) => ({
+      ...prevData,
+      document: file,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const contribution = new FormData();
+
+    contribution.append("title", contributionForm.title);
+    contribution.append("content", contributionForm.content);
+    contribution.append("status", contributionForm.status);
+    contribution.append("event", contributionForm.event.id);
+    contribution.append("image", contributionForm.image);
+    contribution.append("document", contributionForm.document);
+    contribution.append("submitter", currentAuthenticatedUser.id);
+
+    try {
+      await contributionService.createContribution(contribution);
+      handleClose();
+    } catch (error) {
+      console.error("Error creating contribution:", error);
+    }
+  };
 
   return (
     <>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Contribution</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="body-add-new-faculty">
-            <div>
-              <form>
+        <Form onSubmit={handleSubmit}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add New Contribution</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="body-add-new-faculty">
+              <div>
                 <div className="mb-3">
                   <label className="form-label">Title</label>
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={contributionForm.title}
+                    name="title"
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Content</label>
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={contributionForm.content}
+                    name="content"
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">Status</label>
-                  <input type="text" className="form-control" />
+                  <FormControl fullWidth>
+                    <InputLabel>Status</InputLabel>
+                    <Select
+                      label="Status"
+                      fullWidth
+                      onChange={(e) => handleSelectStatus(e)}
+                    >
+                      <MenuItem value="" disabled>
+                        <em>Select a status</em>
+                      </MenuItem>
+                      {statusOptions.map((status) => (
+                        <MenuItem key={status} value={status}>
+                          {status}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">Event</label>
-                  <input type="text" className="form-control" />
+                  <FormControl fullWidth>
+                    <InputLabel>Events</InputLabel>
+                    <Select
+                      label="Event"
+                      fullWidth
+                      onChange={(e) => handleSelectEvent(e)}
+                    >
+                      <MenuItem value="" disabled>
+                        <em>Select an event</em>
+                      </MenuItem>
+                      {events.map((event) => (
+                        <MenuItem key={event.id} value={event}>
+                          {event.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Image</label>
@@ -36,6 +171,7 @@ const CreateContribution = (props) => {
                     type="file"
                     className="form-control"
                     accept="image/*"
+                    onChange={(e) => handleImageChange(e)}
                   />
                 </div>
                 <div className="mb-3">
@@ -44,18 +180,21 @@ const CreateContribution = (props) => {
                     type="file"
                     className="form-control"
                     accept=".doc,.docx"
+                    onChange={(e) => handleDocumentChange(e)}
                   />
                 </div>
-              </form>
+              </div>
             </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary">Save Changes</Button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" type="submit">
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Form>
       </Modal>
     </>
   );

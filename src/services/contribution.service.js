@@ -4,7 +4,12 @@ import auth from "./auth.service";
 
 //all Contribution
 const getAllContribution = () => {
-  return axios.get(publicApi.contribution);
+  return axios.get(publicApi.contribution + "contribution", {
+    headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
 const createContribution = (contribution) => {

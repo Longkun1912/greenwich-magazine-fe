@@ -3,8 +3,7 @@ const publicApi = {
   faculty: "http://localhost:5000/api/faculty/",
   user: "http://localhost:5000/api/user-management/",
   role: "http://localhost:5000/api/role-management/",
-  contribution:
-    "http://localhost:5000/api/contribution-management/contribution/",
+  contribution: "http://localhost:5000/api/contribution-management/",
   event: "http://localhost:5000/api/event-management/events",
 };
 export default publicApi;
