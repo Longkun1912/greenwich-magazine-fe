@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaUserGroup } from "react-icons/fa6";
+import { GrDocumentUser } from "react-icons/gr";
 import { MdEventAvailable, MdOutlineCollectionsBookmark } from "react-icons/md";
 import { RiArticleFill } from "react-icons/ri";
 import { TiThMenu } from "react-icons/ti";
@@ -31,8 +32,6 @@ const Sidebar = ({ currentUser }) => {
       </div>
 
       <ul class="list-unstyled components" id="sidebar-menu">
-        <li class="active"></li>
-        {/* admin */}
         {currentUser.role === "admin" && (
           <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
             <Link to="/user-management">
@@ -84,8 +83,15 @@ const Sidebar = ({ currentUser }) => {
 
         {/* manager */}
         {currentUser.role === "manager" && (
-          <li>
-            <Link to="/contribution">Manage Contribution 1</Link>
+          <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
+            <Link to="/contributionIndex">
+              <span className="option-container">
+                <GrDocumentUser className="manage-icon" />
+                <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
+                  View Contribution
+                </p>
+              </span>
+            </Link>
           </li>
         )}
 

@@ -8,14 +8,18 @@ import {
 } from "mdb-react-ui-kit";
 import React from "react";
 import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../css/Navbar.css";
 import AuthService from "../services/auth.service";
-const GreenwichNavBar = ({ currentUser, onLogoutSuccess }) => {
-  const logOut = () => {
-    AuthService.logout();
+const GreenwichNavBar = ({ currentUser, handleLogout }) => {
+  const navigator = useNavigate();
+
+  const logOut = async () => {
+    await AuthService.logout();
+    navigator("/login");
+    currentUser = null;
     localStorage.clear();
-    onLogoutSuccess();
+    handleLogout();
   };
 
   return (

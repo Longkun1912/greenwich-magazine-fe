@@ -5,11 +5,13 @@ import {
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { MdDelete, MdEdit } from "react-icons/md";
 import "../../css/Faculty.css";
+import auth from "../../services/auth.service";
 import ContributionService from "../../services/contribution.service";
 import ModalCreateContribution from "./CreateContribution";
 import ModalEditContribution from "./EditContribution";
 
 const ContributionManagement = () => {
+  const currentUser = auth.getCurrentUser();
   const [contributions, setContributions] = useState([]);
   const [isShowModalCreateContribution, setIsShowModalCreateContribution] =
     useState(false);
@@ -58,7 +60,7 @@ const ContributionManagement = () => {
     setIsShowModalEditContribution(true);
   };
 
-  const columns = useMemo(
+  let columns = useMemo(
     () => [
       {
         accessorKey: "id",
@@ -114,22 +116,26 @@ const ContributionManagement = () => {
         size: 100,
       },
 
-      {
-        header: "Actions",
-        size: 100,
-        Cell: ({ row }) => (
-          <div>
-            <button onClick={() => handleEditContribution(row.original)}>
-              <MdEdit />
-            </button>
-            <button onClick={() => confirmDelete(row.original.id)}>
-              <MdDelete />
-            </button>
-          </div>
-        ),
-      },
+      ...(currentUser.role === "admin"
+        ? [
+            {
+              header: "Actions",
+              size: 100,
+              Cell: ({ row }) => (
+                <div>
+                  <button onClick={() => handleEditContribution(row.original)}>
+                    <MdEdit />
+                  </button>
+                  <button onClick={() => confirmDelete(row.original.id)}>
+                    <MdDelete />
+                  </button>
+                </div>
+              ),
+            },
+          ]
+        : []),
     ],
-    [confirmDelete]
+    [currentUser.role, confirmDelete]
   );
 
   const table = useMaterialReactTable({

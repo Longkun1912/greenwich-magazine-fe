@@ -22,8 +22,7 @@ function App() {
     if (userData) setCurrentUser(userData);
   };
 
-  const handleLogoutSuccess = () => {
-    window.location.href = "/login";
+  const handleLogout = () => {
     setCurrentUser(null);
   };
 
@@ -41,7 +40,7 @@ function App() {
         <main className="content">
           <GreenwichNavBar
             currentUser={currentUser}
-            onLogoutSuccess={handleLogoutSuccess}
+            handleLogout={handleLogout}
           />
           <div className="page-content">
             {currentUser && <Sidebar currentUser={currentUser} />}
