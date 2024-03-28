@@ -21,9 +21,28 @@ const createContribution = (contribution) => {
   });
 };
 
+const updateContribution = (contribution) => {
+  return axios.put(publicApi.contribution + "contribution", contribution, {
+    headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+const deleteContribution = (id) => {
+  return axios.delete(publicApi.contribution + "contribution/" + id, {
+    headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
+    },
+  });
+};
+
 const contributionService = {
   getAllContribution,
   createContribution,
+  updateContribution,
+  deleteContribution,
 };
 
 export default contributionService;

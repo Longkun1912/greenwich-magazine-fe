@@ -14,7 +14,8 @@ const statusOptions = ["pending", "approved", "rejected", "modified"];
 const currentAuthenticatedUser = auth.getCurrentUser();
 
 const CreateContribution = (props) => {
-  const { show, handleClose } = props;
+  const { show, handleClose, fetchContributions } = props;
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [events, setEvents] = useState([]);
 
   const fetchEvents = async () => {
@@ -62,37 +63,47 @@ const CreateContribution = (props) => {
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setContributionForm((prevData) => ({
-      ...prevData,
-      image: file,
-    }));
+    if (e.target.files.length) {
+      const file = e.target.files[0];
+      setContributionForm((prevData) => ({
+        ...prevData,
+        image: file,
+      }));
+    }
   };
 
   const handleDocumentChange = (e) => {
-    const file = e.target.files[0];
-    setContributionForm((prevData) => ({
-      ...prevData,
-      document: file,
-    }));
+    if (e.target.files.length) {
+      const file = e.target.files[0];
+      setContributionForm((prevData) => ({
+        ...prevData,
+        document: file,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const contribution = new FormData();
+
+    console.log("Event:", contributionForm.event);
 
     contribution.append("title", contributionForm.title);
     contribution.append("content", contributionForm.content);
     contribution.append("status", contributionForm.status);
-    contribution.append("event", contributionForm.event.id);
+    contribution.append("event", contributionForm.event._id);
     contribution.append("image", contributionForm.image);
     contribution.append("document", contributionForm.document);
     contribution.append("submitter", currentAuthenticatedUser.id);
 
     try {
       await contributionService.createContribution(contribution);
+      await fetchContributions();
+      setIsSubmitting(false);
       handleClose();
     } catch (error) {
+      setIsSubmitting(false);
       console.error("Error creating contribution:", error);
     }
   };
@@ -191,7 +202,7 @@ const CreateContribution = (props) => {
               Close
             </Button>
             <Button variant="primary" type="submit">
-              Save Changes
+              {isSubmitting ? "Updating..." : "Save changes"}
             </Button>
           </Modal.Footer>
         </Form>

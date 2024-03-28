@@ -1,16 +1,20 @@
-
-import React, { useEffect, useMemo, useState, useCallback } from "react";
-import { MaterialReactTable, useMaterialReactTable } from "material-react-table";
-import ContributionService from "../../services/contribution.service";
-import { MdEdit, MdDelete } from "react-icons/md";
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+} from "material-react-table";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { MdDelete, MdEdit } from "react-icons/md";
 import "../../css/Faculty.css";
-import ModalCreateContribution from './CreateContribution';
-import ModalEditContribution from './EditContribution';
+import ContributionService from "../../services/contribution.service";
+import ModalCreateContribution from "./CreateContribution";
+import ModalEditContribution from "./EditContribution";
 
 const ContributionManagement = () => {
   const [contributions, setContributions] = useState([]);
-  const [isShowModalCreateContribution, setIsShowModalCreateContribution] = useState(false);
-  const [isShowModalEditContribution, setIsShowModalEditContribution] = useState(false);
+  const [isShowModalCreateContribution, setIsShowModalCreateContribution] =
+    useState(false);
+  const [isShowModalEditContribution, setIsShowModalEditContribution] =
+    useState(false);
   const [selectedContribution, setSelectedContribution] = useState(null);
 
   const fetchContributions = useCallback(async () => {
@@ -18,7 +22,7 @@ const ContributionManagement = () => {
       const response = await ContributionService.getAllContribution();
       setContributions(response.data);
     } catch (error) {
-      console.error('Error fetching contributions:', error);
+      console.error("Error fetching contributions:", error);
     }
   }, []);
 
@@ -26,20 +30,28 @@ const ContributionManagement = () => {
     fetchContributions();
   }, [fetchContributions]);
 
-  const handleDelete = useCallback(async (id) => {
-    try {
-      await ContributionService.deleteContribution(id);
-      fetchContributions(); // Sau khi xóa, cập nhật lại danh sách đóng góp
-    } catch (error) {
-      console.error('Error deleting contribution:', error);
-    }
-  }, [fetchContributions]);
+  const handleDelete = useCallback(
+    async (id) => {
+      try {
+        await ContributionService.deleteContribution(id);
+        fetchContributions(); // Sau khi xóa, cập nhật lại danh sách đóng góp
+      } catch (error) {
+        console.error("Error deleting contribution:", error);
+      }
+    },
+    [fetchContributions]
+  );
 
-  const confirmDelete = useCallback((id) => {
-    if (window.confirm("Are you sure you want to delete this contribution?")) {
-      handleDelete(id);
-    }
-  }, [handleDelete]);
+  const confirmDelete = useCallback(
+    (id) => {
+      if (
+        window.confirm("Are you sure you want to delete this contribution?")
+      ) {
+        handleDelete(id);
+      }
+    },
+    [handleDelete]
+  );
 
   const handleEditContribution = (contribution) => {
     setSelectedContribution(contribution);
@@ -49,7 +61,7 @@ const ContributionManagement = () => {
   const columns = useMemo(
     () => [
       {
-        accessorKey: "_id",
+        accessorKey: "id",
         header: "ID",
         size: 100,
       },
@@ -57,7 +69,13 @@ const ContributionManagement = () => {
         accessorKey: "image",
         header: "Image",
         size: 200,
-        Cell: ({ cell }) => <img src={cell.row.original.image} alt="Contribution" style={{ width: '100px', height: 'auto' }} />,
+        Cell: ({ cell }) => (
+          <img
+            src={cell.row.original.image}
+            alt="Contribution"
+            style={{ width: "15vh", height: "15vh" }}
+          />
+        ),
       },
       {
         accessorKey: "title",
@@ -73,6 +91,12 @@ const ContributionManagement = () => {
         accessorKey: "document",
         header: "Document",
         size: 100,
+        Cell: ({ cell }) =>
+          cell.row.original.document && (
+            <a href={cell.row.original.document} download>
+              <button>Download</button>
+            </a>
+          ),
       },
       {
         accessorKey: "status",
@@ -89,14 +113,18 @@ const ContributionManagement = () => {
         header: "Event",
         size: 100,
       },
-      
+
       {
         header: "Actions",
         size: 100,
         Cell: ({ row }) => (
           <div>
-            <button onClick={() => handleEditContribution(row.original)}><MdEdit /></button> 
-            <button onClick={() => confirmDelete(row.original._id)}><MdDelete /></button>
+            <button onClick={() => handleEditContribution(row.original)}>
+              <MdEdit />
+            </button>
+            <button onClick={() => confirmDelete(row.original.id)}>
+              <MdDelete />
+            </button>
           </div>
         ),
       },
@@ -119,18 +147,26 @@ const ContributionManagement = () => {
     <div className="content-container">
       <h1>Contribution Management</h1>
       <div className="contribution-index">
-        <button className="btn btn-success" onClick={() => setIsShowModalCreateContribution(true)}>
+        <button
+          className="btn btn-success"
+          onClick={() => setIsShowModalCreateContribution(true)}
+        >
           Add New Contribution
         </button>
         <ModalCreateContribution
           show={isShowModalCreateContribution}
           handleClose={handleCloseModals}
+          fetchContributions={fetchContributions}
         />
-        <ModalEditContribution
-          show={isShowModalEditContribution}
-          contribution={selectedContribution}
-          handleClose={handleCloseModals}
-        />
+        {selectedContribution && (
+          <ModalEditContribution
+            show={isShowModalEditContribution}
+            contribution={selectedContribution}
+            fetchContributions={fetchContributions}
+            handleClose={handleCloseModals}
+          />
+        )}
+
         <MaterialReactTable table={table} />
       </div>
     </div>
@@ -138,4 +174,3 @@ const ContributionManagement = () => {
 };
 
 export default ContributionManagement;
-
