@@ -86,18 +86,18 @@ const EditContribution = (props) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    console.log("Event:", JSON.stringify(contributionForm.event._id));
-
-    const contribution = new FormData();
-    contribution.append("id", contributionForm.id);
-    contribution.append("title", contributionForm.title);
-    contribution.append("content", contributionForm.content);
-    contribution.append("status", contributionForm.status);
-    contribution.append("event", contributionForm.event._id);
-    contribution.append("image", contributionForm.image);
-    contribution.append("document", contributionForm.document);
-
     try {
+      console.log("Event:", JSON.stringify(contributionForm.event._id));
+
+      const contribution = new FormData();
+      contribution.append("id", contributionForm.id);
+      contribution.append("title", contributionForm.title);
+      contribution.append("content", contributionForm.content);
+      contribution.append("status", contributionForm.status);
+      contribution.append("event", contributionForm.event._id);
+      contribution.append("image", contributionForm.image);
+      contribution.append("document", contributionForm.document);
+
       await contributionService.updateContribution(contribution);
       await fetchContributions();
       setIsSubmitting(false);

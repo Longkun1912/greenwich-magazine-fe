@@ -85,19 +85,20 @@ const CreateContribution = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const contribution = new FormData();
-
-    console.log("Event:", contributionForm.event);
-
-    contribution.append("title", contributionForm.title);
-    contribution.append("content", contributionForm.content);
-    contribution.append("status", contributionForm.status);
-    contribution.append("event", contributionForm.event._id);
-    contribution.append("image", contributionForm.image);
-    contribution.append("document", contributionForm.document);
-    contribution.append("submitter", currentAuthenticatedUser.id);
 
     try {
+      const contribution = new FormData();
+
+      console.log("Event:", contributionForm.event);
+
+      contribution.append("title", contributionForm.title);
+      contribution.append("content", contributionForm.content);
+      contribution.append("status", contributionForm.status);
+      contribution.append("event", contributionForm.event._id);
+      contribution.append("image", contributionForm.image);
+      contribution.append("document", contributionForm.document);
+      contribution.append("submitter", currentAuthenticatedUser.id);
+
       await contributionService.createContribution(contribution);
       await fetchContributions();
       setIsSubmitting(false);
