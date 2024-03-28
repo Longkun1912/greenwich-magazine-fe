@@ -117,7 +117,7 @@ const Sidebar = ({ currentUser }) => {
         )}
         {currentUser.role === "coordinator" && (
           <li>
-            <Link to="/contribution">Manage Contribution 2</Link>
+            <Link to="/IndexForCoordinator">Manage Contribution 2</Link>
           </li>
         )}
 

@@ -3,8 +3,12 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { MdDelete } from "react-icons/md";
+import { MdEdit, MdDelete } from "react-icons/md";
 import EventService from "../../services/event.service";
+import ModalCreateEvent from './CreateEvent';
+import ModalEditEvent from './EditEvent';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EventManagement = () => {
   const [events, setEvents] = useState([]);
@@ -27,8 +31,10 @@ const EventManagement = () => {
       try {
         await EventService.deleteEvent(id);
         fetchEvents(); // Sau khi xóa, cập nhật lại danh sách sự kiện
+        toast.success("Event deleted successfully");
       } catch (error) {
         console.error("Error deleting event:", error);
+        toast.error("Failed to delete event");
       }
     },
     [fetchEvents]
@@ -42,6 +48,24 @@ const EventManagement = () => {
     },
     [handleDelete]
   );
+
+
+  //edit
+  const handleEditEvent = (event) => {
+    // console.log(event)
+    setDataEventEdit(event);
+    setIsShowModalEditEvent(true); // Hiển thị Modal chỉnh sửa khi nhấn nút
+  }
+
+  const [isShowModalCreateEvent, setIsShowModalCreateEvent] = useState(false);
+  const [isShowModalEditEvent, setIsShowModalEditEvent] = useState(false);
+  const [dataEventEdit, setDataEventEdit] = useState({})
+
+  const handleClose = () => {
+    setIsShowModalCreateEvent(false);
+    setIsShowModalEditEvent(false);
+  }
+
 
   const columns = useMemo(
     () => [
@@ -75,7 +99,7 @@ const EventManagement = () => {
         size: 100,
         Cell: ({ row }) => (
           <div>
-            <button>Edit</button>
+            <button onClick={()=> handleEditEvent(row.original)}><MdEdit /></button> 
             <button onClick={() => confirmDelete(row.original._id)}>
               <MdDelete />
             </button>
@@ -95,9 +119,19 @@ const EventManagement = () => {
     <div className="content-container">
       <h1>Event Management</h1>
       <div className="event-index">
-        <button className="btn btn-success">Add New Event</button>
-
+      <button className="btn btn-scuccess" onClick={() =>setIsShowModalCreateEvent(true)}>
+        Add New Event</button>
+        <ModalCreateEvent
+          show = {isShowModalCreateEvent}
+          handleClose = {handleClose}
+        />
+        <ModalEditEvent
+          show={isShowModalEditEvent}
+          dataEventEdit = {dataEventEdit}
+          handleClose = {handleClose}
+        />
         <MaterialReactTable table={table} />
+        <ToastContainer />
       </div>
     </div>
   );

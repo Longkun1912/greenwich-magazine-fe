@@ -7,7 +7,8 @@ import Login from "./components/Login";
 import Profile from "./components/Profile";
 import Register from "./components/Register";
 import UnAuthorizedPage from "./components/Unauthorized";
-import ContribbutionIndex from "./components/contribution/index";
+import ContributionIndex from "./components/contribution/index";
+import IndexForCoordinator from "./components/contribution/IndexForCoordinator";
 import EventIndex from "./components/event/index";
 import FacultyIndex from "./components/faculty/index";
 import UserIndex from "./components/user/index";
@@ -70,8 +71,10 @@ function App() {
                 <Route path="/faculty" element={<FacultyIndex />} />
                 <Route
                   path="/contributionIndex"
-                  element={<ContribbutionIndex />}
+                  element={<ContributionIndex />}
                 />
+                <Route path="/IndexForCoordinator" element = {<IndexForCoordinator/>} />
+                
                 <Route path="/eventIndex" element={<EventIndex />} />
 
                 <Route
