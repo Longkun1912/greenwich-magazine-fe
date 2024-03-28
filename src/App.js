@@ -45,40 +45,42 @@ function App() {
           />
           <div className="page-content">
             {currentUser && <Sidebar currentUser={currentUser} />}
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  currentUser ? (
-                    <Profile currentUser={currentUser} />
-                  ) : (
-                    <Login onLoginSuccess={handleLoginSuccess} />
-                  )
-                }
-              />
-              <Route
-                path="/profile"
-                element={<Profile currentUser={currentUser} />}
-              />
-              <Route path="/unauthorized" element={<UnAuthorizedPage />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route
-                path="/login"
-                element={<Login onLoginSuccess={handleLoginSuccess} />}
-              />
-              <Route path="/register" element={<Register />} />
-              <Route path="/faculty" element={<FacultyIndex />} />
-              <Route
-                path="/contributionIndex"
-                element={<ContribbutionIndex />}
-              />
-              <Route path="/eventIndex" element={<EventIndex />} />
+            <div style={{ flexBasis: "70%" }}>
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    currentUser ? (
+                      <Profile currentUser={currentUser} />
+                    ) : (
+                      <Login onLoginSuccess={handleLoginSuccess} />
+                    )
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={<Profile currentUser={currentUser} />}
+                />
+                <Route path="/unauthorized" element={<UnAuthorizedPage />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route
+                  path="/login"
+                  element={<Login onLoginSuccess={handleLoginSuccess} />}
+                />
+                <Route path="/register" element={<Register />} />
+                <Route path="/faculty" element={<FacultyIndex />} />
+                <Route
+                  path="/contributionIndex"
+                  element={<ContribbutionIndex />}
+                />
+                <Route path="/eventIndex" element={<EventIndex />} />
 
-              <Route
-                path="/user-management"
-                element={<UserIndex currentUser={currentUser} />}
-              />
-            </Routes>
+                <Route
+                  path="/user-management"
+                  element={<UserIndex currentUser={currentUser} />}
+                />
+              </Routes>
+            </div>
           </div>
         </main>
       </div>

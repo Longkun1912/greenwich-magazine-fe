@@ -3,12 +3,14 @@
 }
 
 .left-bar {
+  width: fit-content;
   flex-basis: 90%;
   align-items: center;
   display: flex;
 }
 
 .right-bar {
+  width: fit-content;
   display: flex !important;
   flex-basis: 10%;
 }
@@ -29,5 +31,11 @@
   border: 0.1vh solid;
 }
 
-#logout-option {
+#navbar-container {
+  flex-wrap: unset;
+}
+
+#navbar-option {
+  width: fit-content !important;
+  display: contents !important;
 }

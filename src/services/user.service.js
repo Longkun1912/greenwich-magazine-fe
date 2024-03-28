@@ -2,7 +2,7 @@ import axios from "axios";
 import publicApi from "../services/api.service";
 import auth from "./auth.service";
 
-const viewSystemUsers = async (req, res) => {
+const viewSystemUsers = (req, res) => {
   return axios.get(publicApi.user + "users", {
     headers: {
       "x-access-token": auth.getCurrentAccessToken(),
@@ -10,7 +10,7 @@ const viewSystemUsers = async (req, res) => {
   });
 };
 
-const createUser = async (userForm) => {
+const createUser = (userForm) => {
   return axios.post(publicApi.user + "user", userForm, {
     headers: {
       "x-access-token": auth.getCurrentAccessToken(),
@@ -19,7 +19,7 @@ const createUser = async (userForm) => {
   });
 };
 
-const editUser = async (userForm) => {
+const editUser = (userForm) => {
   return axios.put(publicApi.user + "user", userForm, {
     headers: {
       "x-access-token": auth.getCurrentAccessToken(),
@@ -28,7 +28,7 @@ const editUser = async (userForm) => {
   });
 };
 
-const deleteUser = async (userId) => {
+const deleteUser = (userId) => {
   return axios.delete(publicApi.user + "user/" + userId, {
     headers: {
       "x-access-token": auth.getCurrentAccessToken(),

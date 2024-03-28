@@ -52,18 +52,18 @@ a:focus {
 }
 
 .sidebar {
-  width: 60vh;
   transition: width 0.3s ease-in-out;
 }
 
 .sidebar.collapsed {
-  width: 20vh;
+  width: fit-content;
 }
 
 #sidebar {
   background: #7386d5;
   color: #fff;
   transition: all 0.3s;
+  margin-left: 0 !important;
 }
 
 #sidebar.active {
@@ -208,4 +208,30 @@ a.article:hover {
 
 #link-profile {
   display: flex;
+}
+
+.manage-icon {
+  font-size: 4vh;
+  margin-right: 2%;
+}
+
+.option-container {
+  display: flex;
+  align-items: center;
+}
+
+.manage-txt {
+  margin-bottom: 0;
+}
+
+.manage-txt-hidden {
+  display: none;
+}
+
+.manage-bar {
+  padding-left: 5vh;
+}
+
+.manage-bar-hidden {
+  padding-left: 2vh;
 }

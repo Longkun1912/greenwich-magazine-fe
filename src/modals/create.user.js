@@ -8,7 +8,13 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import UserService from "../services/user.service";
 
-const UserAddingForm = ({ open, close, roleOptions, facultyOptions }) => {
+const UserAddingForm = ({
+  open,
+  close,
+  roleOptions,
+  facultyOptions,
+  fetchUsers,
+}) => {
   const [selectedRole, setSelectedRole] = useState("");
   const [selectedFaculty, setSelectedFaculty] = useState("");
   const [error, setError] = useState("");
@@ -77,7 +83,9 @@ const UserAddingForm = ({ open, close, roleOptions, facultyOptions }) => {
 
     try {
       await UserService.createUser(user);
-      await window.location.reload();
+      await fetchUsers();
+      setIsSubmitting(false);
+      close();
     } catch (error) {
       setError("Error creating user. Please try again.");
     } finally {

@@ -1,5 +1,4 @@
 import {
-  MDBCollapse,
   MDBContainer,
   MDBNavbar,
   MDBNavbarBrand,
@@ -21,56 +20,54 @@ const GreenwichNavBar = ({ currentUser, onLogoutSuccess }) => {
 
   return (
     <MDBNavbar expand="lg" dark bgColor="primary">
-      <MDBContainer fluid>
+      <MDBContainer id="navbar-container">
         <div className="web-brand">
           <MDBNavbarBrand href="#">Greenwich</MDBNavbarBrand>
         </div>
-        <MDBCollapse navbar>
-          <MDBNavbarNav className="me-auto mb-2 mb-lg-0">
-            <div className="left-bar">
+        <MDBNavbarNav id="navbar-option">
+          <div className="left-bar">
+            <MDBNavbarItem>
+              <MDBNavbarLink href="#">Features</MDBNavbarLink>
+            </MDBNavbarItem>
+          </div>
+          {!currentUser ? (
+            <div className="right-bar">
+              <MDBNavbarItem id="login-option">
+                <Link to="/login">
+                  <MDBNavbarLink>Login</MDBNavbarLink>
+                </Link>
+              </MDBNavbarItem>
               <MDBNavbarItem>
-                <MDBNavbarLink href="#">Features</MDBNavbarLink>
+                <MDBNavbarLink>
+                  <Link to="/register">
+                    <MDBNavbarLink>Register</MDBNavbarLink>
+                  </Link>
+                </MDBNavbarLink>
               </MDBNavbarItem>
             </div>
-            {!currentUser ? (
-              <div className="right-bar">
-                <MDBNavbarItem id="login-option">
-                  <Link to="/login">
-                    <MDBNavbarLink>Login</MDBNavbarLink>
-                  </Link>
-                </MDBNavbarItem>
+          ) : (
+            <div className="right-bar">
+              <MDBNavbarItem id="authenticated-options">
                 <MDBNavbarItem>
-                  <MDBNavbarLink>
-                    <Link to="/register">
-                      <MDBNavbarLink>Register</MDBNavbarLink>
-                    </Link>
-                  </MDBNavbarLink>
+                  <img
+                    src={currentUser.avatar}
+                    alt="avatar"
+                    className="profile-img"
+                  />
                 </MDBNavbarItem>
-              </div>
-            ) : (
-              <div className="right-bar">
-                <MDBNavbarItem id="authenticated-options">
-                  <MDBNavbarItem>
-                    <img
-                      src={currentUser.avatar}
-                      alt="avatar"
-                      className="profile-img"
-                    />
-                  </MDBNavbarItem>
-                  <div style={{ width: "20vh" }}>
-                    <span>{currentUser.username}</span>
+                <div style={{ width: "20vh" }}>
+                  <span>{currentUser.username}</span>
 
-                    <Link>
-                      <Button id="logout-option" onClick={logOut}>
-                        Logout
-                      </Button>
-                    </Link>
-                  </div>
-                </MDBNavbarItem>
-              </div>
-            )}
-          </MDBNavbarNav>
-        </MDBCollapse>
+                  <Link>
+                    <Button id="logout-option" onClick={logOut}>
+                      Logout
+                    </Button>
+                  </Link>
+                </div>
+              </MDBNavbarItem>
+            </div>
+          )}
+        </MDBNavbarNav>
       </MDBContainer>
     </MDBNavbar>
   );

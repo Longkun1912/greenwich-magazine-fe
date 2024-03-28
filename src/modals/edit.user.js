@@ -8,15 +8,9 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import UserService from "../services/user.service";
 
-const EditUserForm = ({
-  user,
-  open,
-  close,
-  closeDefault,
-  refreshUsers,
-  roleOptions,
-  facultyOptions,
-}) => {
+const EditUserForm = (props) => {
+  const { open, close, user, refreshUsers, roleOptions, facultyOptions } =
+    props;
   const [selectedRole, setSelectedRole] = useState("");
   const [selectedFaculty, setSelectedFaculty] = useState("");
   const [error, setError] = useState("");
@@ -89,11 +83,11 @@ const EditUserForm = ({
     try {
       await UserService.editUser(updatedUser);
       await refreshUsers();
-      await close();
-    } catch (error) {
-      setError("Error updating user. Please try again.");
-    } finally {
       setIsSubmitting(false);
+      close();
+    } catch (error) {
+      setIsSubmitting(false);
+      setError("Error updating user. Please try again.");
     }
   };
 
@@ -102,7 +96,7 @@ const EditUserForm = ({
       aria-labelledby="contained-modal-title-vcenter"
       centered
       show={open}
-      onHide={closeDefault}
+      onHide={close}
       backdrop="static"
       keyboard={false}
     >
@@ -214,7 +208,7 @@ const EditUserForm = ({
           <button className="btn btn-primary" type="submit">
             {isSubmitting ? "Updating..." : "Save changes"}
           </button>
-          <button className="btn btn-secondary" onClick={closeDefault}>
+          <button className="btn btn-secondary" onClick={close}>
             Close
           </button>
         </Modal.Footer>

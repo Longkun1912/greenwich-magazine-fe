@@ -37,6 +37,10 @@
   }
 }
 
+.content {
+  width: 200vh !important;
+}
+
 .page-content {
   display: flex;
 }

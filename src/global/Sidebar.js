@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { FaUserGroup } from "react-icons/fa6";
+import { MdEventAvailable, MdOutlineCollectionsBookmark } from "react-icons/md";
+import { RiArticleFill } from "react-icons/ri";
 import { TiThMenu } from "react-icons/ti";
 import { Link } from "react-router-dom";
 import "../css/Sidebar.css";
@@ -31,23 +34,51 @@ const Sidebar = ({ currentUser }) => {
         <li class="active"></li>
         {/* admin */}
         {currentUser.role === "admin" && (
-          <li>
-            <Link to="/user-management">Manage Users</Link>
+          <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
+            <Link to="/user-management">
+              <span className="option-container">
+                <FaUserGroup className="manage-icon" />
+                <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
+                  Manage Users
+                </p>
+              </span>
+            </Link>
           </li>
         )}
         {currentUser.role === "admin" && (
-          <li>
-            <Link to="/Faculty">Manage Faculty</Link>
+          <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
+            <Link to="/Faculty">
+              <span className="option-container">
+                <MdOutlineCollectionsBookmark className="manage-icon" />
+                <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
+                  Manage Faculty
+                </p>
+              </span>
+            </Link>
           </li>
         )}
         {currentUser.role === "admin" && (
-          <li>
-            <Link to="/contributionIndex">Manage Contribution</Link>
+          <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
+            <Link to="/contributionIndex">
+              <span className="option-container">
+                <RiArticleFill className="manage-icon" />
+                <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
+                  Manage Contribution
+                </p>
+              </span>
+            </Link>
           </li>
         )}
         {currentUser.role === "admin" && (
-          <li>
-            <Link to="/eventIndex">Manage Event</Link>
+          <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
+            <Link to="/eventIndex">
+              <span className="option-container">
+                <MdEventAvailable className="manage-icon" />
+                <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
+                  Manage Event
+                </p>
+              </span>
+            </Link>
           </li>
         )}
 
@@ -57,7 +88,7 @@ const Sidebar = ({ currentUser }) => {
             <Link to="/contribution">Manage Contribution 1</Link>
           </li>
         )}
-        
+
         {/* coordinator */}
         {currentUser.role === "coordinator" && (
           <li>
@@ -69,14 +100,14 @@ const Sidebar = ({ currentUser }) => {
             <Link to="/contribution">Manage Contribution 2</Link>
           </li>
         )}
-        
+
         {/* Student */}
         {currentUser.role === "student" && (
           <li>
             <Link to="/contribution">Manage Contribution 2</Link>
           </li>
         )}
-        
+
         {/* <li>
           <a href="#">About</a>
         </li>

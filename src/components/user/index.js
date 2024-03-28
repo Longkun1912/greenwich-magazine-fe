@@ -2,7 +2,7 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { GrView } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
@@ -19,7 +19,7 @@ const UserIndex = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [facultyOptions, setFacultyOptions] = useState([]);
   const [roleOptions, setRoleOptions] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchFaculty = async () => {
     try {
@@ -53,13 +53,21 @@ const UserIndex = () => {
     initializeData();
   }, []);
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     setLoading(true);
-    await UserService.viewSystemUsers().then((response) => {
+    try {
+      const response = await UserService.viewSystemUsers();
       setUsers(response.data);
-    });
-    setLoading(false);
-  };
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("Error fetching users:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
 
   // Handle view user details
   const [openUserDetails, setOpenUserDetails] = useState(false);
@@ -93,24 +101,31 @@ const UserIndex = () => {
   };
 
   const handleCloseEditUser = async () => {
-    await fetchUsers();
-    setOpenEditUser(false);
-    setSelectedUser(null);
-  };
-
-  const handleCloseDefaultEditUser = () => {
     setOpenEditUser(false);
     setSelectedUser(null);
   };
 
   // Handle delete user
-  const handleDeleteUser = async (userId) => {
-    await UserService.deleteUser(userId).then(() => window.location.reload());
-  };
+  const handleDeleteUser = useCallback(
+    async (id) => {
+      try {
+        await UserService.deleteUser(id);
+        fetchUsers();
+      } catch (error) {
+        console.error("Error deleting user:", error);
+      }
+    },
+    [fetchUsers]
+  );
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  const confirmDelete = useCallback(
+    (id) => {
+      if (window.confirm("Are you sure you want to delete this user?")) {
+        handleDeleteUser(id);
+      }
+    },
+    [handleDeleteUser]
+  );
 
   const columns = useMemo(
     () => [
@@ -154,19 +169,13 @@ const UserIndex = () => {
             />
             <MdDelete
               className="act-btn"
-              onClick={() => {
-                if (
-                  window.confirm("Are you sure you want to delete this user?")
-                ) {
-                  handleDeleteUser(cell.row.original._id);
-                }
-              }}
+              onClick={() => confirmDelete(cell.row.original._id)}
             />
           </div>
         ),
       },
     ],
-    []
+    [confirmDelete]
   );
 
   const table = useMaterialReactTable({
@@ -183,7 +192,7 @@ const UserIndex = () => {
       <div className="user-index">
         {loading ? (
           <div className="loading">
-            <div className="loader"></div>
+            <span>Loading users... </span>
           </div>
         ) : (
           <MaterialReactTable table={table} />
@@ -195,6 +204,7 @@ const UserIndex = () => {
           close={handleCloseCreateUser}
           roleOptions={roleOptions}
           facultyOptions={facultyOptions}
+          fetchUsers={fetchUsers}
         />
       )}
       {selectedUser && openUserDetails && (
@@ -208,7 +218,6 @@ const UserIndex = () => {
         <EditUserForm
           open={openEditUser}
           close={handleCloseEditUser}
-          closeDefault={handleCloseDefaultEditUser}
           user={selectedUser}
           refreshUsers={fetchUsers}
           roleOptions={roleOptions}
