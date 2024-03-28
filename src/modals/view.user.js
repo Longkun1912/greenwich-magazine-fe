@@ -29,6 +29,10 @@ const UserInfo = ({ open, close, user }) => {
             <span className="info-value">{user.email}</span>
           </div>
           <div className="info-row">
+            <span className="info-label">Mobile:</span>
+            <span className="info-value">{user.mobile}</span>
+          </div>
+          <div className="info-row">
             <span className="info-label">Role:</span>
             <span className="info-value">{user.role}</span>
           </div>

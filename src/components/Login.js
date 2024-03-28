@@ -8,7 +8,7 @@ import {
 } from "mdb-react-ui-kit";
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../css/Login.css";
 import auth from "../services/auth.service";
 
@@ -109,9 +109,9 @@ const Login = ({ onLoginSuccess }) => {
 
             <p className="ms-5">
               Don't have an account?{" "}
-              <a href="#!" class="link-info">
+              <Link class="link-info" to="/register">
                 Register here
-              </a>
+              </Link>
             </p>
           </div>
         </MDBCol>

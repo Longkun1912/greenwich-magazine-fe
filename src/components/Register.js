@@ -11,7 +11,6 @@ import {
 } from "mdb-react-ui-kit";
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import { isEmail } from "validator";
 import auth from "../services/auth.service";
 
@@ -35,16 +34,6 @@ const vemail = (value) => {
   }
 };
 
-const vmobile = (value) => {
-  if (value.length !== 10) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        Mobile number must be valid.
-      </div>
-    );
-  }
-};
-
 const vpassword = (value, confirm_password) => {
   if (value.length < 5 || value.length > 100) {
     return (
@@ -62,12 +51,11 @@ const vpassword = (value, confirm_password) => {
 };
 
 const Register = () => {
-  const navigator = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
   const [state, setState] = useState({
-    first_name: "",
-    last_name: "",
+    username: "",
     email: "",
     mobile: "",
     password: "",
@@ -96,8 +84,28 @@ const Register = () => {
     }));
   };
 
+  const resetForm = () => {
+    setState((prevState) => ({
+      ...prevState,
+      username: "",
+      email: "",
+      mobile: "",
+      password: "",
+      confirm_password: "",
+      successful: false,
+      message: "",
+      usernameError: "",
+      emailError: "",
+      mobileError: "",
+      passwordError: "",
+      confirm_passwordError: "",
+      avatarError: "",
+    }));
+  };
+
   const handleRegister = (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     setState((prevState) => ({
       ...prevState,
@@ -110,12 +118,11 @@ const Register = () => {
       avatarError: "",
     }));
 
-    const { first_name, last_name, email, mobile, password, confirm_password } =
-      state;
+    const { username, email, mobile, password, confirm_password } = state;
 
-    const usernameError = requiredField(first_name) || requiredField(last_name);
+    const usernameError = requiredField(username);
     const emailError = requiredField(email) || vemail(email);
-    const mobileError = requiredField(mobile) || vmobile(mobile);
+    const mobileError = requiredField(mobile);
     const passwordError =
       requiredField(password) || vpassword(password, confirm_password);
     const confirm_passwordError =
@@ -131,10 +138,11 @@ const Register = () => {
         confirm_passwordError: confirm_passwordError,
         avatarError: !selectedImage ? "Please upload an avatar." : "",
       }));
+      setIsSubmitting(false);
       return;
     } else {
       const formData = new FormData();
-      formData.append("username", first_name + " " + last_name);
+      formData.append("username", username);
 
       if (selectedImage) {
         formData.append("avatar_image", selectedImage);
@@ -143,6 +151,7 @@ const Register = () => {
           ...prevState,
           avatarError: "Please upload an avatar.",
         }));
+        setIsSubmitting(false);
         return;
       }
 
@@ -151,13 +160,13 @@ const Register = () => {
       formData.append("password", password);
 
       auth.register(formData).then(
-        (response) => {
+        () => {
           setState((prevState) => ({
             ...prevState,
-            message: response.data.message,
+            message: "Registration successful!",
             successful: true,
           }));
-          navigator("/login");
+          setIsSubmitting(false);
         },
         (error) => {
           const resMessage =
@@ -172,6 +181,8 @@ const Register = () => {
             successful: false,
             message: resMessage,
           }));
+
+          setIsSubmitting(false);
         }
       );
     }
@@ -209,32 +220,15 @@ const Register = () => {
 
                   <Form onSubmit={handleRegister}>
                     <MDBRow>
-                      <MDBCol md="6">
+                      <MDBCol md="12">
                         <MDBInput
-                          wrapperClass="mb-4"
-                          label="First Name"
+                          wrapperClass="mb-2"
+                          label="Username"
                           size="lg"
                           id="form1"
                           type="text"
-                          name="first_name"
-                          value={state.first_name}
-                          onChange={onChange}
-                          validations={[requiredField]}
-                        />
-                        {usernameError && (
-                          <div className="error-message">{usernameError}</div>
-                        )}
-                      </MDBCol>
-
-                      <MDBCol md="6">
-                        <MDBInput
-                          wrapperClass="mb-4"
-                          label="Last Name"
-                          size="lg"
-                          id="form2"
-                          type="text"
-                          name="last_name"
-                          value={state.last_name}
+                          name="username"
+                          value={state.username}
                           onChange={onChange}
                           validations={[requiredField]}
                         />
@@ -247,7 +241,7 @@ const Register = () => {
                     <MDBRow>
                       <MDBCol md="6">
                         <MDBInput
-                          wrapperClass="mb-4"
+                          wrapperClass="mb-2"
                           label="Email"
                           size="lg"
                           id="form1"
@@ -264,7 +258,7 @@ const Register = () => {
 
                       <MDBCol md="6">
                         <MDBInput
-                          wrapperClass="mb-4"
+                          wrapperClass="mb-2"
                           label="Mobile"
                           size="lg"
                           id="form1"
@@ -272,7 +266,7 @@ const Register = () => {
                           name="mobile"
                           value={state.mobile}
                           onChange={onChange}
-                          validations={[requiredField, vmobile]}
+                          validations={[requiredField]}
                         />
                         {mobileError && (
                           <div className="error-message">{mobileError}</div>
@@ -283,7 +277,7 @@ const Register = () => {
                     <MDBRow>
                       <MDBCol md="6">
                         <MDBInput
-                          wrapperClass="mb-4"
+                          wrapperClass="mb-2"
                           label="Password"
                           size="lg"
                           id="form1"
@@ -300,7 +294,7 @@ const Register = () => {
 
                       <MDBCol md="6">
                         <MDBInput
-                          wrapperClass="mb-4"
+                          wrapperClass="mb-2"
                           label="Confirm Password"
                           size="lg"
                           id="form2"
@@ -318,7 +312,9 @@ const Register = () => {
                       </MDBCol>
                     </MDBRow>
 
-                    <label>Upload Avatar:</label>
+                    <label style={{ marginBottom: "1vh", display: "flex" }}>
+                      Upload Avatar:
+                    </label>
                     <MDBCol md="12">
                       <MDBInput
                         wrapperClass="mb-4"
@@ -332,8 +328,18 @@ const Register = () => {
                       )}
                     </MDBCol>
 
+                    {state.message && (
+                      <Alert severity={state.successful ? "success" : "error"}>
+                        {state.message}
+                      </Alert>
+                    )}
+
                     <div className="d-flex justify-content-end pt-3">
-                      <MDBBtn color="light" size="lg">
+                      <MDBBtn
+                        color="light"
+                        size="lg"
+                        onClick={() => resetForm()}
+                      >
                         Reset all
                       </MDBBtn>
                       <MDBBtn
@@ -342,7 +348,7 @@ const Register = () => {
                         color="warning"
                         size="lg"
                       >
-                        Submit form
+                        {isSubmitting ? "Please wait..." : "Register"}
                       </MDBBtn>
                     </div>
                   </Form>

@@ -30,16 +30,6 @@ const vemail = (value) => {
   }
 };
 
-const vmobile = (value) => {
-  if (value.length !== 10) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        Mobile number must be valid.
-      </div>
-    );
-  }
-};
-
 const vpassword = (value, confirm_password) => {
   if (value.length < 5 || value.length > 100) {
     return (
@@ -66,6 +56,8 @@ const UserAddingForm = ({
   const [selectedRole, setSelectedRole] = useState("");
   const [selectedFaculty, setSelectedFaculty] = useState("");
   const [error, setError] = useState("");
+  const [duplicateEmailError, setDuplicateEmailError] = useState("");
+  const [duplicateMobileError, setDuplicateMobileError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [userForm, setUserForm] = useState({
@@ -129,6 +121,9 @@ const UserAddingForm = ({
     e.preventDefault();
     setIsSubmitting(true);
 
+    setDuplicateEmailError("");
+    setDuplicateMobileError("");
+
     setUserForm((prevData) => ({
       ...prevData,
       usernameError: "",
@@ -154,7 +149,7 @@ const UserAddingForm = ({
 
     const usernameError = requiredField(username);
     const emailError = requiredField(email) || vemail(email);
-    const mobileError = requiredField(mobile) || vmobile(mobile);
+    const mobileError = requiredField(mobile);
     const passwordError =
       requiredField(password) || vpassword(password, confirmPassword);
     const confirmPasswordError =
@@ -198,15 +193,21 @@ const UserAddingForm = ({
 
       try {
         await UserService.createUser(user);
-
         await fetchUsers();
         close();
 
         setIsSubmitting(false);
       } catch (error) {
-        setError(error);
+        if (error.response.data.error === "This email is already taken") {
+          setDuplicateEmailError("Email already exists");
+        } else if (
+          error.response.data.error === "This mobile is already taken"
+        ) {
+          setDuplicateMobileError("Mobile already exists");
+        } else {
+          setError(error.response.data.error);
+        }
         console.error("Error creating user:", error);
-
         setUserForm((prevData) => ({
           ...prevData,
         }));
@@ -267,6 +268,9 @@ const UserAddingForm = ({
               {mobileError && (
                 <div className="error-message">{mobileError}</div>
               )}
+              {duplicateMobileError !== "" && (
+                <Alert variant="danger">{duplicateMobileError}</Alert>
+              )}
             </div>
           </div>
           <div className="input-row">
@@ -281,7 +285,7 @@ const UserAddingForm = ({
                 sx={{ gridColumn: "span 2" }}
               />
 
-              {avatarError && <Alert> {avatarError} </Alert>}
+              {avatarError && <Alert variant="danger"> {avatarError} </Alert>}
             </div>
           </div>
 
@@ -297,6 +301,9 @@ const UserAddingForm = ({
             />
 
             {emailError && <div className="error-message">{emailError}</div>}
+            {duplicateEmailError !== "" && (
+              <Alert variant="danger">{duplicateEmailError}</Alert>
+            )}
           </div>
 
           <div className="input-row">
@@ -318,7 +325,7 @@ const UserAddingForm = ({
                       </MenuItem>
                     ))}
                   </Select>
-                  {roleError && <Alert>{roleError}</Alert>}
+                  {roleError && <Alert variant="danger">{roleError}</Alert>}
                 </FormControl>
               )}
             </div>
@@ -342,7 +349,9 @@ const UserAddingForm = ({
                     ))}
                   </Select>
 
-                  {facultyError && <Alert>{facultyError}</Alert>}
+                  {facultyError && (
+                    <Alert variant="danger">{facultyError}</Alert>
+                  )}
                 </FormControl>
               )}
             </div>
