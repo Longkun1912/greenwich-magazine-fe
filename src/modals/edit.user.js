@@ -82,9 +82,11 @@ const EditUserForm = (props) => {
 
     try {
       await UserService.editUser(updatedUser);
+
       await refreshUsers();
-      setIsSubmitting(false);
       close();
+
+      setIsSubmitting(false);
     } catch (error) {
       setIsSubmitting(false);
       setError("Error updating user. Please try again.");

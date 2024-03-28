@@ -110,7 +110,7 @@ const UserIndex = () => {
     async (id) => {
       try {
         await UserService.deleteUser(id);
-        fetchUsers();
+        await fetchUsers();
       } catch (error) {
         console.error("Error deleting user:", error);
       }

@@ -32,6 +32,7 @@ const Sidebar = ({ currentUser }) => {
       </div>
 
       <ul class="list-unstyled components" id="sidebar-menu">
+        {/* admin */}
         {currentUser.role === "admin" && (
           <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
             <Link to="/user-management">
@@ -89,6 +90,19 @@ const Sidebar = ({ currentUser }) => {
                 <GrDocumentUser className="manage-icon" />
                 <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
                   View Contribution
+                </p>
+              </span>
+            </Link>
+          </li>
+        )}
+
+        {currentUser.role === "manager" && (
+          <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
+            <Link to="/user-management">
+              <span className="option-container">
+                <GrDocumentUser className="manage-icon" />
+                <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
+                  View Users
                 </p>
               </span>
             </Link>

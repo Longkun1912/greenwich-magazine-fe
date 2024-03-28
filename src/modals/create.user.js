@@ -4,9 +4,57 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
+import { Alert } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import { isEmail } from "validator";
 import UserService from "../services/user.service";
+
+const requiredField = (value) => {
+  if (!value) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        This field is required!
+      </div>
+    );
+  }
+};
+
+const vemail = (value) => {
+  if (!isEmail(value)) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        This is not a valid email.
+      </div>
+    );
+  }
+};
+
+const vmobile = (value) => {
+  if (value.length !== 10) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Mobile number must be valid.
+      </div>
+    );
+  }
+};
+
+const vpassword = (value, confirm_password) => {
+  if (value.length < 5 || value.length > 100) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        The password must be between 5 and 100 characters.
+      </div>
+    );
+  } else if (value && value !== confirm_password) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Passwords do not match.
+      </div>
+    );
+  }
+};
 
 const UserAddingForm = ({
   open,
@@ -29,6 +77,15 @@ const UserAddingForm = ({
     confirmPassword: "",
     role: null,
     faculty: null,
+    // Validation
+    usernameError: "",
+    emailError: "",
+    mobileError: "",
+    passwordError: "",
+    confirmPasswordError: "",
+    avatarError: "",
+    roleError: "",
+    facultyError: "",
   });
 
   const handleSelectRole = (e) => {
@@ -72,26 +129,103 @@ const UserAddingForm = ({
     e.preventDefault();
     setIsSubmitting(true);
 
-    const user = new FormData();
-    user.append("email", userForm.email);
-    user.append("username", userForm.username);
-    user.append("mobile", userForm.mobile);
-    user.append("avatar_image", userForm.avatar);
-    user.append("role", userForm.role);
-    user.append("faculty", userForm.faculty);
-    user.append("password", userForm.password);
+    setUserForm((prevData) => ({
+      ...prevData,
+      usernameError: "",
+      emailError: "",
+      mobileError: "",
+      passwordError: "",
+      confirmPasswordError: "",
+      avatarError: "",
+      roleError: "",
+      facultyError: "",
+    }));
 
-    try {
-      await UserService.createUser(user);
-      await fetchUsers();
+    const {
+      username,
+      email,
+      mobile,
+      password,
+      confirmPassword,
+      role,
+      faculty,
+      avatar,
+    } = userForm;
+
+    const usernameError = requiredField(username);
+    const emailError = requiredField(email) || vemail(email);
+    const mobileError = requiredField(mobile) || vmobile(mobile);
+    const passwordError =
+      requiredField(password) || vpassword(password, confirmPassword);
+    const confirmPasswordError =
+      requiredField(confirmPassword) || vpassword(confirmPassword, password);
+    const avatarError = !avatar ? "Please upload an avatar." : "";
+    const roleError = !role ? "Required." : "";
+    const facultyError = !faculty ? "Please select a faculty." : "";
+
+    if (
+      usernameError ||
+      emailError ||
+      mobileError ||
+      passwordError ||
+      confirmPasswordError ||
+      avatarError ||
+      roleError ||
+      facultyError
+    ) {
+      setUserForm((prevData) => ({
+        ...prevData,
+        usernameError,
+        emailError,
+        mobileError,
+        passwordError,
+        confirmPasswordError,
+        avatarError,
+        roleError,
+        facultyError,
+      }));
       setIsSubmitting(false);
-      close();
-    } catch (error) {
-      setError("Error creating user. Please try again.");
-    } finally {
-      setIsSubmitting(false);
+      return;
+    } else {
+      const user = new FormData();
+      user.append("email", userForm.email);
+      user.append("username", userForm.username);
+      user.append("mobile", userForm.mobile);
+      user.append("avatar_image", userForm.avatar);
+      user.append("role", userForm.role);
+      user.append("faculty", userForm.faculty);
+      user.append("password", userForm.password);
+
+      try {
+        await UserService.createUser(user);
+
+        await fetchUsers();
+        close();
+
+        setIsSubmitting(false);
+      } catch (error) {
+        setError(error);
+        console.error("Error creating user:", error);
+
+        setUserForm((prevData) => ({
+          ...prevData,
+        }));
+        setIsSubmitting(false);
+        return;
+      }
     }
   };
+
+  const {
+    usernameError,
+    emailError,
+    mobileError,
+    passwordError,
+    confirmPasswordError,
+    avatarError,
+    roleError,
+    facultyError,
+  } = userForm;
 
   return (
     <Modal
@@ -115,7 +249,11 @@ const UserAddingForm = ({
                 onChange={handleFormChange}
                 value={userForm.username}
                 variant="outlined"
+                validations={[requiredField]}
               />
+              {usernameError && (
+                <div className="error-message">{usernameError}</div>
+              )}
             </div>
             <div className="right-input">
               <TextField
@@ -124,7 +262,11 @@ const UserAddingForm = ({
                 onChange={handleFormChange}
                 value={userForm.mobile}
                 variant="outlined"
+                validations={[requiredField]}
               />
+              {mobileError && (
+                <div className="error-message">{mobileError}</div>
+              )}
             </div>
           </div>
           <div className="input-row">
@@ -138,16 +280,23 @@ const UserAddingForm = ({
                 name="avatar"
                 sx={{ gridColumn: "span 2" }}
               />
+
+              {avatarError && <Alert> {avatarError} </Alert>}
             </div>
-            <div>
-              <TextField
-                label="Email"
-                name="email"
-                onChange={handleFormChange}
-                value={userForm.email}
-                variant="outlined"
-              />
-            </div>
+          </div>
+
+          <div style={{ marginBottom: "2vh" }}>
+            <TextField
+              label="Email"
+              name="email"
+              onChange={handleFormChange}
+              value={userForm.email}
+              variant="outlined"
+              fullWidth
+              validations={[requiredField]}
+            />
+
+            {emailError && <div className="error-message">{emailError}</div>}
           </div>
 
           <div className="input-row">
@@ -169,6 +318,7 @@ const UserAddingForm = ({
                       </MenuItem>
                     ))}
                   </Select>
+                  {roleError && <Alert>{roleError}</Alert>}
                 </FormControl>
               )}
             </div>
@@ -191,6 +341,8 @@ const UserAddingForm = ({
                       </MenuItem>
                     ))}
                   </Select>
+
+                  {facultyError && <Alert>{facultyError}</Alert>}
                 </FormControl>
               )}
             </div>
@@ -202,10 +354,14 @@ const UserAddingForm = ({
                 label="Password"
                 name="password"
                 type="password"
-                // autoComplete="current-password"
                 onChange={handleFormChange}
                 value={userForm.password}
+                variant="outlined"
+                validations={[requiredField]}
               />
+              {passwordError && (
+                <div className="error-message">{passwordError}</div>
+              )}
             </div>
             <div className="right-input">
               <TextField
@@ -214,9 +370,15 @@ const UserAddingForm = ({
                 type="password"
                 onChange={handleFormChange}
                 value={userForm.confirmPassword}
+                variant="outlined"
+                validations={[requiredField]}
               />
+              {confirmPasswordError && (
+                <div className="error-message">{confirmPasswordError}</div>
+              )}
             </div>
           </div>
+          {error && <Alert variant="danger">{error}</Alert>}
         </Modal.Body>
         <Modal.Footer>
           <button className="btn btn-primary" type="submit">
