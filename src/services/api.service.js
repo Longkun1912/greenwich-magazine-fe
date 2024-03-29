@@ -1,4 +1,4 @@
-const serverURL = "http://localhost:5000";
+const serverURL = "https://greenwich-magazine-be-mlk0.onrender.com";
 
 const publicApi = {
   auth: serverURL + "/api/auth/",
