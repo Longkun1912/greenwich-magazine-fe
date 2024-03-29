@@ -7,44 +7,8 @@ import { useState } from "react";
 import { Alert } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import { isEmail } from "validator";
 import UserService from "../services/user.service";
-
-const requiredField = (value) => {
-  if (!value) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This field is required!
-      </div>
-    );
-  }
-};
-
-const vemail = (value) => {
-  if (!isEmail(value)) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This is not a valid email.
-      </div>
-    );
-  }
-};
-
-const vpassword = (value, confirm_password) => {
-  if (value.length < 5 || value.length > 100) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        The password must be between 5 and 100 characters.
-      </div>
-    );
-  } else if (value && value !== confirm_password) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        Passwords do not match.
-      </div>
-    );
-  }
-};
+import UserValidation from "../validation/user";
 
 const UserAddingForm = ({
   open,
@@ -147,13 +111,16 @@ const UserAddingForm = ({
       avatar,
     } = userForm;
 
-    const usernameError = requiredField(username);
-    const emailError = requiredField(email) || vemail(email);
-    const mobileError = requiredField(mobile);
+    const usernameError = UserValidation.requiredField(username);
+    const emailError =
+      UserValidation.requiredField(email) || UserValidation.vemail(email);
+    const mobileError = UserValidation.requiredField(mobile);
     const passwordError =
-      requiredField(password) || vpassword(password, confirmPassword);
+      UserValidation.requiredField(password) ||
+      UserValidation.vpassword(password, confirmPassword);
     const confirmPasswordError =
-      requiredField(confirmPassword) || vpassword(confirmPassword, password);
+      UserValidation.requiredField(confirmPassword) ||
+      UserValidation.vpassword(confirmPassword, password);
     const avatarError = !avatar ? "Please upload an avatar." : "";
     const roleError = !role ? "Required." : "";
     const facultyError = !faculty ? "Please select a faculty." : "";
@@ -207,7 +174,6 @@ const UserAddingForm = ({
         } else {
           setError(error.response.data.error);
         }
-        console.error("Error creating user:", error);
         setUserForm((prevData) => ({
           ...prevData,
         }));
@@ -250,7 +216,7 @@ const UserAddingForm = ({
                 onChange={handleFormChange}
                 value={userForm.username}
                 variant="outlined"
-                validations={[requiredField]}
+                validations={[UserValidation.requiredField]}
               />
               {usernameError && (
                 <div className="error-message">{usernameError}</div>
@@ -263,7 +229,7 @@ const UserAddingForm = ({
                 onChange={handleFormChange}
                 value={userForm.mobile}
                 variant="outlined"
-                validations={[requiredField]}
+                validations={[UserValidation.requiredField]}
               />
               {mobileError && (
                 <div className="error-message">{mobileError}</div>
@@ -297,7 +263,10 @@ const UserAddingForm = ({
               value={userForm.email}
               variant="outlined"
               fullWidth
-              validations={[requiredField]}
+              validations={[
+                UserValidation.requiredField,
+                UserValidation.vemail,
+              ]}
             />
 
             {emailError && <div className="error-message">{emailError}</div>}
@@ -366,7 +335,10 @@ const UserAddingForm = ({
                 onChange={handleFormChange}
                 value={userForm.password}
                 variant="outlined"
-                validations={[requiredField]}
+                validations={[
+                  UserValidation.requiredField,
+                  UserValidation.vpassword,
+                ]}
               />
               {passwordError && (
                 <div className="error-message">{passwordError}</div>
@@ -380,7 +352,10 @@ const UserAddingForm = ({
                 onChange={handleFormChange}
                 value={userForm.confirmPassword}
                 variant="outlined"
-                validations={[requiredField]}
+                validations={[
+                  UserValidation.requiredField,
+                  UserValidation.vpassword,
+                ]}
               />
               {confirmPasswordError && (
                 <div className="error-message">{confirmPasswordError}</div>

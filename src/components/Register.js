@@ -11,44 +11,8 @@ import {
 } from "mdb-react-ui-kit";
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
-import { isEmail } from "validator";
 import auth from "../services/auth.service";
-
-const requiredField = (value) => {
-  if (!value) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This field is required!
-      </div>
-    );
-  }
-};
-
-const vemail = (value) => {
-  if (!isEmail(value)) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This is not a valid email.
-      </div>
-    );
-  }
-};
-
-const vpassword = (value, confirm_password) => {
-  if (value.length < 5 || value.length > 100) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        The password must be between 5 and 100 characters.
-      </div>
-    );
-  } else if (value && value !== confirm_password) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        Passwords do not match.
-      </div>
-    );
-  }
-};
+import UserValidation from "../validation/user";
 
 const Register = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -120,13 +84,16 @@ const Register = () => {
 
     const { username, email, mobile, password, confirm_password } = state;
 
-    const usernameError = requiredField(username);
-    const emailError = requiredField(email) || vemail(email);
-    const mobileError = requiredField(mobile);
+    const usernameError = UserValidation.requiredField(username);
+    const emailError =
+      UserValidation.requiredField(email) || UserValidation.vemail(email);
+    const mobileError = UserValidation.requiredField(mobile);
     const passwordError =
-      requiredField(password) || vpassword(password, confirm_password);
+      UserValidation.requiredField(password) ||
+      UserValidation.vpassword(password, confirm_password);
     const confirm_passwordError =
-      requiredField(confirm_password) || vpassword(password, confirm_password);
+      UserValidation.requiredField(confirm_password) ||
+      UserValidation.vpassword(password, confirm_password);
 
     if (emailError || mobileError || passwordError || confirm_passwordError) {
       setState((prevState) => ({
@@ -230,7 +197,7 @@ const Register = () => {
                           name="username"
                           value={state.username}
                           onChange={onChange}
-                          validations={[requiredField]}
+                          validations={[UserValidation.requiredField]}
                         />
                         {usernameError && (
                           <div className="error-message">{usernameError}</div>
@@ -249,7 +216,10 @@ const Register = () => {
                           name="email"
                           value={state.email}
                           onChange={onChange}
-                          validations={[requiredField, vemail]}
+                          validations={[
+                            UserValidation.requiredField,
+                            UserValidation.vemail,
+                          ]}
                         />
                         {emailError && (
                           <div className="error-message">{emailError}</div>
@@ -266,7 +236,7 @@ const Register = () => {
                           name="mobile"
                           value={state.mobile}
                           onChange={onChange}
-                          validations={[requiredField]}
+                          validations={[UserValidation.requiredField]}
                         />
                         {mobileError && (
                           <div className="error-message">{mobileError}</div>
@@ -285,7 +255,10 @@ const Register = () => {
                           name="password"
                           value={state.password}
                           onChange={onChange}
-                          validations={[requiredField, vpassword]}
+                          validations={[
+                            UserValidation.requiredField,
+                            UserValidation.vpassword,
+                          ]}
                         />
                         {passwordError && (
                           <div className="error-message">{passwordError}</div>
@@ -302,7 +275,7 @@ const Register = () => {
                           name="confirm_password"
                           value={state.confirm_password}
                           onChange={onChange}
-                          validations={[requiredField]}
+                          validations={[UserValidation.requiredField]}
                         />
                         {confirm_passwordError && (
                           <div className="error-message">

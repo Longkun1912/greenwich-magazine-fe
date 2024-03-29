@@ -4,9 +4,11 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
+import { Alert } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import UserService from "../services/user.service";
+import UserValidation from "../validation/user";
 
 const EditUserForm = (props) => {
   const { open, close, user, refreshUsers, roleOptions, facultyOptions } =
@@ -14,16 +16,25 @@ const EditUserForm = (props) => {
   const [selectedRole, setSelectedRole] = useState("");
   const [selectedFaculty, setSelectedFaculty] = useState("");
   const [error, setError] = useState("");
+  const [duplicateMobileError, setDuplicateMobileError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [userForm, setUserForm] = useState({
     username: user.username,
     mobile: user.mobile,
-    password: "",
+    password: user.password,
     avatar: null,
-    confirmPassword: "",
+    confirmPassword: user.password,
     role: user.role,
     faculty: user.faculty,
+    // Validation
+    usernameError: "",
+    mobileError: "",
+    passwordError: "",
+    confirmPasswordError: "",
+    avatarError: "",
+    roleError: "",
+    facultyError: "",
   });
 
   const handleSelectRole = (e) => {
@@ -67,31 +78,104 @@ const EditUserForm = (props) => {
   const handleSubmit = async (value) => {
     value.preventDefault();
     setIsSubmitting(true);
+    setDuplicateMobileError("");
 
-    console.log("User form data: ", userForm);
+    setUserForm((prevData) => ({
+      ...prevData,
+      usernameError: "",
+      mobileError: "",
+      passwordError: "",
+      confirmPasswordError: "",
+      avatarError: "",
+      roleError: "",
+      facultyError: "",
+    }));
 
-    const updatedUser = new FormData();
-    updatedUser.append("id", user._id);
-    updatedUser.append("email", user.email);
-    updatedUser.append("username", userForm.username);
-    updatedUser.append("mobile", userForm.mobile);
-    updatedUser.append("avatar_image", userForm.avatar);
-    updatedUser.append("role", userForm.role);
-    updatedUser.append("faculty", userForm.faculty);
-    updatedUser.append("password", userForm.password);
+    const {
+      username,
+      mobile,
+      password,
+      confirmPassword,
+      avatar,
+      role,
+      faculty,
+    } = userForm;
 
-    try {
-      await UserService.editUser(updatedUser);
+    const usernameError = UserValidation.requiredField(username);
+    const mobileError = UserValidation.requiredField(mobile);
+    const passwordError =
+      UserValidation.requiredField(password) ||
+      UserValidation.vpassword(password, confirmPassword);
+    const confirmPasswordError =
+      UserValidation.requiredField(confirmPassword) ||
+      UserValidation.vpassword(confirmPassword, password);
+    const avatarError = !avatar ? "Please upload an avatar." : "";
+    const roleError = !role ? "Required." : "";
+    const facultyError = !faculty ? "Please select a faculty." : "";
 
-      await refreshUsers();
-      close();
+    if (
+      usernameError ||
+      mobileError ||
+      passwordError ||
+      confirmPasswordError ||
+      avatarError ||
+      roleError ||
+      facultyError
+    ) {
+      setUserForm((prevData) => ({
+        ...prevData,
+        usernameError,
+        mobileError,
+        passwordError,
+        confirmPasswordError,
+        avatarError,
+        roleError,
+        facultyError,
+      }));
 
       setIsSubmitting(false);
-    } catch (error) {
-      setIsSubmitting(false);
-      setError("Error updating user. Please try again.");
+      return;
+    } else {
+      const updatedUser = new FormData();
+      updatedUser.append("id", user._id);
+      updatedUser.append("email", user.email);
+      updatedUser.append("username", userForm.username);
+      updatedUser.append("mobile", userForm.mobile);
+      updatedUser.append("avatar_image", userForm.avatar);
+      updatedUser.append("role", userForm.role);
+      updatedUser.append("faculty", userForm.faculty);
+      updatedUser.append("password", userForm.password);
+
+      try {
+        await UserService.editUser(updatedUser);
+        await refreshUsers();
+        close();
+
+        setIsSubmitting(false);
+      } catch (error) {
+        if (error.response.data.message === "Mobile already exists") {
+          setDuplicateMobileError("Mobile already exists.");
+        } else {
+          setError(error.response.data.error);
+        }
+        setUserForm((prevData) => ({
+          ...prevData,
+        }));
+        setIsSubmitting(false);
+        return;
+      }
     }
   };
+
+  const {
+    usernameError,
+    mobileError,
+    passwordError,
+    confirmPasswordError,
+    avatarError,
+    roleError,
+    facultyError,
+  } = userForm;
 
   return (
     <Modal
@@ -115,7 +199,11 @@ const EditUserForm = (props) => {
                 onChange={handleFormChange}
                 value={userForm.username}
                 variant="outlined"
+                validations={[UserValidation.requiredField]}
               />
+              {usernameError && (
+                <div className="error-message">{usernameError}</div>
+              )}
             </div>
             <div className="right-input">
               <TextField
@@ -124,7 +212,14 @@ const EditUserForm = (props) => {
                 onChange={handleFormChange}
                 value={userForm.mobile}
                 variant="outlined"
+                validations={[UserValidation.requiredField]}
               />
+              {mobileError && (
+                <div className="error-message">{mobileError}</div>
+              )}
+              {duplicateMobileError && (
+                <div className="error-message">{duplicateMobileError}</div>
+              )}
             </div>
           </div>
           <div className="avatar-field">
@@ -137,6 +232,7 @@ const EditUserForm = (props) => {
               name="avatar"
               sx={{ gridColumn: "span 2" }}
             />
+            {avatarError && <Alert variant="danger">{avatarError}</Alert>}
           </div>
           <div className="input-row">
             <div className="left-select">
@@ -157,6 +253,7 @@ const EditUserForm = (props) => {
                       </MenuItem>
                     ))}
                   </Select>
+                  {roleError && <Alert variant="danger">{roleError}</Alert>}
                 </FormControl>
               )}
             </div>
@@ -179,6 +276,9 @@ const EditUserForm = (props) => {
                       </MenuItem>
                     ))}
                   </Select>
+                  {facultyError && (
+                    <Alert variant="danger">{facultyError}</Alert>
+                  )}
                 </FormControl>
               )}
             </div>
@@ -190,10 +290,16 @@ const EditUserForm = (props) => {
                 label="Password"
                 name="password"
                 type="password"
-                // autoComplete="current-password"
                 onChange={handleFormChange}
                 value={userForm.password}
+                validations={[
+                  UserValidation.requiredField,
+                  UserValidation.vpassword,
+                ]}
               />
+              {passwordError && (
+                <div className="error-message">{passwordError}</div>
+              )}
             </div>
             <div className="right-input">
               <TextField
@@ -202,9 +308,17 @@ const EditUserForm = (props) => {
                 type="password"
                 onChange={handleFormChange}
                 value={userForm.confirmPassword}
+                validations={[
+                  UserValidation.requiredField,
+                  UserValidation.vpassword,
+                ]}
               />
+              {confirmPasswordError && (
+                <div className="error-message">{confirmPasswordError}</div>
+              )}
             </div>
           </div>
+          {error && <Alert variant="danger">{error}</Alert>}
         </Modal.Body>
         <Modal.Footer>
           <button className="btn btn-primary" type="submit">

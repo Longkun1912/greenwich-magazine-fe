@@ -1,10 +1,12 @@
+const serverURL = "http://localhost:5000";
+
 const publicApi = {
-  auth: "http://localhost:5000/api/auth/",
-  faculty: "http://localhost:5000/api/faculty/",
-  user: "http://localhost:5000/api/user-management/",
-  role: "http://localhost:5000/api/role-management/",
-  contribution: "http://localhost:5000/api/contribution-management/",
-  event: "http://localhost:5000/api/event-management/events",
+  auth: serverURL + "/api/auth/",
+  faculty: serverURL + "/api/faculty/",
+  user: serverURL + "/api/user-management/",
+  role: serverURL + "/api/role-management/",
+  contribution: serverURL + "/api/contribution-management/",
+  event: serverURL + "/api/event-management/events",
 };
 export default publicApi;
 
