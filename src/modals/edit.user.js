@@ -79,6 +79,7 @@ const EditUserForm = (props) => {
     value.preventDefault();
     setIsSubmitting(true);
     setDuplicateMobileError("");
+    setError("");
 
     setUserForm((prevData) => ({
       ...prevData,
@@ -153,7 +154,10 @@ const EditUserForm = (props) => {
 
         setIsSubmitting(false);
       } catch (error) {
-        if (error.response.data.message === "Mobile already exists") {
+        if (
+          error.response.data.error ===
+          "DuplicateMobileError: This mobile is already taken"
+        ) {
           setDuplicateMobileError("Mobile already exists.");
         } else {
           setError(error.response.data.error);
@@ -218,7 +222,7 @@ const EditUserForm = (props) => {
                 <div className="error-message">{mobileError}</div>
               )}
               {duplicateMobileError && (
-                <div className="error-message">{duplicateMobileError}</div>
+                <Alert variant="danger">{duplicateMobileError}</Alert>
               )}
             </div>
           </div>
@@ -292,6 +296,7 @@ const EditUserForm = (props) => {
                 type="password"
                 onChange={handleFormChange}
                 value={userForm.password}
+                defaultValue={user.password}
                 validations={[
                   UserValidation.requiredField,
                   UserValidation.vpassword,
@@ -308,6 +313,7 @@ const EditUserForm = (props) => {
                 type="password"
                 onChange={handleFormChange}
                 value={userForm.confirmPassword}
+                defaultValue={user.password}
                 validations={[
                   UserValidation.requiredField,
                   UserValidation.vpassword,

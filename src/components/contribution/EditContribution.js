@@ -3,16 +3,18 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { useEffect, useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Alert, Button, Modal } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import contributionService from "../../services/contribution.service";
 import eventService from "../../services/event.service";
+import UserValidation from "../../validation/user";
 
 const statusOptions = ["pending", "approved", "rejected", "modified"];
 
 const EditContribution = (props) => {
   const { show, handleClose, contribution, fetchContributions } = props;
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
   const [events, setEvents] = useState([]);
 
   const fetchEvents = async () => {
@@ -38,6 +40,13 @@ const EditContribution = (props) => {
     event: contribution.event,
     image: contribution.image,
     document: contribution.document,
+    // Validation
+    titleError: "",
+    contentError: "",
+    statusError: "",
+    eventError: "",
+    imageError: "",
+    documentError: "",
   });
 
   const handleChange = (e) => {
@@ -86,25 +95,69 @@ const EditContribution = (props) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    try {
-      console.log("Event:", JSON.stringify(contributionForm.event._id));
+    setContributionForm((prevData) => ({
+      ...prevData,
+      titleError: "",
+      contentError: "",
+      statusError: "",
+      eventError: "",
+      imageError: "",
+      documentError: "",
+    }));
 
-      const contribution = new FormData();
-      contribution.append("id", contributionForm.id);
-      contribution.append("title", contributionForm.title);
-      contribution.append("content", contributionForm.content);
-      contribution.append("status", contributionForm.status);
-      contribution.append("event", contributionForm.event._id);
-      contribution.append("image", contributionForm.image);
-      contribution.append("document", contributionForm.document);
+    const { title, content, status, event, image, document } = contributionForm;
 
-      await contributionService.updateContribution(contribution);
-      await fetchContributions();
+    const titleError = UserValidation.requiredField(title);
+    const contentError = UserValidation.requiredField(content);
+    const statusError = !status ? "Status is required" : "";
+    const eventError = !event ? "Event is required" : "";
+    const imageError = !image ? "Image is required" : "";
+    const documentError = !document ? "Document is required" : "";
+
+    if (
+      titleError ||
+      contentError ||
+      statusError ||
+      eventError ||
+      imageError ||
+      documentError
+    ) {
+      setContributionForm((prevData) => ({
+        ...prevData,
+        titleError,
+        contentError,
+        statusError,
+        eventError,
+        imageError,
+        documentError,
+      }));
       setIsSubmitting(false);
-      handleClose();
-    } catch (error) {
-      setIsSubmitting(false);
-      console.error("Error creating contribution:", error);
+      return;
+    } else {
+      try {
+        console.log("Event:", JSON.stringify(contributionForm.event._id));
+
+        const contribution = new FormData();
+        contribution.append("id", contributionForm.id);
+        contribution.append("title", contributionForm.title);
+        contribution.append("content", contributionForm.content);
+        contribution.append("status", contributionForm.status);
+        contribution.append("event", contributionForm.event._id);
+        contribution.append("image", contributionForm.image);
+        contribution.append("document", contributionForm.document);
+
+        await contributionService.updateContribution(contribution);
+        await fetchContributions();
+        setIsSubmitting(false);
+        handleClose();
+      } catch (error) {
+        setError(error.response.data.error);
+        setContributionForm((prevData) => ({
+          ...prevData,
+        }));
+        setIsSubmitting(false);
+        return;
+      }
     }
   };
 
@@ -126,7 +179,13 @@ const EditContribution = (props) => {
                     value={contributionForm.title}
                     name="title"
                     onChange={handleChange}
+                    validations={contributionForm.titleError}
                   />
+                  {contributionForm.titleError && (
+                    <div className="error-message">
+                      {contributionForm.titleError}
+                    </div>
+                  )}
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Content</label>
@@ -136,7 +195,13 @@ const EditContribution = (props) => {
                     value={contributionForm.content}
                     name="content"
                     onChange={handleChange}
+                    validations={contributionForm.contentError}
                   />
+                  {contributionForm.contentError && (
+                    <div className="error-message">
+                      {contributionForm.contentError}
+                    </div>
+                  )}
                 </div>
                 <div className="mb-3">
                   <FormControl fullWidth>
@@ -145,7 +210,7 @@ const EditContribution = (props) => {
                       label="Status"
                       fullWidth
                       onChange={(e) => handleSelectStatus(e)}
-                      defaultValue={contributionForm.status}
+                      defaultValue={contribution.status}
                     >
                       <MenuItem value="" disabled>
                         <em>Select a status</em>
@@ -156,6 +221,11 @@ const EditContribution = (props) => {
                         </MenuItem>
                       ))}
                     </Select>
+                    {contributionForm.statusError && (
+                      <Alert variant="danger">
+                        {contributionForm.statusError}
+                      </Alert>
+                    )}
                   </FormControl>
                 </div>
                 <div className="mb-3">
@@ -165,6 +235,7 @@ const EditContribution = (props) => {
                       label="Event"
                       fullWidth
                       onChange={(e) => handleSelectEvent(e)}
+                      defaultValue={contribution.event}
                     >
                       <MenuItem value="" disabled>
                         <em>Select an event</em>
@@ -175,6 +246,11 @@ const EditContribution = (props) => {
                         </MenuItem>
                       ))}
                     </Select>
+                    {contributionForm.eventError && (
+                      <Alert variant="danger">
+                        {contributionForm.eventError}
+                      </Alert>
+                    )}
                   </FormControl>
                 </div>
                 <div className="mb-3">
@@ -185,6 +261,11 @@ const EditContribution = (props) => {
                     accept="image/*"
                     onChange={(e) => handleImageChange(e)}
                   />
+                  {contributionForm.imageError && (
+                    <Alert variant="danger">
+                      {contributionForm.imageError}
+                    </Alert>
+                  )}
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Document</label>
@@ -194,6 +275,11 @@ const EditContribution = (props) => {
                     accept=".doc,.docx"
                     onChange={(e) => handleDocumentChange(e)}
                   />
+                  {contributionForm.documentError && (
+                    <Alert variant="danger">
+                      {contributionForm.documentError}
+                    </Alert>
+                  )}
                 </div>
               </div>
             </div>
@@ -207,6 +293,7 @@ const EditContribution = (props) => {
             </Button>
           </Modal.Footer>
         </Form>
+        {error && <Alert variant="danger">{error}</Alert>}
       </Modal>
     </>
   );

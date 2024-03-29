@@ -87,6 +87,7 @@ const UserAddingForm = ({
 
     setDuplicateEmailError("");
     setDuplicateMobileError("");
+    setError("");
 
     setUserForm((prevData) => ({
       ...prevData,
@@ -165,10 +166,14 @@ const UserAddingForm = ({
 
         setIsSubmitting(false);
       } catch (error) {
-        if (error.response.data.error === "This email is already taken") {
+        if (
+          error.response.data.error ===
+          "DuplicateEmailError: This email is already taken"
+        ) {
           setDuplicateEmailError("Email already exists");
         } else if (
-          error.response.data.error === "This mobile is already taken"
+          error.response.data.error ===
+          "DuplicateMobileError: This mobile is already taken"
         ) {
           setDuplicateMobileError("Mobile already exists");
         } else {
@@ -250,7 +255,6 @@ const UserAddingForm = ({
                 name="avatar"
                 sx={{ gridColumn: "span 2" }}
               />
-
               {avatarError && <Alert variant="danger"> {avatarError} </Alert>}
             </div>
           </div>
@@ -268,7 +272,6 @@ const UserAddingForm = ({
                 UserValidation.vemail,
               ]}
             />
-
             {emailError && <div className="error-message">{emailError}</div>}
             {duplicateEmailError !== "" && (
               <Alert variant="danger">{duplicateEmailError}</Alert>
