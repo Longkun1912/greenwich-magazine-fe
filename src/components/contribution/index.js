@@ -95,7 +95,7 @@ const ContributionManagement = () => {
         size: 100,
         Cell: ({ cell }) =>
           cell.row.original.document && (
-            <a href={cell.row.original.document} download>
+            <a href={cell.row.original.document}>
               <button>Download</button>
             </a>
           ),
