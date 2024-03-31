@@ -1,0 +1,45 @@
+/* Event.css */
+.body-add-new-Event {
+  padding: 20px;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.form-control {
+  margin-bottom: 15px;
+}
+
+.invalid-feedback {
+  color: #dc3545; /* Màu đỏ */
+  font-size: 0.875rem; /* Kích thước chữ */
+  font-style: italic; /* Kiểu chữ nghiêng */
+}
+
+.name-error {
+  border: 1px solid #dc3545; /* Viền đỏ */
+  padding: 10px; /* Khoảng cách giữa nội dung và viền */
+  border-radius: 5px; /* Bo tròn các góc */
+  background-color: #f8d7da; /* Màu nền */
+}
+
+.btn-secondary {
+  background-color: #6c757d; /* Màu nền */
+  border-color: #6c757d; /* Màu viền */
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268; /* Màu nền khi di chuột qua */
+  border-color: #545b62; /* Màu viền khi di chuột qua */
+}
+
+.btn-primary {
+  background-color: #007bff; /* Màu nền */
+  border-color: #007bff; /* Màu viền */
+}
+
+.btn-primary:hover {
+  background-color: #0056b3; /* Màu nền khi di chuột qua */
+  border-color: #0056b3; /* Màu viền khi di chuột qua */
+}

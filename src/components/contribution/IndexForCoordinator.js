@@ -1,122 +1,109 @@
-import {
-    MaterialReactTable,
-    useMaterialReactTable,
-  } from "material-react-table";
+import React, { useState, useEffect } from 'react';
+import FacultyService from '../../services/faculty.service';
+import ContributionService from '../../services/contribution.service';
+import "../../css/IndexForCoordinator.css";
 
-  import React, { useMemo, useState } from "react";
+const FacultyCard = ({ faculty, onFacultySelect }) => {
+  return (
+    <div className="card" style={{ width: '18rem' }} onClick={() => onFacultySelect(faculty._id)}>
+      <img className="card-img-top" src={faculty.image} alt={faculty.name} />
+      <div className="card-body">
+        <h5 className="card-title">{faculty.name}</h5>
+        <p className="card-text">{faculty.description}</p>
+      </div>
+    </div>
+  );
+};
+
+const ContributionTable = ({ contributions }) => {
+    return (
+      <div className="contribution-list">
+        {contributions.length === 0 ? (
+          <p className="red-text">No contributions found.</p>
+        ) : (
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Document</th>
+                <th>Status</th>
+                <th>Submitter</th>
+                <th>Event</th>
+              </tr>
+            </thead>
+            <tbody>
+              {contributions.map(contribution => (
+                <tr key={contribution.id}>
+                  <td>{contribution.title}</td>
+                  <td>{contribution.content}</td>
+                  <td>
+                    {contribution.document && (
+                      <a href={contribution.document} download>
+                        <button>Download</button>
+                      </a>
+                    )}
+                  </td>
+                  <td>{contribution.status}</td>
+                  <td>{contribution.submitter}</td>
+                  <td>{contribution.event}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+    );
+  };
+  
 
 const IndexForCoordinator = () => {
+  const [selectedFacultyId, setSelectedFacultyId] = useState(null);
+  const [faculties, setFaculties] = useState([]);
+  const [contributions, setContributions] = useState([]);
 
-    const [contributions, setContributions] = useState([]);
-    
-
-    //test
-    const handleStatusChange = (id, newStatus) => {
-        // Tìm bài viết có id tương ứng trong contributions
-        const updatedContributions = contributions.map(contribution => {
-            if (contribution.id === id) {
-                return { ...contribution, status: newStatus };
-            }
-            return contribution;
-        });
-        // Cập nhật state với trạng thái mới của bài viết
-        setContributions(updatedContributions);
+  useEffect(() => {
+    const fetchFaculties = async () => {
+      try {
+        const response = await FacultyService.getAllFaculties();
+        setFaculties(response.data);
+      } catch (error) {
+        console.error('Error fetching faculties:', error);
+      }
     };
-    
-    
-    let columns = useMemo (
-        () => [
-            {
-                accessorKey: "id",
-                header: "ID",
-                size: 100,
-            },
-            {
-                accessorKey: "image",
-                header: "Image",
-                size: 200,
-                Cell: ({ cell }) => (
-                  <img
-                    src={cell.row.original.image}
-                    alt="Contribution"
-                    style={{ width: "15vh", height: "15vh" }}
-                  />
-                ),
-            },
-            {
-                accessorKey: "title",
-                header: "Title",
-                size: 100,
-            },
-            {
-                accessorKey: "content",
-                header: "Content",
-                size: 100,
-            },
-            {
-                accessorKey: "document",
-                header: "Document",
-                size: 100,
-                Cell: ({ cell }) =>
-                  cell.row.original.document && (
-                    <a href={cell.row.original.document} download>
-                      <button>Download</button>
-                    </a>
-                  ),
-            },
-            
-            {
-                accessorKey: "submitter",
-                header: "submitter",
-                size: 100,
-            },
-            {
-                accessorKey: "event",
-                header: "Event",
-                size: 100,
-            },
-            {
-                accessorKey: "status",
-                header: "Status",
-                size: 100,
-            },
-            {
-                accessorKey: "Actions",
-                header: "Actions",
-                size: 100,
-                Cell: ({ cell }) => (
-                    <div>
-                        <button onClick={() => handleStatusChange(cell.row.original.id, 'public')}>
-                            Public
-                        </button>
-                        <button onClick={() => handleStatusChange(cell.row.original.id, 'private')}>
-                            Private
-                        </button>
-                    </div>
-                ),
-            }
-            
-        ]
-    )
 
-    const table = useMaterialReactTable({
-        columns,
-        data: contributions,
-    });
-    
-    return (
-        <div className="content-container">
-        <h1>Contribution Management 2</h1>
-            <div className="contribution-index">
-                <div style={{ width: "140vh" }}>
-                <MaterialReactTable table={table} />
-                </div>
+    fetchFaculties();
+  }, []);
+
+  const handleFacultySelect = async (facultyId) => {
+    setSelectedFacultyId(facultyId);
+    try {
+      const response = await ContributionService.getAllContributionByFaculty(facultyId);
+      setContributions(response.data);
+    } catch (error) {
+      console.error('Error fetching contributions by faculty:', error);
+    }
+  };
+  
+  return (
+    <div className="content-container">
+      <h1>Contribution Management 2</h1>
+      <div className="faculties-container">
+        <div className="faculties-container">
+          {faculties.map(faculty => (
+            <div key={faculty._id} className="faculty-card">
+              <FacultyCard faculty={faculty} onFacultySelect={handleFacultySelect} />
             </div>
+          ))}
         </div>
-    );
+      </div>
+      <div className="contributions-container">
+        <h2>Contributions</h2>
+        {selectedFacultyId && <ContributionTable contributions={contributions} />}
+      </div>
+    </div>
+  );
+};
 
-}
+export default IndexForCoordinator;
 
-
-
-export default IndexForCoordinator
