@@ -21,6 +21,7 @@ const viewContributionsInFaculty = () => {
   });
 };
 
+// Admin
 const createContribution = (contribution) => {
   return axios.post(publicApi.contribution + "contribution", contribution, {
     headers: {
@@ -28,6 +29,20 @@ const createContribution = (contribution) => {
       "Content-Type": "multipart/form-data",
     },
   });
+};
+
+// Student
+const submitContribution = (contribution) => {
+  return axios.post(
+    publicApi.contribution + "student/contribution",
+    contribution,
+    {
+      headers: {
+        "x-access-token": auth.getCurrentAccessToken(),
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
 };
 
 const updateContribution = (contribution) => {
@@ -51,6 +66,7 @@ const contributionService = {
   getAllContribution,
   viewContributionsInFaculty,
   createContribution,
+  submitContribution,
   updateContribution,
   deleteContribution,
 };
