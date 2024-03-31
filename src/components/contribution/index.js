@@ -115,6 +115,11 @@ const ContributionManagement = () => {
         header: "Event",
         size: 100,
       },
+      {
+        accessorKey: "faculty",
+        header: "Faculty",
+        size: 100,
+      },
 
       ...(currentUser.role === "admin"
         ? [

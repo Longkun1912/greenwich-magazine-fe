@@ -124,7 +124,13 @@ const Sidebar = ({ currentUser }) => {
         {/* Student */}
         {currentUser.role === "student" && (
           <li>
-            <Link to="/contribution">Manage Contribution 2</Link>
+            <Link to="/student/contributions">View Contributions</Link>
+          </li>
+        )}
+
+        {currentUser.role === "student" && (
+          <li>
+            <Link to="/student/contribution">Make own contribution</Link>
           </li>
         )}
 

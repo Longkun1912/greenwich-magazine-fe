@@ -12,6 +12,15 @@ const getAllContribution = () => {
   });
 };
 
+const viewContributionsInFaculty = () => {
+  const currentUser = auth.getCurrentUser();
+  return axios.get(publicApi.contribution + "student/" + currentUser.id, {
+    headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
+    },
+  });
+};
+
 const createContribution = (contribution) => {
   return axios.post(publicApi.contribution + "contribution", contribution, {
     headers: {
@@ -40,6 +49,7 @@ const deleteContribution = (id) => {
 
 const contributionService = {
   getAllContribution,
+  viewContributionsInFaculty,
   createContribution,
   updateContribution,
   deleteContribution,

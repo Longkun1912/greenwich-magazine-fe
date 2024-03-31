@@ -7,8 +7,10 @@ import Login from "./components/Login";
 import Profile from "./components/Profile";
 import Register from "./components/Register";
 import UnAuthorizedPage from "./components/Unauthorized";
-import ContributionIndex from "./components/contribution/index";
 import IndexForCoordinator from "./components/contribution/IndexForCoordinator";
+import ContributionIndex from "./components/contribution/index";
+import StudentContributionForm from "./components/contribution/student.create";
+import StudentContributionIndex from "./components/contribution/student.view";
 import EventIndex from "./components/event/index";
 import FacultyIndex from "./components/faculty/index";
 import UserIndex from "./components/user/index";
@@ -73,13 +75,28 @@ function App() {
                   path="/contributionIndex"
                   element={<ContributionIndex />}
                 />
-                <Route path="/IndexForCoordinator" element = {<IndexForCoordinator/>} />
-                
+                <Route
+                  path="/IndexForCoordinator"
+                  element={<IndexForCoordinator />}
+                />
+
                 <Route path="/eventIndex" element={<EventIndex />} />
 
                 <Route
                   path="/user-management"
                   element={<UserIndex currentUser={currentUser} />}
+                />
+                <Route
+                  path="/student/contributions"
+                  element={
+                    <StudentContributionIndex currentUser={currentUser} />
+                  }
+                />
+                <Route
+                  path="/student/contribution"
+                  element={
+                    <StudentContributionForm currentUser={currentUser} />
+                  }
                 />
               </Routes>
             </div>

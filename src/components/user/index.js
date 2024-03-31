@@ -10,11 +10,13 @@ import "../../css/User.css";
 import UserAddingForm from "../../modals/create.user";
 import EditUserForm from "../../modals/edit.user";
 import UserInfo from "../../modals/view.user";
+import auth from "../../services/auth.service";
 import FacultyService from "../../services/faculty.service";
 import RoleService from "../../services/role.service";
 import UserService from "../../services/user.service";
 
 const UserIndex = () => {
+  const currentUser = auth.getCurrentUser();
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [facultyOptions, setFacultyOptions] = useState([]);
@@ -34,6 +36,14 @@ const UserIndex = () => {
   const fetchRoles = async () => {
     try {
       await RoleService.viewRoles().then((response) => {
+        response.data = response.data.filter((role) => role.name !== "admin");
+        if (currentUser.role !== "admin") {
+          console.log("Current user is not admin");
+          // Remove manager role
+          response.data = response.data.filter(
+            (role) => role.name !== "manager"
+          );
+        }
         localStorage.setItem("roles", JSON.stringify(response.data));
       });
     } catch (error) {
@@ -57,6 +67,11 @@ const UserIndex = () => {
     setLoading(true);
     try {
       const response = await UserService.viewSystemUsers();
+      if (currentUser.role !== "admin") {
+        console.log("Current user is not admin");
+        // Remove manager role
+        response.data = response.data.filter((user) => user.role !== "manager");
+      }
       setUsers(response.data);
       setLoading(false);
     } catch (error) {
