@@ -62,6 +62,15 @@ const deleteContribution = (id) => {
   });
 };
 
+//test
+const getAllContributionByFaculty = (facultyId) => {
+  return axios.get(`${publicApi.contribution}coordinator/${facultyId}`, {
+    headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
+    },
+  });
+};
+
 const contributionService = {
   getAllContribution,
   viewContributionsInFaculty,
@@ -69,6 +78,7 @@ const contributionService = {
   submitContribution,
   updateContribution,
   deleteContribution,
+  getAllContributionByFaculty,
 };
 
 export default contributionService;
