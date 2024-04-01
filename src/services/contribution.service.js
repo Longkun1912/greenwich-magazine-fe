@@ -45,6 +45,29 @@ const submitContribution = (contribution) => {
   );
 };
 
+// Student
+const editContribution = (contribution) => {
+  return axios.put(
+    publicApi.contribution + "student/contribution",
+    contribution,
+    {
+      headers: {
+        "x-access-token": auth.getCurrentAccessToken(),
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+};
+
+// Student
+const removeContribution = (id) => {
+  return axios.delete(publicApi.contribution + "student/contribution/" + id, {
+    headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
+    },
+  });
+};
+
 const updateContribution = (contribution) => {
   return axios.put(publicApi.contribution + "contribution", contribution, {
     headers: {
@@ -76,7 +99,9 @@ const contributionService = {
   viewContributionsInFaculty,
   createContribution,
   submitContribution,
+  editContribution,
   updateContribution,
+  removeContribution,
   deleteContribution,
   getAllContributionByFaculty,
 };
