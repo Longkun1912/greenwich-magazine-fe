@@ -14,6 +14,7 @@ import StudentContributionIndex from "./components/contribution/student.view";
 import EventIndex from "./components/event/index";
 import FacultyIndex from "./components/faculty/index";
 import UserIndex from "./components/user/index";
+import StudentIndex from "./components/user/student.index";
 import GreenwichNavBar from "./global/Navbar";
 import Sidebar from "./global/Sidebar";
 import AuthService from "./services/auth.service";
@@ -97,6 +98,10 @@ function App() {
                   element={
                     <StudentContributionForm currentUser={currentUser} />
                   }
+                />
+                <Route
+                  path="/coordinator/students"
+                  element={<StudentIndex currentUser={currentUser} />}
                 />
               </Routes>
             </div>

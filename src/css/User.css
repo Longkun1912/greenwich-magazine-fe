@@ -29,3 +29,22 @@
 .avatar-field {
   margin-bottom: 2vh;
 }
+
+.avatar-img {
+  width: 13vh;
+  height: 13vh;
+  border-radius: 50%;
+}
+
+.container {
+  margin-top: 2vh;
+}
+
+.content-container {
+  width: 90%;
+  overflow-x: auto;
+}
+
+#student-table {
+  margin: 2vh;
+}

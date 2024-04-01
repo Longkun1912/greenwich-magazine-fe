@@ -112,12 +112,12 @@ const Sidebar = ({ currentUser }) => {
         {/* coordinator */}
         {currentUser.role === "coordinator" && (
           <li>
-            <Link to="#">Manage User</Link>
+            <Link to="/coordinator/students">Manage Students</Link>
           </li>
         )}
         {currentUser.role === "coordinator" && (
           <li>
-            <Link to="/IndexForCoordinator">Manage Contribution 2</Link>
+            <Link to="/IndexForCoordinator">Manage Faculty</Link>
           </li>
         )}
 
