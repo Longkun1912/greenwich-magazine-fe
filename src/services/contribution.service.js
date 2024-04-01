@@ -85,7 +85,7 @@ const deleteContribution = (id) => {
   });
 };
 
-//test
+//getAllContributionByFacultyId
 const getAllContributionByFaculty = (facultyId) => {
   return axios.get(`${publicApi.contribution}coordinator/${facultyId}`, {
     headers: {

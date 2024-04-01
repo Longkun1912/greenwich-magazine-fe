@@ -5,13 +5,13 @@
 }
 
 .faculty-card {
-  width: calc(25% - 10%); /* 4 cards per row with spacing */
-  margin-bottom: 20px;
+  width: calc(25% - 1%); /* 4 cards per row with spacing */
+  margin-bottom: 2%;
 }
 
 .card {
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 2px solid #f4cece;
+  border-radius: 10px; /* Sửa giá trị để làm tròn các góc */
   overflow: hidden;
 }
 
@@ -21,7 +21,7 @@
 }
 
 .card-body {
-  padding: 15px;
+  padding: 5%;
 }
 
 .card-title {
@@ -36,4 +36,23 @@
 /* CSS for red text color */
 .red-text {
   color: red;
+}
+
+/* CSS for public button */
+.public-button {
+  color: white;
+  background-color: green;
+  text-align: center;
+  border-radius: 7px;
+  box-sizing: border-box;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  padding: 8px 16px; /* Thêm padding để nút trở nên dễ nhìn hơn */
+  cursor: pointer; /* Thêm hiệu ứng con trỏ khi rê chuột */
+  outline: none; /* Loại bỏ viền trên nút khi được click */
+  border: none; /* Loại bỏ border trên nút */
+}
+
+.public-button:hover {
+  background-color: rgb(80, 201, 80);
 }
