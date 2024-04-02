@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { FaRegUser } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
 import { GrDocumentUser } from "react-icons/gr";
 import { MdEventAvailable, MdOutlineCollectionsBookmark } from "react-icons/md";
-import { RiArticleFill } from "react-icons/ri";
+import { RiArticleFill, RiDashboardFill } from "react-icons/ri";
 import { TiThMenu } from "react-icons/ti";
 import { Link } from "react-router-dom";
 import "../css/Sidebar.css";
@@ -85,6 +86,19 @@ const Sidebar = ({ currentUser }) => {
         {/* manager */}
         {currentUser.role === "manager" && (
           <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
+            <Link to="/dashboard">
+              <span className="option-container">
+                <RiDashboardFill className="manage-icon" />
+                <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
+                  Dashboard
+                </p>
+              </span>
+            </Link>
+          </li>
+        )}
+
+        {currentUser.role === "manager" && (
+          <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
             <Link to="/contributionIndex">
               <span className="option-container">
                 <GrDocumentUser className="manage-icon" />
@@ -100,7 +114,7 @@ const Sidebar = ({ currentUser }) => {
           <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
             <Link to="/user-management">
               <span className="option-container">
-                <GrDocumentUser className="manage-icon" />
+                <FaRegUser className="manage-icon" />
                 <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
                   View Users
                 </p>

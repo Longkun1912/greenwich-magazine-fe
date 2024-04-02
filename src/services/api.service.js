@@ -7,6 +7,7 @@ const publicApi = {
   role: serverURL + "/api/role-management/",
   contribution: serverURL + "/api/contribution-management/",
   event: serverURL + "/api/event-management/events",
+  dashboard: serverURL + "/api/dashboard/",
 };
 export default publicApi;
 
