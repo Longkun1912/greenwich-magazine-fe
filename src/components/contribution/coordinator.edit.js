@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'; // Import toast
 import 'react-toastify/dist/ReactToastify.css'; // Import toast styles
 import ContributionService from '../../services/contribution.service';
 
-const statusOptions = ['pending', 'approved', 'rejected', 'modified'];
+const statusOptions = ['approved', 'rejected'];
 const stateOptions = ['public', 'private'];
 
 const CoordinatorEdit = (props) => {

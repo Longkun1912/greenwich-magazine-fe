@@ -166,7 +166,19 @@ const Sidebar = ({ currentUser }) => {
             <Link to="/student/contribution">Create own contribution</Link>
           </li>
         )}
-
+        {/* Guest */}
+        {currentUser.role === "guest" && (
+          <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
+            <Link to="/ContributionForGuest">
+              <span className="option-container">
+                <RiArticleFill className="manage-icon" />
+                <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
+                  Manage Contribution
+                </p>
+              </span>
+            </Link>
+          </li>
+        )}
         {/* <li>
           <a href="#">About</a>
         </li>

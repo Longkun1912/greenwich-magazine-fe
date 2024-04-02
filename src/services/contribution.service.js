@@ -85,6 +85,7 @@ const deleteContribution = (id) => {
   });
 };
 
+//Coordinator
 //getAllContributionByFacultyId
 const getAllContributionByFaculty = (facultyId) => {
   return axios.get(`${publicApi.contribution}coordinator/${facultyId}`, {
@@ -107,6 +108,15 @@ const EditForCoordinator = (contributionId, editForm) => {
   );
 };
 
+//Guest
+const getAllContributionForGuest = () => {
+  return axios.get(publicApi.contributionForGuest, {
+    headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
+    },
+  });
+};
+
 
 
 const contributionService = {
@@ -120,6 +130,7 @@ const contributionService = {
   deleteContribution,
   getAllContributionByFaculty,
   EditForCoordinator,
+  getAllContributionForGuest,
 };
 
 export default contributionService;

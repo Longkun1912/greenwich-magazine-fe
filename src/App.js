@@ -9,6 +9,7 @@ import Register from "./components/Register";
 import UnAuthorizedPage from "./components/Unauthorized";
 import IndexForCoordinator from "./components/contribution/coordinator.index";
 import ContributionIndex from "./components/contribution/index";
+import ContributionForGuest from "./components/contribution/contributionForGuest.index";
 import StudentContributionForm from "./components/contribution/student.create";
 import StudentContributionIndex from "./components/contribution/student.view";
 import EventIndex from "./components/event/index";
@@ -80,7 +81,10 @@ function App() {
                   path="/IndexForCoordinator"
                   element={<IndexForCoordinator />}
                 />
-
+                <Route
+                  path="/ContributionForGuest"
+                  element={<ContributionForGuest />}
+                />
                 <Route path="/eventIndex" element={<EventIndex />} />
 
                 <Route

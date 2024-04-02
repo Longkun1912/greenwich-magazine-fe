@@ -1,0 +1,58 @@
+/* Chia grid thành 4 cột */
+/* .guest-content {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr)); 
+    gap: 20px;
+} */
+
+.guest-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+/* .guest-content: Thiết lập hiển thị của phần nội dung của khách hàng dưới dạng grid layout, tự động điều chỉnh số lượng và kích thước của các phần tử con. */
+
+.card {
+    width: 100%;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.guest-contribution-image {
+    width: 100%;
+    height: auto;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.versatile-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.versatile-actions .btn {
+    margin-right: 20%; /* Cách nhau một khoảng 10px */
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.guest-contribution-image {
+    width: 100%;
+    /* Đảm bảo tỷ lệ khung hình được giữ nguyên */
+    max-height: 150px;
+    /* Đặt chiều cao tối đa cho ảnh */
+    object-fit: cover;
+    /* Đảm bảo ảnh được điều chỉnh tỷ lệ để vừa với khung */
+}
