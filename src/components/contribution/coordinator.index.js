@@ -3,7 +3,10 @@ import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import FacultyService from '../../services/faculty.service';
 import ContributionService from '../../services/contribution.service';
 import "../../css/IndexForCoordinator.css";
+import ModalEditContribution from "./coordinator.edit";
+import { MdEdit } from "react-icons/md";
 
+// Component thẻ của mỗi khoa
 const FacultyCard = ({ faculty, onFacultySelect }) => {
   return (
     <div className="card" style={{ width: '18rem' }} onClick={() => onFacultySelect(faculty._id)}>
@@ -21,6 +24,8 @@ const IndexForCoordinator = () => {
   const [faculties, setFaculties] = useState([]);
   const [contributions, setContributions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isShowModalEditForCoordinator, setIsShowModalEditForCoordinator] = useState(false);
+  const [dataEditForCoordinator, setDataEditForCoordinator] = useState({});
 
   useEffect(() => {
     const fetchFaculties = async () => {
@@ -50,6 +55,17 @@ const IndexForCoordinator = () => {
       console.error('Error fetching contributions by faculty:', error);
     }
   };  
+
+
+  const handleEditForCoordinator = (contribution) => {
+    console.log("Selected contribution:", contribution);
+    setDataEditForCoordinator(contribution); 
+    setIsShowModalEditForCoordinator(true);
+  };
+
+  const handleClose = () => {
+    setIsShowModalEditForCoordinator(false);
+  };
 
   const columns = [
     {
@@ -105,17 +121,21 @@ const IndexForCoordinator = () => {
       header: "Faculty",
       size: 100,
     },
-    // Bỏ comment lại sau khi xử lý hàm updateContributionStatus
     {
-      accessor: "State",
+      accessorKey: "state",
       header: "State",
-      // Cell: ({ cell }) => (
-      //   <button className={`public-button ${cell.value ? 'green' : ''}`} onClick={() => updateContributionStatus(cell.row.original._id, !cell.value)}>
-      //     {cell.value ? 'Private' : 'Public'}
-      //   </button>
-      // ),
-      Cell: ({ cell }) => (
-        <button className= 'public-button'>Public</button>
+      size: 100,
+    },
+    
+    {
+      accessor: "Action",
+      header: "Action",
+      Cell: ({ row }) => (
+        <div>
+          <button onClick={() => handleEditForCoordinator(row.original)}>
+            <MdEdit />
+          </button>
+        </div>
       ),
     },
   ];
@@ -134,8 +154,13 @@ const IndexForCoordinator = () => {
           </div>
         ))}
       </div>
-      <h2>View Contribution By FacultyID:</h2> <br/>
       {loading && <div>Loading...</div>}
+      <ModalEditContribution
+        show={isShowModalEditForCoordinator}
+        dataEditForCoordinator={dataEditForCoordinator} 
+        handleClose={handleClose}
+        contributionId={dataEditForCoordinator.id}
+      />
       <MaterialReactTable table={table} />
     </div>
   );

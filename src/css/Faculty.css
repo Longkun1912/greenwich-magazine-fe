@@ -4,6 +4,12 @@ button.btn.btn-scuccess {
   color: white;
   margin-left: -81%;
   border-radius: 10px;
+  transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+button.btn.btn-scuccess:hover {
+  background: darkgreen; /* Change background color on hover */
+  font-weight: bold; /* Make text bold on hover */
 }
 
 .contribution-table {

@@ -94,6 +94,21 @@ const getAllContributionByFaculty = (facultyId) => {
   });
 };
 
+//EditForCoordinator
+const EditForCoordinator = (contributionId, editForm) => {
+  return axios.put(
+    publicApi.contribution + "coordinator",
+    { id: contributionId, ...editForm }, // Thêm `id` vào editForm
+    {
+      headers: {
+        "x-access-token": auth.getCurrentAccessToken(),
+      },
+    }
+  );
+};
+
+
+
 const contributionService = {
   getAllContribution,
   viewContributionsInFaculty,
@@ -104,6 +119,7 @@ const contributionService = {
   removeContribution,
   deleteContribution,
   getAllContributionByFaculty,
+  EditForCoordinator,
 };
 
 export default contributionService;

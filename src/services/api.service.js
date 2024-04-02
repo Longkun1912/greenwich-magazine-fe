@@ -6,7 +6,6 @@ const publicApi = {
   user: serverURL + "/api/user-management/",
   role: serverURL + "/api/role-management/",
   contribution: serverURL + "/api/contribution-management/",
-  // contribution2: serverURL +   "/api/contribution-management/coordinator/:facultyId",
   event: serverURL + "/api/event-management/events",
 };
 export default publicApi;

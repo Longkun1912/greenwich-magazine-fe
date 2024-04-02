@@ -7,7 +7,7 @@ import Login from "./components/Login";
 import Profile from "./components/Profile";
 import Register from "./components/Register";
 import UnAuthorizedPage from "./components/Unauthorized";
-import IndexForCoordinator from "./components/contribution/IndexForCoordinator";
+import IndexForCoordinator from "./components/contribution/coordinator.index";
 import ContributionIndex from "./components/contribution/index";
 import StudentContributionForm from "./components/contribution/student.create";
 import StudentContributionIndex from "./components/contribution/student.view";
