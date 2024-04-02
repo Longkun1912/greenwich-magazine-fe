@@ -1,7 +1,8 @@
 .student-content {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  width: 90%;
+  margin-left: 5%;
+  overflow-x: auto;
 }
 
 .contribution-container .card {
@@ -36,4 +37,9 @@
   display: flex;
   justify-content: center;
   margin-bottom: 2vh;
+}
+
+#contribution-paging {
+  justify-content: center !important;
+  margin-top: 5vh;
 }

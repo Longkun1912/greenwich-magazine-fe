@@ -63,6 +63,15 @@ const StudentContributionIndex = () => {
     initMDB({ Ripple });
   }, []);
 
+  // Paginate contributions
+  const totalPages = 100;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(3);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = contributions.slice(indexOfFirstItem, indexOfLastItem);
+
   return (
     <div className="student-contribution-container">
       <ToastContainer />
@@ -70,7 +79,7 @@ const StudentContributionIndex = () => {
         <h1>Contributions in your faculty</h1>
       </div>
       <div className="student-content">
-        {contributions.map((contribution) => (
+        {currentItems.map((contribution) => (
           <div className="card" id="contribution-info">
             <div
               className="bg-image hover-overlay"
@@ -126,6 +135,21 @@ const StudentContributionIndex = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="pagination" id="contribution-paging">
+        {[1, currentPage - 1, currentPage, currentPage + 1, totalPages]
+          .filter((v, i, a) => a.indexOf(v) === i && v >= 1 && v <= totalPages)
+          .map((page) => (
+            <React.Fragment key={page}>
+              <button
+                onClick={() => setCurrentPage(page)}
+                disabled={page === currentPage}
+              >
+                {page}
+              </button>
+              {page < totalPages && <span>...</span>}
+            </React.Fragment>
+          ))}
       </div>
       {isShowModalEditContribution && (
         <StudentUpdateContributionForm

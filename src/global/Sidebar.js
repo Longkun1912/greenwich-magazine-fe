@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
-import { GrDocumentUser } from "react-icons/gr";
+import { GrArticle, GrDocumentUser } from "react-icons/gr";
 import {
   MdEventAvailable,
   MdOutlineClass,
@@ -156,14 +156,28 @@ const Sidebar = ({ currentUser }) => {
 
         {/* Student */}
         {currentUser.role === "student" && (
-          <li>
-            <Link to="/student/contributions">View all contributions</Link>
+          <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
+            <Link to="/student/contributions">
+              <span className="option-container">
+                <MdOutlineClass className="manage-icon" />
+                <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
+                  View all contributions
+                </p>
+              </span>
+            </Link>
           </li>
         )}
 
         {currentUser.role === "student" && (
-          <li>
-            <Link to="/student/contribution">Create own contribution</Link>
+          <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
+            <Link to="/student/contribution">
+              <span className="option-container">
+                <GrArticle className="manage-icon" />
+                <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
+                  Create own contribution
+                </p>
+              </span>
+            </Link>
           </li>
         )}
         {/* Guest */}
