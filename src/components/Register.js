@@ -11,6 +11,7 @@ import {
 } from "mdb-react-ui-kit";
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
+import "../css/Register.css";
 import auth from "../services/auth.service";
 import UserValidation from "../validation/user";
 
@@ -165,11 +166,14 @@ const Register = () => {
   } = state;
 
   return (
-    <MDBContainer fluid className="bg-dark">
-      <MDBRow className="d-flex justify-content-center align-items-center h-100">
+    <MDBContainer fluid className="bg-dark" id="register-container">
+      <MDBRow
+        className="d-flex justify-content-center align-items-center"
+        id="register-background"
+      >
         <MDBCol>
           <MDBCard className="my-4">
-            <MDBRow className="g-0">
+            <MDBRow className="g-0" id="register-form">
               <MDBCol md="6" className="d-none d-md-block">
                 <MDBCardImage
                   src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
@@ -179,7 +183,7 @@ const Register = () => {
                 />
               </MDBCol>
 
-              <MDBCol md="6">
+              <MDBCol md="6" id="sign-up-form">
                 <MDBCardBody className="text-black d-flex flex-column justify-content-center">
                   <h3 className="mb-5 text-uppercase fw-bold">
                     Student registration form

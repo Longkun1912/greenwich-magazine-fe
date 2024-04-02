@@ -177,7 +177,7 @@ const ContributionManagement = () => {
             handleClose={handleCloseModals}
           />
         )}
-        <div style={{ width: "140vh" }}>
+        <div className="contribution-table">
           <MaterialReactTable table={table} />
         </div>
       </div>

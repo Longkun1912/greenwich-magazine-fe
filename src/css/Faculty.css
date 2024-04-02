@@ -5,4 +5,9 @@ button.btn.btn-scuccess {
   margin-left: -81%;
   border-radius: 10px;
 }
-  
+
+.contribution-table {
+  margin-top: 3vh;
+  width: 140vh;
+  margin-left: 10%;
+}

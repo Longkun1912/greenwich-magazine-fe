@@ -1,0 +1,17 @@
+#register-container {
+  margin-left: 22%;
+  margin-top: 2%;
+}
+
+#register-background {
+  height: 80vh !important;
+}
+
+#register-form {
+  height: 70vh;
+}
+
+#sign-up-form {
+  height: inherit;
+  overflow-y: auto;
+}
