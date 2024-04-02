@@ -1,3 +1,8 @@
+.dashboard-title {
+  margin-left: 2vh;
+  margin-top: 2vh;
+}
+
 .contribution-number {
   margin: 2vh;
   background-color: antiquewhite;
@@ -5,7 +10,26 @@
   width: 142vh;
 }
 
-.dashboard-1-intro {
+#dashboard-1-intro {
   margin-top: 2vh;
   margin-bottom: 2vh;
+}
+
+.contribution-percentage {
+  width: 142vh;
+  margin: 2vh;
+  margin-top: 5vh !important;
+  background-color: antiquewhite;
+}
+
+.pie-chart {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 2vh;
+}
+
+#dashboard-2-intro {
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  padding-top: 2vh;
 }

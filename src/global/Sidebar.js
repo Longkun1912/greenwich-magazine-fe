@@ -2,7 +2,12 @@ import { useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
 import { GrDocumentUser } from "react-icons/gr";
-import { MdEventAvailable, MdOutlineCollectionsBookmark } from "react-icons/md";
+import {
+  MdEventAvailable,
+  MdOutlineClass,
+  MdOutlineCollectionsBookmark,
+} from "react-icons/md";
+import { PiStudentBold } from "react-icons/pi";
 import { RiArticleFill, RiDashboardFill } from "react-icons/ri";
 import { TiThMenu } from "react-icons/ti";
 import { Link } from "react-router-dom";
@@ -125,13 +130,27 @@ const Sidebar = ({ currentUser }) => {
 
         {/* coordinator */}
         {currentUser.role === "coordinator" && (
-          <li>
-            <Link to="/coordinator/students">Manage Students</Link>
+          <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
+            <Link to="/coordinator/students">
+              <span className="option-container">
+                <PiStudentBold className="manage-icon" />
+                <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
+                  Manage Students
+                </p>
+              </span>
+            </Link>
           </li>
         )}
         {currentUser.role === "coordinator" && (
-          <li>
-            <Link to="/IndexForCoordinator">Manage Faculty</Link>
+          <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
+            <Link to="/IndexForCoordinator">
+              <span className="option-container">
+                <MdOutlineClass className="manage-icon" />
+                <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
+                  Manage your Faculty
+                </p>
+              </span>
+            </Link>
           </li>
         )}
 
