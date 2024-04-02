@@ -8,6 +8,7 @@ const publicApi = {
   contribution: serverURL + "/api/contribution-management/",
   // contribution2: serverURL +   "/api/contribution-management/coordinator/:facultyId",
   event: serverURL + "/api/event-management/events",
+  dashboard: serverURL + "/api/dashboard/",
 };
 export default publicApi;
 

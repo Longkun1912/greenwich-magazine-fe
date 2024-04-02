@@ -1,0 +1,11 @@
+.contribution-number {
+  margin: 2vh;
+  background-color: antiquewhite;
+  overflow: auto;
+  width: 142vh;
+}
+
+.dashboard-1-intro {
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
