@@ -26,6 +26,16 @@ const StudentContributionIndex = () => {
     }
   };
 
+  // Handle download document
+  const handleDownloadDocument = async (documentName) => {
+    try {
+      await ContributionService.downloadDocument(documentName);
+    } catch (error) {
+      console.error("Error downloading document:", error);
+      toast.error("Failed to download document!");
+    }
+  };
+
   // Handle view contribution
   const handleViewContribution = (contribution) => {
     setSelectedContribution(contribution);
@@ -111,9 +121,12 @@ const StudentContributionIndex = () => {
                 >
                   View
                 </button>
-                <a href={contribution.document.replace(/^http:/, "https:")}>
-                  <button className="btn btn-success">Download</button>
-                </a>
+                <button
+                  className="btn btn-success"
+                  onClick={() => handleDownloadDocument(contribution.document)}
+                >
+                  Download
+                </button>
               </div>
               {currentAuthenticatedUser.email === contribution.submitter && (
                 <div className="only-actions">

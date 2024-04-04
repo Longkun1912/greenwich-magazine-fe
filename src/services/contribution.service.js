@@ -2,6 +2,17 @@ import axios from "axios";
 import publicApi from "./api.service";
 import auth from "./auth.service";
 
+const downloadDocument = (documentName) => {
+  return axios.get(
+    publicApi.contribution + "contribution/download/" + documentName,
+    {
+      headers: {
+        "x-access-token": auth.getCurrentAccessToken(),
+      },
+    }
+  );
+};
+
 //all Contribution
 const getAllContribution = () => {
   return axios.get(publicApi.contribution + "contribution", {
@@ -117,9 +128,8 @@ const getAllContributionForGuest = () => {
   });
 };
 
-
-
 const contributionService = {
+  downloadDocument,
   getAllContribution,
   viewContributionsInFaculty,
   createContribution,
