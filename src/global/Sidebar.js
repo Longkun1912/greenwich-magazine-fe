@@ -187,7 +187,7 @@ const Sidebar = ({ currentUser }) => {
               <span className="option-container">
                 <RiArticleFill className="manage-icon" />
                 <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
-                  Manage Contribution
+                  View All Contribution
                 </p>
               </span>
             </Link>

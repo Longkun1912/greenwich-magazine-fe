@@ -44,9 +44,32 @@
     margin-right: 20%; /* Cách nhau một khoảng 10px */
 }
 
+button.btn.btn-view {
+    background-color: #0001fc;
+    color: white;
+    font-weight: bold;
+}
+
+button.btn.btn-download {
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+}
+
 .btn {
     cursor: pointer;
 }
+
+.versatile-actions .btn-view:hover {
+    background-color: #e85b35; 
+    color: #fff;
+}
+
+.versatile-actions .btn-download:hover {
+    background-color: #e85b35; 
+    color: #fff;
+}
+
 
 .guest-contribution-image {
     width: 100%;
