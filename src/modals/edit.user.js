@@ -56,7 +56,6 @@ const EditUserForm = (props) => {
   };
 
   // Handle image upload
-
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
 

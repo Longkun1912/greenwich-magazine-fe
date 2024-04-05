@@ -2,6 +2,23 @@ import axios from "axios";
 import publicApi from "../services/api.service";
 import auth from "./auth.service";
 
+const viewCurrentUserInfo = (userId) => {
+  return axios.get(publicApi.user + "profile/" + userId, {
+    headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
+    },
+  });
+};
+
+const editProfile = (profileForm) => {
+  return axios.put(publicApi.user + "profile", profileForm, {
+    headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
 const viewSystemUsers = (req, res) => {
   return axios.get(publicApi.user + "users", {
     headers: {
@@ -54,6 +71,8 @@ const deleteUser = (userId) => {
 };
 
 const UserService = {
+  viewCurrentUserInfo,
+  editProfile,
   viewSystemUsers,
   viewStudentByFaculty,
   createUser,

@@ -147,7 +147,7 @@ const Sidebar = ({ currentUser }) => {
               <span className="option-container">
                 <MdOutlineClass className="manage-icon" />
                 <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
-                  Manage your Faculty
+                  Manage faculty's contributions
                 </p>
               </span>
             </Link>

@@ -36,7 +36,6 @@ const StudentContributionIndex = () => {
       const zip = new JSZip();
       zip.file(documentName, response.data);
       const content = await zip.generateAsync({ type: "blob" });
-
       saveAs(content, `${documentName}.zip`);
 
       toast.success("Document downloaded successfully!");

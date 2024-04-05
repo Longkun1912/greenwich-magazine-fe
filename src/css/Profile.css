@@ -46,6 +46,7 @@ body {
 
 #profile-avatar {
   width: 20vh;
+  height: 20vh;
   border: 0.1vh solid;
 }
 

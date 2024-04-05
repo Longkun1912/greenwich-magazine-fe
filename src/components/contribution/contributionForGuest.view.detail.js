@@ -1,7 +1,24 @@
+import { saveAs } from "file-saver";
+import JSZip from "jszip";
 import { Alert, Button, Modal } from "react-bootstrap";
 import "../../css/Contribution.css";
+import ContributionService from "../../services/contribution.service";
 
 const ContributionForGuestDetails = ({ contribution, open, close }) => {
+  // Handle download document
+  const handleDownloadDocument = async (documentName) => {
+    try {
+      // Send file to download
+      const response = await ContributionService.downloadDocument(documentName);
+      const zip = new JSZip();
+      zip.file(documentName, response.data);
+      const content = await zip.generateAsync({ type: "blob" });
+      saveAs(content, `${documentName}.zip`);
+    } catch (error) {
+      console.error("Error downloading document:", error);
+    }
+  };
+
   return (
     <Modal show={open} onHide={close}>
       <Modal.Header closeButton>
@@ -30,7 +47,13 @@ const ContributionForGuestDetails = ({ contribution, open, close }) => {
               : contribution.content}
           </p>
           <h5>Document</h5>
-          <a href={contribution.document.replace(/^http:/, "https:")}>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              handleDownloadDocument(contribution.document);
+            }}
+          >
             {contribution.document.length > 49
               ? contribution.document.substring(0, 49) + "..."
               : contribution.document}

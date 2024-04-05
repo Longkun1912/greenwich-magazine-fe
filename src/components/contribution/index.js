@@ -1,3 +1,5 @@
+import { saveAs } from "file-saver";
+import JSZip from "jszip";
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -60,6 +62,21 @@ const ContributionManagement = () => {
     setIsShowModalEditContribution(true);
   };
 
+  // Handle download document
+  const handleDownloadDocument = async (documentName) => {
+    try {
+      console.log("Downloading document:", documentName);
+      // Send file to download
+      const response = await ContributionService.downloadDocument(documentName);
+      const zip = new JSZip();
+      zip.file(documentName, response.data);
+      const content = await zip.generateAsync({ type: "blob" });
+      saveAs(content, `${documentName}.zip`);
+    } catch (error) {
+      console.error("Error downloading document:", error);
+    }
+  };
+
   let columns = useMemo(
     () => [
       {
@@ -95,9 +112,11 @@ const ContributionManagement = () => {
         size: 100,
         Cell: ({ cell }) =>
           cell.row.original.document && (
-            <a href={cell.row.original.document.replace(/^http:/, "https:")}>
-              <button>Download</button>
-            </a>
+            <button
+              onClick={() => handleDownloadDocument(cell.row.original.document)}
+            >
+              Download
+            </button>
           ),
       },
       {

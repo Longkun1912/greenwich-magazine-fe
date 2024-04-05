@@ -1,16 +1,22 @@
-import { useState, useEffect } from 'react'; 
-import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
-import ContributionService from '../../services/contribution.service';
-import "../../css/IndexForCoordinator.css";
-import ModalEditContribution from "./coordinator.edit";
+import { saveAs } from "file-saver";
+import JSZip from "jszip";
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+} from "material-react-table";
+import { useEffect, useState } from "react";
 import { MdEdit } from "react-icons/md";
-import auth from '../../services/auth.service'; 
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
+import "../../css/IndexForCoordinator.css";
+import auth from "../../services/auth.service";
+import ContributionService from "../../services/contribution.service";
+import ModalEditContribution from "./coordinator.edit";
 
 const IndexForCoordinator = () => {
   const [contributions, setContributions] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [isShowModalEditForCoordinator, setIsShowModalEditForCoordinator] = useState(false);
+  const [isShowModalEditForCoordinator, setIsShowModalEditForCoordinator] =
+    useState(false);
   const [dataEditForCoordinator, setDataEditForCoordinator] = useState({});
 
   useEffect(() => {
@@ -18,26 +24,45 @@ const IndexForCoordinator = () => {
       try {
         const currentUser = auth.getCurrentUser();
         setLoading(true);
-        const response = await ContributionService.getAllContributionByFaculty(currentUser.id);
+        const response = await ContributionService.getAllContributionByFaculty(
+          currentUser.id
+        );
         setContributions(response.data);
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        console.error('Error fetching contributions:', error);
+        console.error("Error fetching contributions:", error);
       }
     };
-  
+
     fetchContributions();
   }, []);
 
   const handleEditForCoordinator = (contribution) => {
     console.log("Selected contribution:", contribution);
-    setDataEditForCoordinator(contribution); 
+    setDataEditForCoordinator(contribution);
     setIsShowModalEditForCoordinator(true);
   };
 
   const handleClose = () => {
     setIsShowModalEditForCoordinator(false);
+  };
+
+  // Handle download document
+  const handleDownloadDocument = async (documentName) => {
+    try {
+      // Send file to download
+      const response = await ContributionService.downloadDocument(documentName);
+      const zip = new JSZip();
+      zip.file(documentName, response.data);
+      const content = await zip.generateAsync({ type: "blob" });
+      saveAs(content, `${documentName}.zip`);
+
+      toast.success("Document downloaded successfully!");
+    } catch (error) {
+      console.error("Error downloading document:", error);
+      toast.error("Failed to download document!");
+    }
   };
 
   const columns = [
@@ -69,9 +94,11 @@ const IndexForCoordinator = () => {
       size: 100,
       Cell: ({ cell }) =>
         cell.row.original.document && (
-          <a href={cell.row.original.document.replace(/^http:/, "https:")}>
-            <button>Download</button>
-          </a>
+          <button
+            onClick={() => handleDownloadDocument(cell.row.original.document)}
+          >
+            Download
+          </button>
         ),
     },
     {
@@ -99,7 +126,7 @@ const IndexForCoordinator = () => {
       header: "State",
       size: 100,
     },
-    
+
     {
       accessor: "Action",
       header: "Action",
@@ -124,12 +151,13 @@ const IndexForCoordinator = () => {
       {loading && <div>Loading...</div>}
       <ModalEditContribution
         show={isShowModalEditForCoordinator}
-        dataEditForCoordinator={dataEditForCoordinator} 
+        dataEditForCoordinator={dataEditForCoordinator}
         handleClose={handleClose}
         contributionId={dataEditForCoordinator.id}
       />
       <MaterialReactTable table={table} />
-      <ToastContainer /> {/* Component này sẽ render ra nơi bạn muốn hiển thị toast */}
+      <ToastContainer />{" "}
+      {/* Component này sẽ render ra nơi bạn muốn hiển thị toast */}
     </div>
   );
 };
