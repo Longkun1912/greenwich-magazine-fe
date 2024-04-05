@@ -9,6 +9,7 @@ const downloadDocument = (documentName) => {
       headers: {
         "x-access-token": auth.getCurrentAccessToken(),
       },
+      responseType: "blob",
     }
   );
 };

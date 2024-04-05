@@ -1,3 +1,5 @@
+import { saveAs } from "file-saver";
+import JSZip from "jszip";
 import { Ripple, initMDB } from "mdb-ui-kit";
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -29,7 +31,15 @@ const StudentContributionIndex = () => {
   // Handle download document
   const handleDownloadDocument = async (documentName) => {
     try {
-      await ContributionService.downloadDocument(documentName);
+      // Send file to download
+      const response = await ContributionService.downloadDocument(documentName);
+      const zip = new JSZip();
+      zip.file(documentName, response.data);
+      const content = await zip.generateAsync({ type: "blob" });
+
+      saveAs(content, `${documentName}.zip`);
+
+      toast.success("Document downloaded successfully!");
     } catch (error) {
       console.error("Error downloading document:", error);
       toast.error("Failed to download document!");
