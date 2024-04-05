@@ -4,15 +4,19 @@ import "react-toastify/dist/ReactToastify.css";
 import ContributionService from "../../services/contribution.service";
 import "../../css/ContributionForGuest.css";
 import ContributionForGuestDetails from "./contributionForGuest.view.detail";
+import auth from '../../services/auth.service'; // Import auth service để lấy thông tin về tài khoản đang đăng nhập
 
-const ContributionForGuest = () => {
+const ContributionForGuest = () => { 
   const [contributions, setContributions] = useState([]);
   const [selectedContribution, setSelectedContribution] = useState(null);
   const [isShowModalViewContribution, setIsShowModalViewContribution] = useState(false);
 
-  const fetchAllContributionsForGuest = async () => {
+  const fetchContributionsForGuest = async () => {
     try {
-      const response = await ContributionService.getAllContributionForGuest();
+      const currentUser = auth.getCurrentUser();
+      // Gửi yêu cầu đến backend chỉ lấy ra các đóng góp theo faculty của khách
+      const response = await ContributionService.getAllContributionForGuest(currentUser.id);
+      
       setContributions(response.data);
     } catch (error) {
       console.error("Error fetching contributions for guest:", error);
@@ -21,8 +25,18 @@ const ContributionForGuest = () => {
   };
 
   useEffect(() => {
-    fetchAllContributionsForGuest();
-  }, []);
+    fetchContributionsForGuest();
+  }, []); 
+
+  // Tính index của đóng góp đầu tiên và cuối cùng trên trang hiện tại
+  const totalPages = 50;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(3);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = contributions.slice(indexOfFirstItem, indexOfLastItem);
+
 
   const handleViewContribution = (contribution) => {
     setSelectedContribution(contribution);
@@ -40,7 +54,7 @@ const ContributionForGuest = () => {
         <h1>View All Contribution For Guest</h1>
       </div>
       <div className="guest-content">
-        {contributions.map((contribution) => (
+        {currentItems.map((contribution) => (
           <div className="card" id="contribution-info" key={contribution.id}>
             <div className="bg-image hover-overlay">
               <img src={contribution.image} className="guest-contribution-image" alt="Contribution" />
@@ -61,6 +75,21 @@ const ContributionForGuest = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="pagination" id="contribution-paging">
+        {[1, currentPage - 1, currentPage, currentPage + 1, totalPages]
+          .filter((v, i, a) => a.indexOf(v) === i && v >= 1 && v <= totalPages)
+          .map((page) => (
+            <React.Fragment key={page}>
+              <button
+                onClick={() => setCurrentPage(page)}
+                disabled={page === currentPage}
+              >
+                {page}
+              </button>
+              {page < totalPages && <span>...</span>}
+            </React.Fragment>
+          ))}
       </div>
       {isShowModalViewContribution && (
         <ContributionForGuestDetails

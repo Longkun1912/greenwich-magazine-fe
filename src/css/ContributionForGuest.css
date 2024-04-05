@@ -7,13 +7,15 @@
 
 .guest-content {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(40vh, 1fr));
     gap: 20px;
 }
-/* .guest-content: Thiết lập hiển thị của phần nội dung của khách hàng dưới dạng grid layout, tự động điều chỉnh số lượng và kích thước của các phần tử con. */
 
 .card {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .card-body {
@@ -22,7 +24,8 @@
 
 .guest-contribution-image {
     width: 100%;
-    height: auto;
+    max-height: 150px;
+    object-fit: cover;
 }
 
 .card-title {
@@ -41,7 +44,8 @@
 }
 
 .versatile-actions .btn {
-    margin-right: 20%; /* Cách nhau một khoảng 10px */
+    /* Điều chỉnh khoảng cách giữa các nút */
+    margin-right: 10px;
 }
 
 button.btn.btn-view {
@@ -60,22 +64,9 @@ button.btn.btn-download {
     cursor: pointer;
 }
 
-.versatile-actions .btn-view:hover {
-    background-color: #e85b35; 
-    color: #fff;
-}
-
+/* Định dạng khi di chuột qua nút */
+.versatile-actions .btn-view:hover,
 .versatile-actions .btn-download:hover {
     background-color: #e85b35; 
     color: #fff;
-}
-
-
-.guest-contribution-image {
-    width: 100%;
-    /* Đảm bảo tỷ lệ khung hình được giữ nguyên */
-    max-height: 150px;
-    /* Đặt chiều cao tối đa cho ảnh */
-    object-fit: cover;
-    /* Đảm bảo ảnh được điều chỉnh tỷ lệ để vừa với khung */
 }

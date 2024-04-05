@@ -1,5 +1,6 @@
 import axios from "axios";
 import publicApi from "../services/api.service";
+import auth from "./auth.service";
 
 // all faculty
 const getAllFaculties = () => {
@@ -58,12 +59,28 @@ export const getFacultyById = async (id) => {
   }
 };
 
+//test
+const getFacultiesByCoordinator = async (coordinatorId) => {
+  try {
+    const token = auth.getCurrentAccessToken(); // Lấy token từ auth service
+    const response = await axios.get(`${publicApi.contribution}coordinator/${coordinatorId}`, {
+      headers: {
+        "x-access-token": token // Đảm bảo token được đính kèm vào header
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const facultyService = {
   postCreateFaculty,
   getAllFaculties,
   putUpdateFaculty,
   deleteFaculty,
   getFacultyById,
+  getFacultiesByCoordinator,
 };
 
 export default facultyService;

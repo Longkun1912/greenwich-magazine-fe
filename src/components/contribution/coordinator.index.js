@@ -1,61 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'; 
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
-import FacultyService from '../../services/faculty.service';
 import ContributionService from '../../services/contribution.service';
 import "../../css/IndexForCoordinator.css";
 import ModalEditContribution from "./coordinator.edit";
 import { MdEdit } from "react-icons/md";
-
-// Component thẻ của mỗi khoa
-const FacultyCard = ({ faculty, onFacultySelect }) => {
-  return (
-    <div className="card" style={{ width: '18rem' }} onClick={() => onFacultySelect(faculty._id)}>
-      <img className="card-img-top" src={faculty.image} alt={faculty.name} />
-      <div className="card-body">
-        <h5 className="card-title">{faculty.name}</h5>
-        <p className="card-text">{faculty.description}</p>
-      </div>
-    </div>
-  );
-};
+import auth from '../../services/auth.service'; 
+import { ToastContainer } from 'react-toastify';
 
 const IndexForCoordinator = () => {
-  const [selectedFacultyId, setSelectedFacultyId] = useState(null);
-  const [faculties, setFaculties] = useState([]);
   const [contributions, setContributions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isShowModalEditForCoordinator, setIsShowModalEditForCoordinator] = useState(false);
   const [dataEditForCoordinator, setDataEditForCoordinator] = useState({});
 
   useEffect(() => {
-    const fetchFaculties = async () => {
+    const fetchContributions = async () => {
       try {
-        const response = await FacultyService.getAllFaculties();
-        setFaculties(response.data);
+        const currentUser = auth.getCurrentUser();
+        setLoading(true);
+        const response = await ContributionService.getAllContributionByFaculty(currentUser.id);
+        setContributions(response.data);
+        setLoading(false);
       } catch (error) {
-        console.error('Error fetching faculties:', error);
+        setLoading(false);
+        console.error('Error fetching contributions:', error);
       }
     };
-
-    fetchFaculties();
-  }, [selectedFacultyId]);
-
-  const handleFacultySelect = async (facultyId) => {
-    setSelectedFacultyId(facultyId);
-    try {
-      setLoading(true);
-      setContributions([]);
   
-      const response = await ContributionService.getAllContributionByFaculty(facultyId);
-      setContributions(response.data);
-  
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.error('Error fetching contributions by faculty:', error);
-    }
-  };  
-
+    fetchContributions();
+  }, []);
 
   const handleEditForCoordinator = (contribution) => {
     console.log("Selected contribution:", contribution);
@@ -147,13 +120,7 @@ const IndexForCoordinator = () => {
 
   return (
     <div className="content-container">
-      <div className="faculties-container">
-        {faculties.map(faculty => (
-          <div key={faculty._id} className="faculty-card">
-            <FacultyCard faculty={faculty} onFacultySelect={handleFacultySelect} />
-          </div>
-        ))}
-      </div>
+      <h2>All Contribution For Faculty</h2>
       {loading && <div>Loading...</div>}
       <ModalEditContribution
         show={isShowModalEditForCoordinator}
@@ -162,6 +129,7 @@ const IndexForCoordinator = () => {
         contributionId={dataEditForCoordinator.id}
       />
       <MaterialReactTable table={table} />
+      <ToastContainer /> {/* Component này sẽ render ra nơi bạn muốn hiển thị toast */}
     </div>
   );
 };
