@@ -9,6 +9,7 @@ import ModalCreateEvent from './CreateEvent';
 import ModalEditEvent from './EditEvent';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import moment from 'moment';
 
 const EventManagement = () => {
   const [events, setEvents] = useState([]);
@@ -16,7 +17,13 @@ const EventManagement = () => {
   const fetchEvents = useCallback(async () => {
     try {
       const response = await EventService.getAllEvent();
-      setEvents(response.data);
+      // Định dạng lại ngày và giờ trước khi cập nhật vào state
+      const formattedEvents = response.data.map(event => ({
+        ...event,
+        firstDeadLineDate: moment(event.firstDeadLineDate).format('MMMM/DD/YYYY h:mm:ss a'),
+        finalDeadLineDate: moment(event.finalDeadLineDate).format('MMMM/DD/YYYY h:mm:ss a')
+      }));
+      setEvents(formattedEvents);
     } catch (error) {
       console.error("Error fetching events:", error);
     }

@@ -11,7 +11,7 @@ const CreateEvent = (props) => {
   const { show, handleClose } = props;
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [firstDeadLineDate, setFirstDeadLineDate] = useState("");
+  const [firstDeadLineDate, setFirstDeadLineDate] = useState(new Date()); // Set ngày giờ mặc định
   const [nameError, setNameError] = useState(false);
   const [descriptionError, setDescriptionError] = useState(false);
   const [dateError, setDateError] = useState(false);
@@ -37,7 +37,7 @@ const CreateEvent = (props) => {
         handleClose();
         setName('');
         setDescription('');
-        setFirstDeadLineDate('');
+        setFirstDeadLineDate(new Date()); // Reset ngày giờ mặc định
       }
       toast.success("Event created successfully"); 
       setTimeout(() => {

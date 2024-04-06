@@ -74,17 +74,17 @@ const Faculty = () => {
       {
         accessorKey: "_id",
         header: "ID",
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: "name",
         header: "Name",
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: "image",
         header: "Image",
-        size: 200,
+        size: 100,
         Cell: ({ cell }) => (
           <img
             src={cell.row.original.image}
@@ -96,11 +96,11 @@ const Faculty = () => {
       {
         accessorKey: "description",
         header: "Description",
-        size: 150,
+        size: 100,
       },
       {
         header: "Actions",
-        size: 150,
+        size: 100,
         Cell: ({ row }) => (
           <div>
             <button onClick={() => handleEditFaculty(row.original)}>

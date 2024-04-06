@@ -6,7 +6,6 @@ import {
 } from "material-react-table";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { MdDelete, MdEdit } from "react-icons/md";
-import "../../css/Faculty.css";
 import auth from "../../services/auth.service";
 import ContributionService from "../../services/contribution.service";
 import ModalCreateContribution from "./CreateContribution";
@@ -87,7 +86,7 @@ const ContributionManagement = () => {
       {
         accessorKey: "image",
         header: "Image",
-        size: 200,
+        size: 150,
         Cell: ({ cell }) => (
           <img
             src={cell.row.original.image}

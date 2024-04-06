@@ -3,12 +3,13 @@
 }
 
 button.btn.btn-scuccess {
-  background: green;
+  background: #14a44d;
   text-align: center;
   color: white;
-  margin-left: -81%;
   border-radius: 10px;
   transition: background-color 0.3s ease; 
+  margin: 1%;
+  margin-left: -100vh;
 }
 
 button.btn.btn-scuccess:hover {
@@ -19,8 +20,4 @@ button.btn.btn-scuccess:hover {
 .contribution-table {
   margin-top: 3vh;
   margin-left: 10%;
-}
-
-.contribution-index {
-  width: 150vh;
 }
