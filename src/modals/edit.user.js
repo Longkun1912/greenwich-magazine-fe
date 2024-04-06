@@ -32,7 +32,6 @@ const EditUserForm = (props) => {
     mobileError: "",
     passwordError: "",
     confirmPasswordError: "",
-    avatarError: "",
     roleError: "",
     facultyError: "",
   });
@@ -91,25 +90,25 @@ const EditUserForm = (props) => {
       facultyError: "",
     }));
 
-    const {
-      username,
-      mobile,
-      password,
-      confirmPassword,
-      avatar,
-      role,
-      faculty,
-    } = userForm;
+    const { username, mobile, password, confirmPassword, role, faculty } =
+      userForm;
 
     const usernameError = UserValidation.requiredField(username);
     const mobileError = UserValidation.requiredField(mobile);
-    const passwordError =
-      UserValidation.requiredField(password) ||
-      UserValidation.vpassword(password, confirmPassword);
-    const confirmPasswordError =
-      UserValidation.requiredField(confirmPassword) ||
-      UserValidation.vpassword(confirmPassword, password);
-    const avatarError = !avatar ? "Please upload an avatar." : "";
+
+    let passwordError = null;
+    if (password) {
+      passwordError = UserValidation.vpassword(password, confirmPassword);
+    }
+
+    let confirmPasswordError = null;
+    if (confirmPassword) {
+      confirmPasswordError = UserValidation.vpassword(
+        confirmPassword,
+        password
+      );
+    }
+
     const roleError = !role ? "Required." : "";
     const facultyError = !faculty ? "Please select a faculty." : "";
 
@@ -118,7 +117,6 @@ const EditUserForm = (props) => {
       mobileError ||
       passwordError ||
       confirmPasswordError ||
-      avatarError ||
       roleError ||
       facultyError
     ) {
@@ -128,7 +126,6 @@ const EditUserForm = (props) => {
         mobileError,
         passwordError,
         confirmPasswordError,
-        avatarError,
         roleError,
         facultyError,
       }));
@@ -175,7 +172,6 @@ const EditUserForm = (props) => {
     mobileError,
     passwordError,
     confirmPasswordError,
-    avatarError,
     roleError,
     facultyError,
   } = userForm;
@@ -235,7 +231,6 @@ const EditUserForm = (props) => {
               name="avatar"
               sx={{ gridColumn: "span 2" }}
             />
-            {avatarError && <Alert variant="danger">{avatarError}</Alert>}
           </div>
           <div className="input-row">
             <div className="left-select">
@@ -296,10 +291,7 @@ const EditUserForm = (props) => {
                 onChange={handleFormChange}
                 value={userForm.password}
                 defaultValue={user.password}
-                validations={[
-                  UserValidation.requiredField,
-                  UserValidation.vpassword,
-                ]}
+                validations={[UserValidation.vpassword]}
               />
               {passwordError && (
                 <div className="error-message">{passwordError}</div>
@@ -313,10 +305,7 @@ const EditUserForm = (props) => {
                 onChange={handleFormChange}
                 value={userForm.confirmPassword}
                 defaultValue={user.password}
-                validations={[
-                  UserValidation.requiredField,
-                  UserValidation.vpassword,
-                ]}
+                validations={[UserValidation.vpassword]}
               />
               {confirmPasswordError && (
                 <div className="error-message">{confirmPasswordError}</div>

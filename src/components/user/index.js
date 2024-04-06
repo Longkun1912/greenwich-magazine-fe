@@ -182,15 +182,17 @@ const UserIndex = () => {
               className="act-btn"
               onClick={() => handleEditUser(cell.row.original)}
             />
-            <MdDelete
-              className="act-btn"
-              onClick={() => confirmDelete(cell.row.original._id)}
-            />
+            {currentUser.role === "admin" && (
+              <MdDelete
+                className="act-btn"
+                onClick={() => confirmDelete(cell.row.original._id)}
+              />
+            )}
           </div>
         ),
       },
     ],
-    [confirmDelete]
+    [handleEditUser]
   );
 
   const table = useMaterialReactTable({
