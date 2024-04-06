@@ -11,6 +11,9 @@ import { Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/Navbar.css";
 import AuthService from "../services/auth.service";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserLock, faUsers } from '@fortawesome/free-solid-svg-icons';
+
 const GreenwichNavBar = ({ currentUser, handleLogout }) => {
   const navigator = useNavigate();
 
@@ -26,25 +29,26 @@ const GreenwichNavBar = ({ currentUser, handleLogout }) => {
     <MDBNavbar expand="lg" dark bgColor="primary">
       <MDBContainer id="navbar-container">
         <div className="web-brand">
+          <img src={process.env.PUBLIC_URL + '/logo192.png'} alt="Logo" className="logo" />
           <MDBNavbarBrand href="#">Greenwich</MDBNavbarBrand>
         </div>
         <MDBNavbarNav id="navbar-option">
-          <div className="left-bar">
-            <MDBNavbarItem>
-              <MDBNavbarLink href="#">Features</MDBNavbarLink>
-            </MDBNavbarItem>
-          </div>
           {!currentUser ? (
             <div className="right-bar">
-              <MDBNavbarItem id="login-option">
+             <MDBNavbarItem id="login-option">
                 <Link to="/login">
-                  <MDBNavbarLink>Login</MDBNavbarLink>
+                  <MDBNavbarLink>
+                    <FontAwesomeIcon icon={faUserLock} className="fa-icon" />
+                    Login
+                  </MDBNavbarLink>
                 </Link>
               </MDBNavbarItem>
-              <MDBNavbarItem>
+
+              <MDBNavbarItem id="register-option">
                 <MDBNavbarLink>
                   <Link to="/register">
-                    <MDBNavbarLink>Register</MDBNavbarLink>
+                    <FontAwesomeIcon icon={faUsers} className="fa-icon" />
+                    Register
                   </Link>
                 </MDBNavbarLink>
               </MDBNavbarItem>
@@ -61,7 +65,7 @@ const GreenwichNavBar = ({ currentUser, handleLogout }) => {
                 </MDBNavbarItem>
                 <div style={{ width: "20vh" }}>
                   <span>{currentUser.username}</span>
-
+  
                   <Link>
                     <Button id="logout-option" onClick={logOut}>
                       Logout

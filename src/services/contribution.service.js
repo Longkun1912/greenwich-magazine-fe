@@ -107,7 +107,7 @@ const getAllContributionByFaculty = (facultyId) => {
   });
 };
 
-//EditForCoordinator
+//Edit State, Status For Coordinator
 const EditForCoordinator = (contributionId, editForm) => {
   return axios.put(
     publicApi.contribution + "coordinator",
@@ -119,6 +119,30 @@ const EditForCoordinator = (contributionId, editForm) => {
     }
   );
 };
+
+
+//Edit Event For Coordinator
+const updateEventForCoordinator = (eventId, eventDetails) => {
+  return axios.put(
+    publicApi.event + `/${eventId}`,
+    eventDetails,
+    {
+      headers: {
+        "x-access-token": auth.getCurrentAccessToken(),
+        "Content-Type": "application/json", // Đặt Content-Type là application/json cho dữ liệu gửi đi
+      },
+    }
+  );
+};
+
+const getAllEvents = () => {
+  return axios.get(publicApi.event, {
+    headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
+    },
+  });
+};
+
 
 //Guest
 const getAllContributionForGuest = (facultyId) => {
@@ -142,6 +166,8 @@ const contributionService = {
   getAllContributionByFaculty,
   EditForCoordinator,
   getAllContributionForGuest,
+  updateEventForCoordinator,
+  getAllEvents,
 };
 
 export default contributionService;

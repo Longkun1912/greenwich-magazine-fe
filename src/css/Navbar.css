@@ -1,5 +1,17 @@
 .web-brand {
-  flex-basis: 20%;
+  display: flex; /* Sử dụng flexbox để căn chỉnh */
+  align-items: center; /* Căn giữa các phần tử theo chiều dọc */
+  margin-left: -12%;
+}
+
+.logo {
+  width: 50px; /* Độ rộng của logo */
+  height: auto; /* Chiều cao tự động để giữ tỷ lệ khung hình */
+  margin-right: 10px; /* Khoảng cách giữa logo và chữ "Greenwich" */
+}
+
+#navbar-container {
+  flex-wrap: nowrap; /* Không cho phép các phần tử tràn xuống hàng mới */
 }
 
 .left-bar {
@@ -9,15 +21,49 @@
   display: flex;
 }
 
-.right-bar {
-  width: fit-content;
-  display: flex !important;
-  flex-basis: 10%;
+.logo {
+  width: 50px; /* Độ rộng của logo */
+  height: auto; /* Chiều cao tự động để giữ tỷ lệ khung hình */
+  margin-right: 10px; /* Khoảng cách giữa logo và chữ "Greenwich" */
 }
+
+
+.right-bar {
+  display: flex;
+  justify-content: flex-end; /* Đẩy phần tử về phía bên phải */
+  align-items: center; /* Căn giữa các phần tử theo chiều dọc */
+  margin-right: -12%;
+  font-weight: bold;
+}
+
+.right-bar .navbar-item {
+  margin-left: 2rem; /* Khoảng cách giữa các navbar item */
+}
+
 
 #login-option {
   display: flex;
   align-items: center;
+  margin: 0 12px;
+}
+
+#login-option .fa-icon {
+  margin-right: 0.5rem; /* Khoảng cách giữa icon và chữ */ 
+}
+
+svg.svg-inline--fa.fa-users.fa-icon {
+  margin-right: 0.5rem; /* Khoảng cách giữa icon và chữ */
+}
+
+
+#login-option:hover,
+#register-option:hover {
+  transform: translateY(-5px); /* Di chuyển phần tử lên trên khi hover */
+}
+
+#login-option:hover .fa-icon,
+#register-option:hover .fa-icon {
+  color: #ffffff; /* Đổi màu icon khi hover */
 }
 
 #authenticated-options {

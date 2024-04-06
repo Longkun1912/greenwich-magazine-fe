@@ -16,6 +16,7 @@ export const postCreateFaculty = (name, description, image) => {
 
   return axios.post(publicApi.faculty + "create", facultyForm, {
     headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
       "Content-Type": "multipart/form-data",
     },
   });
@@ -30,6 +31,7 @@ export const putUpdateFaculty = (id, name, description, image) => {
 
   return axios.put(publicApi.faculty + `update/${id}`, facultyForm, {
     headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
       "Content-Type": "multipart/form-data",
     },
   });
@@ -41,7 +43,11 @@ const deleteFaculty = async (id) => {
     if (!id) {
       throw new Error("Missing Faculty ID");
     }
-    await axios.delete(publicApi.faculty + `delete/${id}`);
+    await axios.delete(publicApi.faculty + `delete/${id}`, {
+      headers: {
+        "x-access-token": auth.getCurrentAccessToken(),
+      },
+    });
   } catch (error) {
     console.error("Error deleting faculty:", error);
     throw error;
@@ -59,7 +65,7 @@ export const getFacultyById = async (id) => {
   }
 };
 
-//test
+//getFacultiesByCoordinator
 const getFacultiesByCoordinator = async (coordinatorId) => {
   try {
     const token = auth.getCurrentAccessToken(); // Lấy token từ auth service

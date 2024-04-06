@@ -52,7 +52,7 @@ const ContributionForGuest = () => {
   // Tính index của đóng góp đầu tiên và cuối cùng trên trang hiện tại
   const totalPages = 50;
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(3);
+  const [itemsPerPage] = useState(6);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
