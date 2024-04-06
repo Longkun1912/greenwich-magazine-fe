@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
 import { GrArticle, GrDocumentUser } from "react-icons/gr";
+import { IoMdChatboxes } from "react-icons/io";
 import {
   MdEventAvailable,
   MdOutlineClass,
@@ -147,7 +148,20 @@ const Sidebar = ({ currentUser }) => {
               <span className="option-container">
                 <MdOutlineClass className="manage-icon" />
                 <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
-                  Manage faculty's contributions
+                  Manage contributions
+                </p>
+              </span>
+            </Link>
+          </li>
+        )}
+
+        {currentUser.role === "coordinator" && (
+          <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
+            <Link to="/coordinator/chat">
+              <span className="option-container">
+                <IoMdChatboxes className="manage-icon" />
+                <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
+                  Contact students
                 </p>
               </span>
             </Link>
@@ -180,6 +194,20 @@ const Sidebar = ({ currentUser }) => {
             </Link>
           </li>
         )}
+
+        {currentUser.role === "student" && (
+          <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>
+            <Link to="/student/chat">
+              <span className="option-container">
+                <IoMdChatboxes className="manage-icon" />
+                <p className={isExpanded ? "manage-txt" : "manage-txt-hidden"}>
+                  Contact coordinator
+                </p>
+              </span>
+            </Link>
+          </li>
+        )}
+
         {/* Guest */}
         {currentUser.role === "guest" && (
           <li className={isExpanded ? "manage-bar" : "manage-bar-hidden"}>

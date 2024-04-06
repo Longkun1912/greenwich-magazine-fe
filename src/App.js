@@ -7,9 +7,10 @@ import Login from "./components/Login";
 import Profile from "./components/Profile";
 import Register from "./components/Register";
 import UnAuthorizedPage from "./components/Unauthorized";
+import CoordinatorChat from "./components/chat/coordinator.chat";
+import ContributionForGuest from "./components/contribution/contributionForGuest.index";
 import IndexForCoordinator from "./components/contribution/coordinator.index";
 import ContributionIndex from "./components/contribution/index";
-import ContributionForGuest from "./components/contribution/contributionForGuest.index";
 import StudentContributionForm from "./components/contribution/student.create";
 import StudentContributionIndex from "./components/contribution/student.view";
 import EventIndex from "./components/event/index";
@@ -106,6 +107,10 @@ function App() {
                 <Route
                   path="/coordinator/students"
                   element={<StudentIndex currentUser={currentUser} />}
+                />
+                <Route
+                  path="/coordinator/chat"
+                  element={<CoordinatorChat currentUser={currentUser} />}
                 />
               </Routes>
             </div>
