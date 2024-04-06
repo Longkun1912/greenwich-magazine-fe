@@ -1,15 +1,19 @@
+.sidebar {
+  height: 100vh; /* Chiều cao là 100% của viewport */
+}
+
 button.btn.btn-scuccess {
   background: green;
   text-align: center;
   color: white;
   margin-left: -81%;
   border-radius: 10px;
-  transition: background-color 0.3s ease; /* Smooth transition effect */
+  transition: background-color 0.3s ease; 
 }
 
 button.btn.btn-scuccess:hover {
-  background: darkgreen; /* Change background color on hover */
-  font-weight: bold; /* Make text bold on hover */
+  background: darkgreen; 
+  font-weight: bold; 
 }
 
 .contribution-table {

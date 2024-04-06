@@ -1,7 +1,6 @@
 .web-brand {
   display: flex; /* Sử dụng flexbox để căn chỉnh */
   align-items: center; /* Căn giữa các phần tử theo chiều dọc */
-  margin-left: -12%;
 }
 
 .logo {
@@ -32,7 +31,6 @@
   display: flex;
   justify-content: flex-end; /* Đẩy phần tử về phía bên phải */
   align-items: center; /* Căn giữa các phần tử theo chiều dọc */
-  margin-right: -12%;
   font-weight: bold;
 }
 
