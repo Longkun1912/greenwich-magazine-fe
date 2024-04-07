@@ -50,8 +50,8 @@ const EditEvent = (props) => {
       await fetchEvents();
       setTimeout(() => {
         handleClose();
-        toast.success("Event updated successfully");
-    }, 2500);
+      }, 2000);
+      toast.success("Event updated successfully");
     } catch (error) {
       console.error("Error updating event:", error);
       toast.error("Failed to update event");
@@ -114,11 +114,11 @@ const EditEvent = (props) => {
             Save Changes
           </Button>
         </Modal.Footer>
-        <ToastContainer />
       </Modal>
     </>
   );
 }
 
 export default EditEvent;
+<ToastContainer />
 

@@ -4,7 +4,7 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { GrView } from "react-icons/gr";
 import { ToastContainer, toast } from "react-toastify";
@@ -24,26 +24,26 @@ const IndexForCoordinator = () => {
   const [isShowModalViewDetailContribution, setIsShowModalViewDetailContribution] = useState(false);
   const [selectedContribution, setSelectedContribution] = useState(null);
 
-  useEffect(() => {
-    const fetchContributions = async () => {
-      try {
-        const currentUser = auth.getCurrentUser();
-        setLoading(true);
-        const response = await ContributionService.getAllContributionByFaculty(
-          currentUser.id
-        );
-        setContributions(response.data);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        console.error("Error fetching contributions:", error);
-      }
-    };
-
-    fetchContributions();
+  const fetchContributions = useCallback(async () => {
+    try {
+      const currentUser = auth.getCurrentUser();
+      setLoading(true);
+      const response = await ContributionService.getAllContributionByFaculty(
+        currentUser.id
+      );
+      setContributions(response.data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("Error fetching contributions:", error);
+    }
+  
   }, []);
 
-  
+  useEffect(() => {
+    fetchContributions();
+  }, [fetchContributions]);
+
   //handle View Detail Contribiton
   const handleViewDetailContribution = (contribution) => {
     setSelectedContribution(contribution);
@@ -91,11 +91,11 @@ const IndexForCoordinator = () => {
       case "rejected":
         return "status-rejected";
       case "modified":
-      return "status-modified";
+        return "status-modified";
       default:
         return "";
     }
-  };  
+  };
 
   //sử dụng để chỉnh màu cho state
   const getStateColor = (state) => {
@@ -118,7 +118,7 @@ const IndexForCoordinator = () => {
         <img
           src={cell.row.original.image}
           alt="Contribution"
-          style={{ width: "15vh", height: "15vh" , borderRadius: "3vh"}}
+          style={{ width: "15vh", height: "15vh", borderRadius: "3vh" }}
         />
       ),
     },
@@ -150,7 +150,7 @@ const IndexForCoordinator = () => {
           {cell.row.original.status}
         </button>
       ),
-    },      
+    },
     {
       accessorKey: "faculty",
       header: "Faculty",
@@ -165,7 +165,7 @@ const IndexForCoordinator = () => {
           {cell.row.original.state}
         </button>
       ),
-    },      
+    },
 
     {
       accessor: "Action",
@@ -173,11 +173,11 @@ const IndexForCoordinator = () => {
       size: 100,
       Cell: ({ row }) => (
         <div>
-          <GrView 
+          <GrView
             className="act-btn"
             onClick={() => handleViewDetailContribution(row.original)}
-          /> 
-          <AiFillEdit 
+          />
+          <AiFillEdit
             className="act-btn"
             onClick={() => handleEditForCoordinator(row.original)}
           />
@@ -193,31 +193,31 @@ const IndexForCoordinator = () => {
 
   return (
     <div className="content-container">
+      <ToastContainer />  {/* Component này sẽ render ra nơi bạn muốn hiển thị toast */}
       <h2>All Contribution For Faculty</h2>
       {selectedContribution && isShowModalViewDetailContribution && (
-          <ContributionInfo
-            open={isShowModalViewDetailContribution} 
-            close={handleClose} 
-            contribution={selectedContribution}
-          />
+        <ContributionInfo
+          open={isShowModalViewDetailContribution}
+          close={handleClose}
+          contribution={selectedContribution}
+        />
       )}
       <ModalEditContribution
         show={isShowModalEditForCoordinator}
         dataEditForCoordinator={dataEditForCoordinator}
         handleClose={handleClose}
         contributionId={dataEditForCoordinator.id}
+        fetchContributions={fetchContributions}
       />
       <div className="Coordinatorcontribution-table">
-          {loading ? (
-            <div className="loading">
-              <span>Loading Contribitons... </span>
-            </div>
-          ) : (
-            <MaterialReactTable table={table} />
-          )}
+        {loading ? (
+          <div className="loading">
+            <span>Loading Contribitons... </span>
+          </div>
+        ) : (
+          <MaterialReactTable table={table} />
+        )}
       </div>
-      <ToastContainer />{" "}
-      {/* Component này sẽ render ra nơi bạn muốn hiển thị toast */}
     </div>
   );
 };

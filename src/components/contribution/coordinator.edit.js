@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Alert } from 'react-bootstrap';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { toast } from 'react-toastify'; // Import toast
-import 'react-toastify/dist/ReactToastify.css'; // Import toast styles
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ContributionService from '../../services/contribution.service';
 
 const statusOptions = ['approved', 'rejected'];
 const stateOptions = ['public', 'private'];
 
 const CoordinatorEdit = (props) => {
-  const { show, handleClose, contribution, contributionId } = props;
+  const { show, handleClose, contribution, contributionId, fetchContributions } = props;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [contributionForm, setContributionForm] = useState({
@@ -20,7 +20,7 @@ const CoordinatorEdit = (props) => {
   });
 
   useEffect(() => {
-    // Set form fields when contribution changes
+    // Set form when contribution changes
     if (contribution) {
       setContributionForm({
         status: contribution.status,
@@ -66,21 +66,23 @@ const CoordinatorEdit = (props) => {
   
     try {
       const response = await ContributionService.EditForCoordinator(contributionId, { status, state });
+      await fetchContributions();
       if (response && response.data) {
         setIsSubmitting(false);
-        handleClose();
-        // Update contribution data in UI without refreshing the page
+        
+        // Update contribution data
         setContributionForm((prevData) => ({
           ...prevData,
           status: response.data.status,
           state: response.data.state,
         }));
-        // Show toast notification for success
-        toast.success('Contribution updated successfully!');
-        // Reload the page after 2 seconds
+
+        // tắt khung nhập dữ liệu sau 1.5s
         setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+          handleClose();
+        }, 1500);
+        // Show thông báo thành công
+        toast.success('Contribution updated successfully!');
       } else {
         throw new Error('Invalid response');
       }
@@ -165,4 +167,4 @@ const CoordinatorEdit = (props) => {
 };
 
 export default CoordinatorEdit;
-
+<ToastContainer />

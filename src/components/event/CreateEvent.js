@@ -43,7 +43,7 @@ const CreateEvent = (props) => {
       }
       setTimeout(() => {
         handleClose();
-      }, 2500);
+      }, 2000);
       toast.success("Event created successfully"); 
     } catch (error) {
       toast.error("Failed to create Event");
@@ -107,10 +107,10 @@ const CreateEvent = (props) => {
             Save Changes
           </Button>
         </Modal.Footer>
-        <ToastContainer />
       </Modal>
     </>
   );
 };
 
 export default CreateEvent;
+<ToastContainer />

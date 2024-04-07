@@ -22,7 +22,7 @@ const EditFaculty = (props) => {
   const handleEditFaculty = async () => {
     setIsSubmitting(true);
     try {
-      if (!image || !name || !description) {
+      if (!name || !description) {
         throw new Error("Please fill in all fields");
       }
 
@@ -96,10 +96,9 @@ const EditFaculty = (props) => {
             {isSubmitting ? "Updating..." : "Save changes"}
           </Button>
         </Modal.Footer>
-        <ToastContainer />
       </Modal>
     </>
   );
 };
-
 export default EditFaculty;
+<ToastContainer />

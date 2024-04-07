@@ -16,9 +16,7 @@ const CreateFaculty = (props) => {
     try {
       let res = await postCreateFaculty(name, description, image);
       await fetchFaculties();
-
       if (res && res.id) {
-        handleClose();
         setName("");
         setDescription("");
         setImage("");
@@ -26,7 +24,7 @@ const CreateFaculty = (props) => {
 
       handleClose();
       toast.success("Faculty created successfully");
-      setIsSubmitting(false);
+
     } catch (error) {
       setIsSubmitting(false);
       console.error("Error creating faculty:", error);
@@ -89,9 +87,9 @@ const CreateFaculty = (props) => {
             {isSubmitting ? "Saving..." : "Save changes"}
           </Button>
         </Modal.Footer>
-        <ToastContainer />
       </Modal>
     </>
   );
 };
 export default CreateFaculty;
+<ToastContainer />

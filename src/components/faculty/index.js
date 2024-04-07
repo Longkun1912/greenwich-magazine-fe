@@ -64,13 +64,13 @@ const Faculty = () => {
     setIsShowModalEditFaculty(true); // Hiển thị Modal chỉnh sửa khi nhấn nút
   };
 
-  const [isShowModalcreateFaculty, setIsShowModalcreateFaculty] =
+  const [isShowModalCreateFaculty, setIsShowModalCreateFaculty] =
     useState(false);
   const [isShowModalEditFaculty, setIsShowModalEditFaculty] = useState(false);
   const [dataFacultyEdit, setDataFacultyEdit] = useState({});
 
   const handleClose = () => {
-    setIsShowModalcreateFaculty(false);
+    setIsShowModalCreateFaculty(false);
     setIsShowModalEditFaculty(false);
   };
 
@@ -130,16 +130,17 @@ const Faculty = () => {
 
   return (
     <div className="content-container">
+      <ToastContainer />
       <h1>Faculties Management</h1>
       <div className="faculty-index">
         <button
-          className="btn btn-scuccess"
-          onClick={() => setIsShowModalcreateFaculty(true)}
+          className="btn btn-success"
+          onClick={() => setIsShowModalCreateFaculty(true)}
         >
           Create Faculty
         </button>
         <ModalcreateFaculty
-          show={isShowModalcreateFaculty}
+          show={isShowModalCreateFaculty}
           handleClose={handleClose}
           fetchFaculties={fetchFaculties}
         />
@@ -158,7 +159,6 @@ const Faculty = () => {
             <MaterialReactTable table={table} />
           )}
         </div>
-        <ToastContainer />
       </div>
     </div>
   );
