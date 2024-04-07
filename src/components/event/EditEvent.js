@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import '../../css/Event.css'; 
 
 const EditEvent = (props) => {
-  const { show, handleClose, dataEventEdit } = props;
+  const { show, handleClose, dataEventEdit ,fetchEvents } = props;
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [firstDeadLineDate, setFirstDeadLineDate] = useState("");
@@ -47,10 +47,10 @@ const EditEvent = (props) => {
       };
 
       await putUpdateEvent(updatedEvent);
-      toast.success("Event updated successfully");
-      handleClose();
+      await fetchEvents();
       setTimeout(() => {
-        window.location.reload();
+        handleClose();
+        toast.success("Event updated successfully");
     }, 2500);
     } catch (error) {
       console.error("Error updating event:", error);

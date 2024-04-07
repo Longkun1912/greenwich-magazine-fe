@@ -3,7 +3,8 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { MdEdit, MdDelete } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
+import { AiFillEdit } from "react-icons/ai";
 import EventService from "../../services/event.service";
 import ModalCreateEvent from './CreateEvent';
 import ModalEditEvent from './EditEvent';
@@ -11,10 +12,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment';
 
+
 const EventManagement = () => {
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchEvents = useCallback(async () => {
+    setLoading(true);
     try {
       const response = await EventService.getAllEvent();
       // Định dạng lại ngày và giờ trước khi cập nhật vào state
@@ -24,6 +28,7 @@ const EventManagement = () => {
         finalDeadLineDate: moment(event.finalDeadLineDate).format('MMMM/DD/YYYY h:mm:ss a')
       }));
       setEvents(formattedEvents);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching events:", error);
     }
@@ -106,10 +111,14 @@ const EventManagement = () => {
         size: 100,
         Cell: ({ row }) => (
           <div>
-            <button onClick={()=> handleEditEvent(row.original)}><MdEdit /></button> 
-            <button onClick={() => confirmDelete(row.original._id)}>
-              <MdDelete />
-            </button>
+            <AiFillEdit 
+              className="act-btn" 
+              onClick={()=> handleEditEvent(row.original)}
+            />
+            <MdDelete 
+              className="act-btn"
+              onClick={() => confirmDelete(row.original._id)}
+            />
           </div>
         ),
       },
@@ -127,18 +136,28 @@ const EventManagement = () => {
       <h1>Event Management</h1>
       <div className="event-index">
       <button className="btn btn-scuccess" onClick={() =>setIsShowModalCreateEvent(true)}>
-        Add New Event</button>
+        Create Event</button>
         <ModalCreateEvent
           show = {isShowModalCreateEvent}
+          fetchEvents={fetchEvents}
           handleClose = {handleClose}
         />
         <ModalEditEvent
           show={isShowModalEditEvent}
           dataEventEdit = {dataEventEdit}
+          fetchEvents={fetchEvents}
           handleClose = {handleClose}
         />
-        <MaterialReactTable table={table} />
-        <ToastContainer />
+        <div className="event-table">
+          {loading ? (
+            <div className="loading">
+              <span>Loading Events... </span>
+            </div>
+          ) : (
+            <MaterialReactTable table={table} />
+          )}
+          <ToastContainer />
+        </div>
       </div>
     </div>
   );

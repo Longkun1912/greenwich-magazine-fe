@@ -5,25 +5,35 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { MdDelete, MdEdit } from "react-icons/md";
+import { MdDelete} from "react-icons/md";
+import { GrView } from "react-icons/gr";
+import { AiFillEdit } from "react-icons/ai";
 import auth from "../../services/auth.service";
 import ContributionService from "../../services/contribution.service";
 import ModalCreateContribution from "./CreateContribution";
 import ModalEditContribution from "./EditContribution";
+import ContributionInfo from "../../modals/coordinator.ViewDetailContribution";
+import "../../css/ContributionForAdmin.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
+
+
 
 const ContributionManagement = () => {
   const currentUser = auth.getCurrentUser();
   const [contributions, setContributions] = useState([]);
-  const [isShowModalCreateContribution, setIsShowModalCreateContribution] =
-    useState(false);
-  const [isShowModalEditContribution, setIsShowModalEditContribution] =
-    useState(false);
+  const [isShowModalCreateContribution, setIsShowModalCreateContribution] = useState(false);
+  const [isShowModalEditContribution, setIsShowModalEditContribution] = useState(false);
   const [selectedContribution, setSelectedContribution] = useState(null);
+  const [isShowModalViewDetailContribution, setIsShowModalViewDetailContribution] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchContributions = useCallback(async () => {
+    setLoading(true);
     try {
       const response = await ContributionService.getAllContribution();
       setContributions(response.data);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching contributions:", error);
     }
@@ -56,6 +66,13 @@ const ContributionManagement = () => {
     [handleDelete]
   );
 
+  //handle View Detail Contribiton
+  const handleViewDetailContribution = (contribution) => {
+    setSelectedContribution(contribution);
+    setIsShowModalViewDetailContribution(true);
+  };
+
+  //Handle Edit Contribution
   const handleEditContribution = (contribution) => {
     setSelectedContribution(contribution);
     setIsShowModalEditContribution(true);
@@ -76,22 +93,34 @@ const ContributionManagement = () => {
     }
   };
 
+  //sử dụng để chỉnh màu cho status
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "pending":
+        return "status-pending";
+      case "approved":
+        return "status-approved";
+      case "rejected":
+        return "status-rejected";
+      case "modified":
+      return "status-modified";
+      default:
+        return "";
+    }
+  };  
+  
   let columns = useMemo(
     () => [
-      {
-        accessorKey: "id",
-        header: "ID",
-        size: 100,
-      },
+      
       {
         accessorKey: "image",
         header: "Image",
-        size: 150,
+        size: 100,
         Cell: ({ cell }) => (
           <img
             src={cell.row.original.image}
             alt="Contribution"
-            style={{ width: "15vh", height: "15vh" }}
+            style={{ width: "15vh", height: "15vh", borderRadius: "3vh" }}
           />
         ),
       },
@@ -101,57 +130,55 @@ const ContributionManagement = () => {
         size: 100,
       },
       {
-        accessorKey: "content",
-        header: "Content",
-        size: 100,
-      },
-      {
         accessorKey: "document",
         header: "Document",
         size: 100,
         Cell: ({ cell }) =>
           cell.row.original.document && (
-            <button
+            <button className="btn btn-AdminDownload"
               onClick={() => handleDownloadDocument(cell.row.original.document)}
             >
+              <FontAwesomeIcon icon={faDownload} className="fa-solid" />
               Download
             </button>
           ),
       },
+
       {
         accessorKey: "status",
         header: "Status",
-        size: 100,
-      },
+        size: 70,
+        Cell: ({ cell }) => (
+          <button className={`btn btn-Status ${getStatusColor(cell.row.original.status)}`}>
+            {cell.row.original.status}
+          </button>
+        ),
+      },      
+      
       {
         accessorKey: "submitter",
         header: "submitter",
-        size: 100,
+        size: 70,
       },
-      {
-        accessorKey: "event",
-        header: "Event",
-        size: 100,
-      },
-      {
-        accessorKey: "faculty",
-        header: "Faculty",
-        size: 100,
-      },
-
       ...(currentUser.role === "admin"
         ? [
             {
               header: "Actions",
-              size: 100,
+              size: 120,
               Cell: ({ row }) => (
-                <div>
-                  <button onClick={() => handleEditContribution(row.original)}>
-                    <MdEdit />
-                  </button>
-                  <button onClick={() => confirmDelete(row.original.id)}>
-                    <MdDelete />
-                  </button>
+                <div className="action-buttons">
+                    <GrView 
+                      className="act-btn"
+                      onClick={() => handleViewDetailContribution(row.original)}
+                    /> 
+                    <AiFillEdit 
+                      className="act-btn"
+                      onClick={() => handleEditContribution(row.original)}
+                    />
+                    <MdDelete 
+                      className="act-btn"
+                      onClick={() => confirmDelete(row.original.id)}
+                    /> 
                 </div>
               ),
             },
@@ -170,6 +197,7 @@ const ContributionManagement = () => {
     setIsShowModalCreateContribution(false);
     setIsShowModalEditContribution(false);
     setSelectedContribution(null);
+    setIsShowModalViewDetailContribution(false);
   };
 
   return (
@@ -180,7 +208,7 @@ const ContributionManagement = () => {
           className="btn btn-success"
           onClick={() => setIsShowModalCreateContribution(true)}
         >
-          Add New Contribution
+          Create Contribution
         </button>
         <ModalCreateContribution
           show={isShowModalCreateContribution}
@@ -195,8 +223,21 @@ const ContributionManagement = () => {
             handleClose={handleCloseModals}
           />
         )}
+        {selectedContribution && isShowModalViewDetailContribution && (
+          <ContributionInfo
+            open={isShowModalViewDetailContribution} 
+            close={handleCloseModals} 
+            contribution={selectedContribution}
+          />
+        )}
         <div className="contribution-table">
-          <MaterialReactTable table={table} />
+          {loading ? (
+            <div className="loading">
+              <span>Loading Contribitons... </span>
+            </div>
+          ) : (
+            <MaterialReactTable table={table} />
+          )}
         </div>
       </div>
     </div>

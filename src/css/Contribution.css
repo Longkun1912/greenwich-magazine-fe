@@ -43,3 +43,9 @@
   justify-content: center !important;
   margin-top: 5vh;
 }
+
+button.btn.btn-dowbload {
+  background-color: #3eab4c;
+  color: white;
+  font-weight: bold;
+}

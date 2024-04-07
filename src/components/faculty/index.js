@@ -3,9 +3,10 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { MdDelete, MdEdit } from "react-icons/md";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { MdDelete } from "react-icons/md";
+import { AiFillEdit } from "react-icons/ai";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "../../css/Faculty.css";
 import FacultyService from "../../services/faculty.service";
 import ModalcreateFaculty from "./CreateFaculty";
@@ -13,13 +14,17 @@ import ModalEditFaculty from "./EditFaculty";
 
 const Faculty = () => {
   const [faculties, setFaculties] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchFaculties = useCallback(async () => {
+    setLoading(true);
     try {
       const response = await FacultyService.getAllFaculties();
       setFaculties(response.data);
+      setLoading(false);
     } catch (error) {
-      console.error("Error fetching faculties:", error);
+      // console.error("Error fetching faculties:", error);
+      toast.error("Error fetching faculties", error);
     }
   }, []);
 
@@ -35,8 +40,8 @@ const Faculty = () => {
         fetchFaculties(); // Sau khi xóa, cập nhật lại danh sách khoa
         toast.success("Faculty deleted successfully");
       } catch (error) {
-        console.error("Error deleting faculty:", error);
-        toast.error("Failed to delete faculty");
+        // console.error("Error deleting faculty:", error);
+        toast.error("Failed to delete faculty" , error);
       }
     },
     [fetchFaculties]
@@ -89,7 +94,7 @@ const Faculty = () => {
           <img
             src={cell.row.original.image}
             alt="Faculty"
-            style={{ width: "100px", height: "auto" }}
+            style={{ width: "15vh", height: "15vh" , borderRadius: "3vh" }}
           />
         ),
       },
@@ -103,12 +108,14 @@ const Faculty = () => {
         size: 100,
         Cell: ({ row }) => (
           <div>
-            <button onClick={() => handleEditFaculty(row.original)}>
-              <MdEdit />
-            </button>
-            <button onClick={() => confirmDelete(row.original._id)}>
-              <MdDelete />
-            </button>
+              <AiFillEdit 
+                className="act-btn"
+                onClick={() => handleEditFaculty(row.original)}
+              />
+              <MdDelete 
+                className="act-btn"
+                onClick={() => confirmDelete(row.original._id)}
+              />
           </div>
         ),
       },
@@ -123,13 +130,13 @@ const Faculty = () => {
 
   return (
     <div className="content-container">
-      <h1>Faculty Management</h1>
+      <h1>Faculties Management</h1>
       <div className="faculty-index">
         <button
           className="btn btn-scuccess"
           onClick={() => setIsShowModalcreateFaculty(true)}
         >
-          Add New Faculty
+          Create Faculty
         </button>
         <ModalcreateFaculty
           show={isShowModalcreateFaculty}
@@ -142,7 +149,15 @@ const Faculty = () => {
           handleClose={handleClose}
           fetchFaculties={fetchFaculties}
         />
-        <MaterialReactTable table={table} />
+        <div className="faculty-table">
+          {loading ? (
+            <div className="loading">
+              <span>Loading Faculties... </span>
+            </div>
+          ) : (
+            <MaterialReactTable table={table} />
+          )}
+        </div>
         <ToastContainer />
       </div>
     </div>

@@ -1,0 +1,70 @@
+.sidebar {
+    height: auto; /* Chiều cao là 100% của viewport */
+}
+
+
+button.btn.btn-success {
+    background: #14a44d;
+    text-align: center;
+    color: white;
+    transition: background-color 0.3s ease; 
+    margin: 1vh;
+    border-radius: 10vh;
+    margin-right: 100vh;
+}
+
+
+.contribution-table {
+    margin-top: 3vh;
+    margin-left: 1%;
+    margin-right: 1%;
+    border-radius: 5px;
+    /* border: 2px solid #37d1e8; */
+}
+  
+button.btn.btn-AdminDownload {
+    font-size: 11px;
+    color: white;
+    background-color: black;
+    border-radius: 2vh;
+    font-weight: bold;
+    transition: background-color 0.3s ease; /* Tạo hiệu ứng chuyển đổi mượt mà */
+
+    /* Hover */
+    &:hover {
+        background-color: darkgray; /* Màu nền khi hover */
+        cursor: pointer; /* Đổi con trỏ chuột thành dấu nhấp chuột */
+    }
+}
+
+svg.svg-inline--fa.fa-download.fa-solid {
+    margin-right: 1vh;
+    font-size: 14px;
+}
+
+.MuiTableContainer-root.css-nhjqqh-MuiTableContainer-root {
+    overflow: hidden; /*ẩn thanh croll ở dưới table*/
+}
+
+button.btn.btn-Status{
+    color: white;
+    font-weight: bold;
+    border-radius: 1vh;
+} 
+
+.status-pending {
+    background-color: orange;
+}
+  
+.status-approved {
+    background-color: green;
+}
+  
+.status-rejected {
+    background-color: red;
+}
+
+.status-modified {
+    background-color: rgba(66, 173, 8, 0.714);
+}
+  

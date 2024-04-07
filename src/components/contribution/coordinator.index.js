@@ -74,7 +74,7 @@ const IndexForCoordinator = () => {
         <img
           src={cell.row.original.image}
           alt="Contribution"
-          style={{ width: "15vh", height: "15vh" }}
+          style={{ width: "15vh", height: "15vh" , borderRadius: "3vh"}}
         />
       ),
     },
@@ -94,9 +94,8 @@ const IndexForCoordinator = () => {
       size: 100,
       Cell: ({ cell }) =>
         cell.row.original.document && (
-          <button
-            onClick={() => handleDownloadDocument(cell.row.original.document)}
-          >
+          <button className="btn-download"
+            onClick={() => handleDownloadDocument(cell.row.original.document)} >
             Download
           </button>
         ),

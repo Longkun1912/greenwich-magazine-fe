@@ -1,15 +1,21 @@
 .sidebar {
-  height: 100vh; /* Chiều cao là 100% của viewport */
+  height: auto; /* Chiều cao là 100% của viewport */
 }
+
+h1 {
+  font-family: fantasy;
+  font-weight: bold;
+}
+
 
 button.btn.btn-scuccess {
   background: #14a44d;
   text-align: center;
   color: white;
-  border-radius: 10px;
   transition: background-color 0.3s ease; 
-  margin: 1%;
-  margin-left: -100vh;
+  margin: 1vh;
+  border-radius: 10vh;
+  margin-right: 100vh;
 }
 
 button.btn.btn-scuccess:hover {
@@ -17,7 +23,10 @@ button.btn.btn-scuccess:hover {
   font-weight: bold; 
 }
 
-.contribution-table {
+.faculty-table {
   margin-top: 3vh;
-  margin-left: 10%;
+  margin-left: 1%;
+  margin-right: 1%;
+  border-radius: 5px;
+  border: 2px solid #f1bdb8;
 }

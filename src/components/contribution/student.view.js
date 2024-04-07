@@ -124,14 +124,14 @@ const StudentContributionIndex = () => {
               </p>
               <div className="versatile-actions">
                 <button
-                  className="btn btn-primary"
+                  className="btn btn-view"
                   style={{ marginRight: "2vh" }}
                   onClick={() => handleViewContribution(contribution)}
                 >
                   View
                 </button>
                 <button
-                  className="btn btn-success"
+                  className="btn btn-dowbload"
                   onClick={() => handleDownloadDocument(contribution.document)}
                 >
                   Download

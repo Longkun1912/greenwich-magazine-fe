@@ -38,3 +38,11 @@
   background-color: #0056b3; /* Màu nền khi di chuột qua */
   border-color: #0056b3; /* Màu viền khi di chuột qua */
 }
+
+.event-table {
+  margin-top: 3vh;
+  margin-left: 1%;
+  margin-right: 1%;
+  border-radius: 5px;
+  /* border: 2px solid #ff8a24; */
+}

@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import '../../css/Event.css'; 
 
 const CreateEvent = (props) => {
-  const { show, handleClose } = props;
+  const { show, handleClose, fetchEvents } = props;
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [firstDeadLineDate, setFirstDeadLineDate] = useState(new Date()); // Set ngày giờ mặc định
@@ -17,6 +17,7 @@ const CreateEvent = (props) => {
   const [dateError, setDateError] = useState(false);
 
   const handleSaveEvent = async () => {
+    
     if (!name) {
       setNameError(true);
       return;
@@ -32,6 +33,7 @@ const CreateEvent = (props) => {
 
     try {
       let res = await postCreateEvent(name, description, firstDeadLineDate);
+      await fetchEvents();
       console.log(">>check res", res);
       if (res && res.id) {
         handleClose();
@@ -39,10 +41,10 @@ const CreateEvent = (props) => {
         setDescription('');
         setFirstDeadLineDate(new Date()); // Reset ngày giờ mặc định
       }
-      toast.success("Event created successfully"); 
       setTimeout(() => {
-        window.location.reload();
+        handleClose();
       }, 2500);
+      toast.success("Event created successfully"); 
     } catch (error) {
       toast.error("Failed to create Event");
       console.error("Error creating Event:", error);

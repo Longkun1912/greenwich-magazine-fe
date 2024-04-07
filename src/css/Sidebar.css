@@ -52,7 +52,8 @@ a:focus {
 }
 
 .sidebar {
-  transition: width 0.3s ease-in-out;
+  /* transition: width 0.3s ease-in-out; */
+  width: 30%
 }
 
 .sidebar.collapsed {
@@ -60,7 +61,7 @@ a:focus {
 }
 
 #sidebar {
-  background: #7386d5;
+  background: #4a4a4d;
   color: #fff;
   transition: all 0.3s;
   margin-left: 0 !important;
@@ -72,7 +73,7 @@ a:focus {
 
 #sidebar .sidebar-header {
   padding: 3vh;
-  background: #6d7fcc;
+  background: #4a4a4d;
   display: flex !important;
 }
 
@@ -93,8 +94,10 @@ a:focus {
 }
 
 #sidebar ul li a:hover {
-  color: #7386d5;
-  background: #fff;
+  color: #131827;
+  background: #cb6565;
+  transform: translateY(-5px); /* Di chuyển phần tử lên trên khi hover */
+
 }
 
 #sidebar ul li.active > a,
