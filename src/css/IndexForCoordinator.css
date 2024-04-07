@@ -1,58 +1,47 @@
-.faculties-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+.Coordinatorcontribution-table {
+  margin-top: 3vh;
+  margin-left: 1%;
+  margin-right: 1%;
+  border-radius: 5px;
+  /* border: 2px solid #f1bdb8; */
 }
 
-.faculty-card {
-  width: calc(25% - 1%); /* 4 cards per row with spacing */
-  margin-bottom: 2%;
-}
 
-.card {
-  border: 2px solid #f4cece;
-  border-radius: 10px; /* Sửa giá trị để làm tròn các góc */
-  overflow: hidden;
-}
-
-.card-img-top {
-  width: 100%;
-  height: auto;
-}
-
-.card-body {
-  padding: 5%;
-}
-
-.card-title {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.card-text {
-  font-size: 14px;
-}
-
-/* CSS for red text color */
-.red-text {
-  color: red;
-}
-
-/* CSS for public button */
-.public-button {
+button.btn.btn-Status{
   color: white;
-  background-color: green;
-  text-align: center;
-  border-radius: 7px;
-  box-sizing: border-box;
   font-weight: bold;
-  transition: background-color 0.3s;
-  padding: 8px 16px; /* Thêm padding để nút trở nên dễ nhìn hơn */
-  cursor: pointer; /* Thêm hiệu ứng con trỏ khi rê chuột */
-  outline: none; /* Loại bỏ viền trên nút khi được click */
-  border: none; /* Loại bỏ border trên nút */
+  border-radius: 1vh;
+} 
+
+/* màu Status */
+.status-pending {
+  background-color: orange;
 }
 
-.public-button:hover {
-  background-color: rgb(80, 201, 80);
+.status-approved {
+  background-color: green;
+}
+
+.status-rejected {
+  background-color: red;
+}
+
+.status-modified {
+  background-color: rgba(66, 173, 8, 0.714);
+}
+
+/* màu State */
+
+button.btn.btn-State{
+  color: white;
+  font-weight: bold;
+  border-radius: 1vh;
+} 
+
+.status-public{
+  background-color: #10d220;
+}
+
+.status-private{
+  background-color: red;
 }

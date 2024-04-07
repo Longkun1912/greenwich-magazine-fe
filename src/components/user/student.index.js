@@ -51,12 +51,12 @@ const StudentIndex = () => {
       {
         accessorKey: "_id",
         header: "ID",
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: "username",
         header: "Username",
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: "avatar",
@@ -73,16 +73,16 @@ const StudentIndex = () => {
       {
         accessorKey: "email",
         header: "Email",
-        size: 200,
+        size: 150,
       },
       {
         accessorKey: "mobile",
         header: "Mobile",
-        size: 200,
+        size: 100,
       },
       {
         header: "Actions",
-        size: 150,
+        size: 100,
         Cell: ({ cell }) => (
           <AiFillEdit
             className="act-btn"

@@ -32,6 +32,10 @@ const ContributionInfo = ({ open, close, contribution }) => {
             <span className="info-value">{contribution.faculty}</span>
           </div>
           <div className="info-row">
+            <span className="info-label">Submitter: </span>
+            <span className="info-value">{contribution.submitter}</span>
+          </div>
+          <div className="info-row">
             <span className="info-label">State: </span>
             <span className="info-value">{contribution.state}</span>
           </div>

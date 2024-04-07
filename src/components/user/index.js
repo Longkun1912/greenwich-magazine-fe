@@ -147,31 +147,31 @@ const UserIndex = () => {
       {
         accessorKey: "_id",
         header: "ID",
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: "username",
         header: "Username",
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: "email",
         header: "Email",
-        size: 200,
+        size: 150,
       },
       {
         accessorKey: "role",
         header: "Role",
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: "faculty",
         header: "Faculty",
-        size: 150,
+        size: 100,
       },
       {
         header: "Actions",
-        size: 150,
+        size: 100,
         Cell: ({ cell }) => (
           <div className="action-buttons">
             <GrView
