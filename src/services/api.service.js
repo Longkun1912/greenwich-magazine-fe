@@ -9,7 +9,7 @@ const publicApi = {
   event: serverURL + "/api/event-management/events",
   dashboard: serverURL + "/api/dashboard/",
   contributionForGuest: serverURL + "/api/guest/contribution/",
-  chat: serverURL + "/api/chat/",
+  chat: serverURL + "/api/chat-management/",
 };
 export default publicApi;
 

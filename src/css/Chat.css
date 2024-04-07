@@ -1,0 +1,74 @@
+#manage-message-btn {
+  color: darkslategrey;
+  font-size: 3vh;
+}
+
+#search-student-input {
+  height: 7vh;
+}
+
+#search-student-btn {
+  height: 7vh;
+  background-color: #3b71ca;
+  color: ghostwhite;
+}
+
+#select-student-chat-btn {
+  width: 100%;
+}
+
+#chat-info {
+  width: 100%;
+  margin-top: -1vh;
+}
+
+#student-avatar {
+  width: 10vh;
+  height: 10vh;
+}
+
+#student-chat-info {
+  text-align: left;
+  margin-left: 1vh;
+}
+
+.messages-container {
+  height: 70vh;
+  background-color: aliceblue;
+  border-radius: 2vh;
+  overflow-y: auto;
+  box-shadow: 0 1vh 3vh 0 rgba(0, 0, 0, 0.1), 0 1vh 2vh 0 rgba(0, 0, 0, 0.06);
+}
+
+#sender-avatar {
+  margin-left: 2vh;
+  margin-right: 0 !important;
+  width: 9vh;
+  height: 9vh;
+}
+
+#receiver-avatar {
+  margin-right: 2vh;
+  margin-left: 0 !important;
+  width: 9vh;
+  height: 9vh;
+}
+
+.message-management {
+  display: flex;
+  margin-top: 2vh;
+  margin-left: 2vh;
+}
+
+#edit-message-btn {
+  font-size: 4vh;
+  color: cornflowerblue;
+  margin-right: 1vh;
+  cursor: pointer;
+}
+
+#delete-message-btn {
+  font-size: 4vh;
+  color: orangered;
+  cursor: pointer;
+}
