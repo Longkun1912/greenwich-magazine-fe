@@ -1,3 +1,8 @@
+.chat-header {
+  margin-top: -4vh;
+  margin-bottom: 4vh;
+}
+
 #manage-message-btn {
   color: darkslategrey;
   font-size: 3vh;
@@ -15,6 +20,24 @@
 
 #select-student-chat-btn {
   width: 100%;
+}
+
+#chat-list {
+  height: 60vh;
+  overflow-y: auto;
+}
+
+.chat-details {
+  background-color: cornflowerblue;
+  height: 8vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2vh;
+}
+
+#message-title {
+  color: ghostwhite;
 }
 
 #chat-info {

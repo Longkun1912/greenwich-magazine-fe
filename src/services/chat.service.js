@@ -12,6 +12,16 @@ const getStudentsInFacultyForChat = () => {
   });
 };
 
+const contactCoordinator = () => {
+  const currentUser = auth.getCurrentUser();
+
+  return axios.get(publicApi.chat + "coordinator/" + currentUser.id, {
+    headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
+    },
+  });
+};
+
 const getMessagesInSelectedChat = (chatId) => {
   return axios.get(publicApi.chat + "messages/" + chatId, {
     headers: {
@@ -48,6 +58,7 @@ const deleteMessage = (messageId) => {
 
 const ChatService = {
   getStudentsInFacultyForChat,
+  contactCoordinator,
   getMessagesInSelectedChat,
   sendMessage,
   editMessage,

@@ -8,6 +8,7 @@ import Profile from "./components/Profile";
 import Register from "./components/Register";
 import UnAuthorizedPage from "./components/Unauthorized";
 import CoordinatorChat from "./components/chat/coordinator.chat";
+import StudentChat from "./components/chat/student.chat";
 import ContributionForGuest from "./components/contribution/contributionForGuest.index";
 import IndexForCoordinator from "./components/contribution/coordinator.index";
 import ContributionIndex from "./components/contribution/index";
@@ -111,6 +112,10 @@ function App() {
                 <Route
                   path="/coordinator/chat"
                   element={<CoordinatorChat currentUser={currentUser} />}
+                />
+                <Route
+                  path="/student/chat"
+                  element={<StudentChat currentUser={currentUser} />}
                 />
               </Routes>
             </div>

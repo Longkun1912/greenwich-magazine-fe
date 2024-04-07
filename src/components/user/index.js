@@ -1,3 +1,5 @@
+import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -208,9 +210,23 @@ const UserIndex = () => {
       </button>
       <div className="user-index">
         {loading ? (
-          <div className="loading">
-            <span>Loading users... </span>
-          </div>
+          <Box>
+            <Skeleton />
+            <Skeleton animation="wave" />
+            <Skeleton animation={false} />
+            <Skeleton animation="wave" />
+            <Skeleton />
+            <Skeleton animation={false} />
+            <Skeleton animation="wave" />
+            <Skeleton />
+            <Skeleton animation={false} />
+            <Skeleton />
+            <Skeleton animation="wave" />
+            <Skeleton animation={false} />
+            <Skeleton />
+            <Skeleton animation="wave" />
+            <Skeleton animation={false} />
+          </Box>
         ) : (
           <MaterialReactTable table={table} />
         )}

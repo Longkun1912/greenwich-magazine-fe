@@ -1,17 +1,18 @@
+import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
 import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
+import moment from "moment";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { MdDelete } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
+import { MdDelete } from "react-icons/md";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import EventService from "../../services/event.service";
-import ModalCreateEvent from './CreateEvent';
-import ModalEditEvent from './EditEvent';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import moment from 'moment';
-
+import ModalCreateEvent from "./CreateEvent";
+import ModalEditEvent from "./EditEvent";
 
 const EventManagement = () => {
   const [events, setEvents] = useState([]);
@@ -22,10 +23,14 @@ const EventManagement = () => {
     try {
       const response = await EventService.getAllEvent();
       // Định dạng lại ngày và giờ trước khi cập nhật vào state
-      const formattedEvents = response.data.map(event => ({
+      const formattedEvents = response.data.map((event) => ({
         ...event,
-        firstDeadLineDate: moment(event.firstDeadLineDate).format('MMMM/DD/YYYY h:mm:ss a'),
-        finalDeadLineDate: moment(event.finalDeadLineDate).format('MMMM/DD/YYYY h:mm:ss a')
+        firstDeadLineDate: moment(event.firstDeadLineDate).format(
+          "MMMM/DD/YYYY h:mm:ss a"
+        ),
+        finalDeadLineDate: moment(event.finalDeadLineDate).format(
+          "MMMM/DD/YYYY h:mm:ss a"
+        ),
       }));
       setEvents(formattedEvents);
       setLoading(false);
@@ -61,23 +66,21 @@ const EventManagement = () => {
     [handleDelete]
   );
 
-
   //edit
   const handleEditEvent = (event) => {
     // console.log(event)
     setDataEventEdit(event);
     setIsShowModalEditEvent(true); // Hiển thị Modal chỉnh sửa khi nhấn nút
-  }
+  };
 
   const [isShowModalCreateEvent, setIsShowModalCreateEvent] = useState(false);
   const [isShowModalEditEvent, setIsShowModalEditEvent] = useState(false);
-  const [dataEventEdit, setDataEventEdit] = useState({})
+  const [dataEventEdit, setDataEventEdit] = useState({});
 
   const handleClose = () => {
     setIsShowModalCreateEvent(false);
     setIsShowModalEditEvent(false);
-  }
-
+  };
 
   const columns = useMemo(
     () => [
@@ -111,11 +114,11 @@ const EventManagement = () => {
         size: 100,
         Cell: ({ row }) => (
           <div>
-            <AiFillEdit 
-              className="act-btn" 
-              onClick={()=> handleEditEvent(row.original)}
+            <AiFillEdit
+              className="act-btn"
+              onClick={() => handleEditEvent(row.original)}
             />
-            <MdDelete 
+            <MdDelete
               className="act-btn"
               onClick={() => confirmDelete(row.original._id)}
             />
@@ -135,24 +138,42 @@ const EventManagement = () => {
     <div className="content-container">
       <h1>Event Management</h1>
       <div className="event-index">
-      <button className="btn btn-scuccess" onClick={() =>setIsShowModalCreateEvent(true)}>
-        Create Event</button>
+        <button
+          className="btn btn-scuccess"
+          onClick={() => setIsShowModalCreateEvent(true)}
+        >
+          Create Event
+        </button>
         <ModalCreateEvent
-          show = {isShowModalCreateEvent}
+          show={isShowModalCreateEvent}
           fetchEvents={fetchEvents}
-          handleClose = {handleClose}
+          handleClose={handleClose}
         />
         <ModalEditEvent
           show={isShowModalEditEvent}
-          dataEventEdit = {dataEventEdit}
+          dataEventEdit={dataEventEdit}
           fetchEvents={fetchEvents}
-          handleClose = {handleClose}
+          handleClose={handleClose}
         />
         <div className="event-table">
           {loading ? (
-            <div className="loading">
-              <span>Loading Events... </span>
-            </div>
+            <Box>
+              <Skeleton />
+              <Skeleton animation="wave" />
+              <Skeleton animation={false} />
+              <Skeleton animation="wave" />
+              <Skeleton />
+              <Skeleton animation={false} />
+              <Skeleton animation="wave" />
+              <Skeleton />
+              <Skeleton animation={false} />
+              <Skeleton />
+              <Skeleton animation="wave" />
+              <Skeleton animation={false} />
+              <Skeleton />
+              <Skeleton animation="wave" />
+              <Skeleton animation={false} />
+            </Box>
           ) : (
             <MaterialReactTable table={table} />
           )}

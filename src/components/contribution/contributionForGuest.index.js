@@ -1,3 +1,5 @@
+import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import React, { useEffect, useState } from "react";
@@ -9,6 +11,7 @@ import ContributionService from "../../services/contribution.service";
 import ContributionForGuestDetails from "./contributionForGuest.view.detail";
 
 const ContributionForGuest = () => {
+  const [loading, setLoading] = useState(false);
   const [contributions, setContributions] = useState([]);
   const [selectedContribution, setSelectedContribution] = useState(null);
   const [isShowModalViewContribution, setIsShowModalViewContribution] =
@@ -16,6 +19,7 @@ const ContributionForGuest = () => {
 
   const fetchContributionsForGuest = async () => {
     try {
+      setLoading(true);
       const currentUser = auth.getCurrentUser();
       // Gửi yêu cầu đến backend chỉ lấy ra các đóng góp theo faculty của khách
       const response = await ContributionService.getAllContributionForGuest(
@@ -27,6 +31,7 @@ const ContributionForGuest = () => {
       console.error("Error fetching contributions for guest:", error);
       toast.error("Failed to fetch contributions for guest!");
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -73,45 +78,68 @@ const ContributionForGuest = () => {
       <div className="header">
         <h1>View All Contribution For Guest</h1>
       </div>
-      <div className="guest-content">
-        {currentItems.map((contribution) => (
-          <div className="card" id="contribution-info" key={contribution.id}>
-            <div className="bg-image hover-overlay">
-              <img
-                src={contribution.image}
-                className="guest-contribution-image"
-                alt="Contribution"
-              />
-            </div>
-            <div className="card-body">
-              <h5 className="card-title">{contribution.title}</h5>
-              <p className="card-text">
-                Submitted by: {contribution.submitter.username}
-              </p>
-              <p className="card-text">Faculty: {contribution.faculty.name}</p>
-              <p className="card-text">Event: {contribution.event.name}</p>
-              <div className="versatile-actions">
-                <button
-                  className="btn btn-view"
-                  onClick={() => handleViewContribution(contribution)}
-                >
-                  View
-                </button>
-                {contribution.document && (
+      {loading ? (
+        <Box>
+          <Skeleton />
+          <Skeleton animation="wave" />
+          <Skeleton animation={false} />
+          <Skeleton animation="wave" />
+          <Skeleton />
+          <Skeleton animation={false} />
+          <Skeleton animation="wave" />
+          <Skeleton />
+          <Skeleton animation={false} />
+          <Skeleton />
+          <Skeleton animation="wave" />
+          <Skeleton animation={false} />
+          <Skeleton />
+          <Skeleton animation="wave" />
+          <Skeleton animation={false} />
+        </Box>
+      ) : (
+        <div className="guest-content">
+          {currentItems.map((contribution) => (
+            <div className="card" id="contribution-info" key={contribution.id}>
+              <div className="bg-image hover-overlay">
+                <img
+                  src={contribution.image}
+                  className="guest-contribution-image"
+                  alt="Contribution"
+                />
+              </div>
+              <div className="card-body">
+                <h5 className="card-title">{contribution.title}</h5>
+                <p className="card-text">
+                  Submitted by: {contribution.submitter.username}
+                </p>
+                <p className="card-text">
+                  Faculty: {contribution.faculty.name}
+                </p>
+                <p className="card-text">Event: {contribution.event.name}</p>
+                <div className="versatile-actions">
                   <button
-                    className="btn btn-download"
-                    onClick={() =>
-                      handleDownloadDocument(contribution.document)
-                    }
+                    className="btn btn-view"
+                    onClick={() => handleViewContribution(contribution)}
                   >
-                    Download
+                    View
                   </button>
-                )}
+                  {contribution.document && (
+                    <button
+                      className="btn btn-download"
+                      onClick={() =>
+                        handleDownloadDocument(contribution.document)
+                      }
+                    >
+                      Download
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
+
       <div className="pagination" id="contribution-paging">
         {[1, currentPage - 1, currentPage, currentPage + 1, totalPages]
           .filter((v, i, a) => a.indexOf(v) === i && v >= 1 && v <= totalPages)

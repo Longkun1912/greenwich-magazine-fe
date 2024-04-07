@@ -93,6 +93,7 @@ const EditMessageForm = ({ message, refreshMessages, open, close }) => {
               style={{ marginTop: "2vh" }}
               value={messageForm.content}
               onChange={handleChange}
+              rows={6}
             ></textarea>
             {messageForm.contentError && (
               <div className="alert alert-danger mt-1">

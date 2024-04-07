@@ -1,12 +1,14 @@
+import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
 import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { MdDelete } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { MdDelete } from "react-icons/md";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../../css/Faculty.css";
 import FacultyService from "../../services/faculty.service";
 import ModalcreateFaculty from "./CreateFaculty";
@@ -41,7 +43,7 @@ const Faculty = () => {
         toast.success("Faculty deleted successfully");
       } catch (error) {
         // console.error("Error deleting faculty:", error);
-        toast.error("Failed to delete faculty" , error);
+        toast.error("Failed to delete faculty", error);
       }
     },
     [fetchFaculties]
@@ -94,7 +96,7 @@ const Faculty = () => {
           <img
             src={cell.row.original.image}
             alt="Faculty"
-            style={{ width: "15vh", height: "15vh" , borderRadius: "3vh" }}
+            style={{ width: "15vh", height: "15vh", borderRadius: "3vh" }}
           />
         ),
       },
@@ -108,14 +110,14 @@ const Faculty = () => {
         size: 100,
         Cell: ({ row }) => (
           <div>
-              <AiFillEdit 
-                className="act-btn"
-                onClick={() => handleEditFaculty(row.original)}
-              />
-              <MdDelete 
-                className="act-btn"
-                onClick={() => confirmDelete(row.original._id)}
-              />
+            <AiFillEdit
+              className="act-btn"
+              onClick={() => handleEditFaculty(row.original)}
+            />
+            <MdDelete
+              className="act-btn"
+              onClick={() => confirmDelete(row.original._id)}
+            />
           </div>
         ),
       },
@@ -152,9 +154,23 @@ const Faculty = () => {
         />
         <div className="faculty-table">
           {loading ? (
-            <div className="loading">
-              <span>Loading Faculties... </span>
-            </div>
+            <Box>
+              <Skeleton />
+              <Skeleton animation="wave" />
+              <Skeleton animation={false} />
+              <Skeleton animation="wave" />
+              <Skeleton />
+              <Skeleton animation={false} />
+              <Skeleton animation="wave" />
+              <Skeleton />
+              <Skeleton animation={false} />
+              <Skeleton />
+              <Skeleton animation="wave" />
+              <Skeleton animation={false} />
+              <Skeleton />
+              <Skeleton animation="wave" />
+              <Skeleton animation={false} />
+            </Box>
           ) : (
             <MaterialReactTable table={table} />
           )}
