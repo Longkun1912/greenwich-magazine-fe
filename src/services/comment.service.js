@@ -39,12 +39,13 @@ export const postComment = async (contributionId, commentContent) => {
 // Edit Comment
 export const putComment = async (commentId, newCommentContent) => {
     try {
-        // Xây dựng payload cho bình luận mới
-        const updatedCommentPayload = {
+        // Xây dựng payload cho comment cập nhật
+        const commentPayload = {
             content: newCommentContent
         };
-        // Gửi yêu cầu PUT để cập nhật bình luận
-        const response = await axios.put(publicApi.comment + `${commentId}`, updatedCommentPayload, {
+
+        // Gửi yêu cầu PUT để cập nhật comment
+        const response = await axios.put(publicApi.comment + `${commentId}`, commentPayload, {
             headers: {
                 "x-access-token": auth.getCurrentAccessToken(),
             },
@@ -60,10 +61,28 @@ export const putComment = async (commentId, newCommentContent) => {
 
 
 //delete Comment
+// export const deleteComment = async (commentId) => {
+//     try {
+//         // Gửi yêu cầu DELETE để xóa comment
+//         const response = await axios.delete(publicApi.comment + `${commentId}`, {
+//             headers: {
+//                 "x-access-token": auth.getCurrentAccessToken(),
+//             },
+//         });
+//         // Trả về dữ liệu từ phản hồi
+//         return response.data;
+//     } catch (error) {
+//         // Xử lý lỗi nếu có
+//         console.error("Error deleting comment:", error);
+//         throw error;
+//     }
+// };
+
+//delete Comment
 export const deleteComment = async (commentId) => {
     try {
         // Gửi yêu cầu DELETE để xóa comment
-        const response = await axios.delete(publicApi.comment + `${commentId}`, {
+        const response = await axios.delete(`${publicApi.comment}${commentId}`, {
             headers: {
                 "x-access-token": auth.getCurrentAccessToken(),
             },
@@ -89,7 +108,22 @@ export const getStudentViewComment = async (idUser, idContribution) => {
                 "x-access-token": auth.getCurrentAccessToken(),
             },
         });
-        return response.data;
+
+        // Kiểm tra mã trạng thái của response
+        if (response.status === 200) {
+            // Kiểm tra xem response.data có tồn tại không
+            if (response.data) {
+                return response.data;
+            } else {
+                throw new Error("No data returned from the server.");
+            }
+        } else if (response.status === 403) {
+            // Nếu mã trạng thái là 403, nghĩa là người dùng không có quyền truy cập
+            throw new Error("You are not authorized to view comments for this contribution.");
+        } else {
+            // Xử lý các trường hợp khác nếu cần thiết
+            throw new Error(`Error fetching student view comment: ${response.statusText}`);
+        }
     } catch (error) {
         console.error("Error getting student view comment:", error);
         throw error;

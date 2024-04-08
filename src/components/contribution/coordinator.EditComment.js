@@ -50,7 +50,8 @@ const EditCommentCoordinator = (props) => {
           <Form.Group controlId="formCommentContent">
             <Form.Label>Comment Content</Form.Label>
             <Form.Control
-              type="text"
+              as="textarea"
+              rows={5}
               placeholder="Enter comment content"
               value={newCommentContent}
               onChange={(e) => setNewCommentContent(e.target.value)}

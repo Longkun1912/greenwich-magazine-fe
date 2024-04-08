@@ -1,4 +1,4 @@
-const serverURL = "https://greenwich-magazine-be-mlk0.onrender.com";
+const serverURL = "http://localhost:5000";
 
 const publicApi = {
   auth: serverURL + "/api/auth/",
@@ -14,6 +14,5 @@ const publicApi = {
   studentComment: serverURL + "/api/student/comment",
 };
 export default publicApi;
-
 // Live server: https://greenwich-magazine-be-mlk0.onrender.com
 // Local server: http://localhost:5000

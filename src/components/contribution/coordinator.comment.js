@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer, toast } from "react-toastify"; 
+// import "react-toastify/dist/ReactToastify.css";
 import { postComment } from "../../services/comment.service";
 
 const CoordinatorComment = (props) => {
@@ -15,25 +15,29 @@ const CoordinatorComment = (props) => {
 
   const handleSubmit = async (e) => {
     setIsSubmitting(true);
-    e.preventDefault();
-
     try {
       // Gửi comment
       await postComment(contributionId, commentContent);
-      handleClose();
-      // Thông báo thành công
-      toast.success("Comment created successfully!");
-      // Fetch comments và đóng modal
       await fetchContributions();
+      setTimeout(() => {
+        setIsSubmitting(false);
+        handleClose();
+      }, 2000);
+      // toast.success("Comment created successfully!");
+      // Fetch comments và đóng modal
     } catch (error) {
       setIsSubmitting(false);
-      toast.error("Failed to create comment!! Contributions have comments.");
+      console.error("Error creating faculty:", error);
+      // toast.error("Failed to create faculty");
     }
+    e.preventDefault();
+
   };
-  
+
 
   return (
     <>
+          {/* <ToastContainer/> */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title className="modal-title7">Create New Comment</Modal.Title>
@@ -52,12 +56,12 @@ const CoordinatorComment = (props) => {
               />
             </Form.Group>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="primary" onClick={handleSubmit}>
-                    {isSubmitting ? "Saving..." : "Save changes"}
-                </Button>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={handleSubmit}>
+                {isSubmitting ? "Saving..." : "Save changes"}
+              </Button>
             </Modal.Footer>
           </Form>
         </Modal.Body>
@@ -67,4 +71,3 @@ const CoordinatorComment = (props) => {
 };
 
 export default CoordinatorComment;
-

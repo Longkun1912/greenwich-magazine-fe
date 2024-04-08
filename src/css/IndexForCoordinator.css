@@ -50,7 +50,65 @@ button.btn.btn-State{
   background-color: red;
 }
 
+
 /* View Detail Contribution Css */
 span.info-label {
   font-weight: bold;
+}
+
+.feedback-content {
+  position: relative;
+  max-height: 200px;
+  overflow-y: auto;
+  word-wrap: break-word;
+}
+
+.btn-edit,
+.btn-delete {
+  display: inline-block; /* Đặt các nút là inline-block để chúng được căn chỉnh ngang hàng */
+  width: 9vh;
+  height: 4.5vh;
+  border-radius: 2vh;
+  font-weight: 700;
+}
+
+.btn-edit {
+  background-color: black;
+  color: white;
+  margin-right: 1vh; /* Cách nút "Edit" và "Delete" nhau 1vh */
+}
+
+.btn-delete {
+  background-color: rgb(255, 0, 0);
+  color: white;
+}
+
+button.btn-save,
+button.btn-cancel {
+  display: inline-block;
+  width: 9vh;
+  height: 4.5vh;
+  border-radius: 2vh;
+  font-weight: 700;
+}
+
+button.btn-save {
+  background-color: black;
+  color: white;
+  margin-right: 1vh; /* Cách nút "Save" và "Cancel" nhau 1vh */
+}
+
+button.btn-cancel {
+  background-color: rgb(0, 4, 250);
+  width: 10vh;
+  height: 4.5vh;
+  color: white;
+}
+
+
+input[type="text"] {
+  height: 16vh;
+  width: 63vh;
+  word-wrap: break-word;
+  overflow-y: auto;
 }

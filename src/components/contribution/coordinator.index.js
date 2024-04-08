@@ -220,10 +220,8 @@ const IndexForCoordinator = () => {
 
       <ToastContainer />  {/* Component này sẽ render ra nơi bạn muốn hiển thị toast */}
       <h1>All Contribution In <span>{currentUser.faculty}</span></h1>
-
       <ToastContainer />{" "}
       {/* Component này sẽ render ra nơi bạn muốn hiển thị toast */}
-      <h2>All Contribution For Faculty</h2>
       {selectedContribution && isShowModalViewDetailContribution && (
         <ContributionInfo
           open={isShowModalViewDetailContribution}
