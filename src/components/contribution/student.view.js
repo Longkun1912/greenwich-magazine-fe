@@ -73,12 +73,12 @@ const StudentContributionIndex = () => {
 
 
   //handle view feedback
-  const handleViewFeeback = (contribution) => {
+  const handleViewFeedback = (contribution) => {
     setSelectedContribution(contribution);
     setIsShowModalViewFeedback(true);
   }
 
-  const handleCloseModalViewFeeback = () => {
+  const handleCloseModalViewFeedback = () => {
     setIsShowModalViewFeedback(false);
   };
 
@@ -114,25 +114,19 @@ const StudentContributionIndex = () => {
       <div className="header">
         <h1>Contributions in your <span>{currentAuthenticatedUser.faculty}</span></h1>
       </div>
-<<<<<<< HEAD
       <div className="student-content">
         {currentItems.map((contribution) => (
-          <div className="card" id="contribution-info">
-            <div
-              className="bg-image hover-overlay"
+          <div className="card" id="contribution-info" key={contribution.id}>
+            <div className="bg-image hover-overlay"
               data-mdb-ripple-init
-              data-mdb-ripple-color="light"
-            >
-              <img
-                src={contribution.image}
+              data-mdb-ripple-color="light">
+              <img src={contribution.image}
                 className="student-contribution-image"
-                alt="Nature"
-              />
+                alt="Nature" />
               <a href="#!">
-                <div
-                  className="mask"
-                  style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}
-                ></div>
+                <div className="mask"
+                  style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}>
+                </div>
               </a>
             </div>
             <div className="card-body">
@@ -141,155 +135,70 @@ const StudentContributionIndex = () => {
                 Submitted by: {contribution.submitter}
               </p>
               <div className="versatile-actions">
-                <button
-                  className="btn btn-studentview"
+                <button className="btn btn-studentview"
                   style={{ marginRight: "2vh" }}
-                  onClick={() => handleViewContribution(contribution)}
-                >
+                  onClick={() => handleViewContribution(contribution)}>
                   View
                 </button>
-                <button
-                  className="btn btn-dowbload"
-                  onClick={() => handleDownloadDocument(contribution.document)}
-                >
+                <button className="btn btn-download"
+                  onClick={() => handleDownloadDocument(contribution.document)}>
                   Download
                 </button>
-=======
-      {loading ? (
-        <Box>
-          <Skeleton />
-          <Skeleton animation="wave" />
-          <Skeleton animation={false} />
-          <Skeleton animation="wave" />
-          <Skeleton />
-          <Skeleton animation={false} />
-          <Skeleton animation="wave" />
-          <Skeleton />
-          <Skeleton animation={false} />
-          <Skeleton />
-          <Skeleton animation="wave" />
-          <Skeleton animation={false} />
-          <Skeleton />
-          <Skeleton animation="wave" />
-          <Skeleton animation={false} />
-        </Box>
-      ) : (
-        <div className="student-content">
-          {currentItems.map((contribution) => (
-            <div className="card" id="contribution-info">
-              <div
-                className="bg-image hover-overlay"
-                data-mdb-ripple-init
-                data-mdb-ripple-color="light"
-              >
-                <img
-                  src={contribution.image}
-                  className="student-contribution-image"
-                  alt="Nature"
-                />
-                <a href="#!">
-                  <div
-                    className="mask"
-                    style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}
-                  ></div>
-                </a>
->>>>>>> 774459f3696c648453d6f7cb37038ac274ca3c1b
               </div>
-              <div className="card-body">
-                <h5 className="card-title">{contribution.title}</h5>
-                <p className="card-text">
-                  Submitted by: {contribution.submitter}
-                </p>
-                <div className="versatile-actions">
-                  <button
-<<<<<<< HEAD
-                    className="btn btn-Feedback"
-                    style={{ marginRight: "2vh" }}
-                    
-                    onClick={() => handleViewFeeback(contribution)}
-                  >
-                    Feedback
-                  </button>
-                  <button
-                    className="btn btn-warning"
-=======
-                    className="btn btn-view"
->>>>>>> 774459f3696c648453d6f7cb37038ac274ca3c1b
-                    style={{ marginRight: "2vh" }}
-                    onClick={() => handleViewContribution(contribution)}
-                  >
-                    View
-                  </button>
-                  <button
-                    className="btn btn-dowbload"
-                    onClick={() =>
-                      handleDownloadDocument(contribution.document)
-                    }
-                  >
-                    Download
-                  </button>
+              {loading ? (
+                <Box>
+                  {[...Array(15)].map((_, index) => (
+                    <Skeleton key={index} />
+                  ))}
+                </Box>
+              ) : (
+                <div className="student-content">
+                  {currentItems.map((contribution) => (
+                    <div className="card" id="contribution-info" key={contribution.id}>
+                      {/* Inner div content */}
+                    </div>
+                  ))}
                 </div>
-                {currentAuthenticatedUser.email === contribution.submitter && (
-                  <div className="only-actions">
-                    <button
-                      className="btn btn-warning"
-                      style={{ marginRight: "2vh" }}
-                      onClick={() => handleEditContribution(contribution)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => handleDeleteContribution(contribution.id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                )}
+              )}
+              <div className="pagination" id="contribution-paging">
+                {[1, currentPage - 1, currentPage, currentPage + 1, totalPages]
+                  .filter((v, i, a) => a.indexOf(v) === i && v >= 1 && v <= totalPages)
+                  .map((page) => (
+                    <React.Fragment key={page}>
+                      <button onClick={() => setCurrentPage(page)}
+                        disabled={page === currentPage}>
+                        {page}
+                      </button>
+                      {page < totalPages && <span>...</span>}
+                    </React.Fragment>
+                  ))}
               </div>
+              {isShowModalEditContribution && (
+                <StudentUpdateContributionForm
+                  open={isShowModalEditContribution}
+                  close={handleCloseModalEditContribution}
+                  contribution={selectedContribution}
+                  fetchContributions={fetchContributionsInFaculty}
+                />
+              )}
+              {isShowModalViewContribution && (
+                <StudentContributionDetails
+                  contribution={selectedContribution}
+                  open={isShowModalViewContribution}
+                  close={handleCloseModalViewContribution}
+                />
+              )}
+              {isShowModalViewFeedback && (
+                <StudentViewFeedback
+                  contribution={selectedContribution}
+                  open={isShowModalViewFeedback}
+                  close={handleCloseModalViewFeedback}
+                />
+              )}
             </div>
-          ))}
-        </div>
-      )}
-
-      <div className="pagination" id="contribution-paging">
-        {[1, currentPage - 1, currentPage, currentPage + 1, totalPages]
-          .filter((v, i, a) => a.indexOf(v) === i && v >= 1 && v <= totalPages)
-          .map((page) => (
-            <React.Fragment key={page}>
-              <button
-                onClick={() => setCurrentPage(page)}
-                disabled={page === currentPage}
-              >
-                {page}
-              </button>
-              {page < totalPages && <span>...</span>}
-            </React.Fragment>
-          ))}
+          </div>
+        ))}
       </div>
-      {isShowModalEditContribution && (
-        <StudentUpdateContributionForm
-          open={isShowModalEditContribution}
-          close={handleCloseModalEditContribution}
-          contribution={selectedContribution}
-          fetchContributions={fetchContributionsInFaculty}
-        />
-      )}
-      {isShowModalViewContribution && (
-        <StudentContributionDetails
-          contribution={selectedContribution}
-          open={isShowModalViewContribution}
-          close={handleCloseModalViewContribution}
-        />
-      )}
-      {isShowModalViewFeedback && (
-        <StudentViewFeedback
-          contribution={selectedContribution}
-          open={isShowModalViewFeedback}
-          close={handleCloseModalViewFeeback}
-        />
-      )}
-
     </div>
   );
 };

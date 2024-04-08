@@ -8,21 +8,14 @@ import moment from "moment";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import EventService from "../../services/event.service";
-<<<<<<< HEAD
 import ModalCreateEvent from './CreateEvent';
 import ModalEditEvent from './EditEvent';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import moment from 'moment';
+// import moment from 'moment';
 import '../../css/Event.css'; 
 
-=======
-import ModalCreateEvent from "./CreateEvent";
-import ModalEditEvent from "./EditEvent";
->>>>>>> 774459f3696c648453d6f7cb37038ac274ca3c1b
 
 const EventManagement = () => {
   const [events, setEvents] = useState([]);
@@ -148,17 +141,10 @@ const EventManagement = () => {
     <div className="content-container">
       <h1>Event Management</h1>
       <div className="event-index">
-<<<<<<< HEAD
-      <button className="btn btn-scuccessEvent" onClick={() =>setIsShowModalCreateEvent(true)}>
-        Create Event</button>
-=======
-        <button
-          className="btn btn-scuccess"
-          onClick={() => setIsShowModalCreateEvent(true)}
-        >
-          Create Event
-        </button>
->>>>>>> 774459f3696c648453d6f7cb37038ac274ca3c1b
+      <button className="btn btn-scuccessEvent" 
+        onClick={() =>setIsShowModalCreateEvent(true)}>
+        Create Event
+      </button>
         <ModalCreateEvent
           show={isShowModalCreateEvent}
           fetchEvents={fetchEvents}

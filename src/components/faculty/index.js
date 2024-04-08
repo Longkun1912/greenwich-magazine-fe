@@ -42,13 +42,11 @@ const Faculty = () => {
         fetchFaculties(); // Sau khi xóa, cập nhật lại danh sách khoa
         toast.success("Faculty deleted successfully");
       } catch (error) {
-<<<<<<< HEAD
         console.error("Error deleting faculty:", error);
         toast.error("Failed to delete faculty" , error);
-=======
+
         // console.error("Error deleting faculty:", error);
         toast.error("Failed to delete faculty", error);
->>>>>>> 774459f3696c648453d6f7cb37038ac274ca3c1b
       }
     },
     [fetchFaculties]

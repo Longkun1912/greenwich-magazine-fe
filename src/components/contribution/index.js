@@ -13,22 +13,13 @@ import { AiFillEdit } from "react-icons/ai";
 import { GrView } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import "../../css/ContributionForAdmin.css";
-import ContributionInfo from "../../modals/coordinator.ViewDetailContribution";
 import auth from "../../services/auth.service";
 import ContributionService from "../../services/contribution.service";
 import ModalCreateContribution from "./CreateContribution";
 import ModalEditContribution from "./EditContribution";
-<<<<<<< HEAD
 import ContributionInfo from "./coordinator.ViewDetailContribution";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import "../../css/ContributionForAdmin.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
-
-
-=======
->>>>>>> 774459f3696c648453d6f7cb37038ac274ca3c1b
 
 const ContributionManagement = () => {
   const currentUser = auth.getCurrentUser();
