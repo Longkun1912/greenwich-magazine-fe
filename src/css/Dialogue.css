@@ -1,0 +1,30 @@
+.message-form {
+  margin: 1vh;
+}
+
+#compose-message-container {
+  background-color: aliceblue;
+  border-radius: 2vh;
+  margin-right: 2vh;
+}
+
+#input-message {
+  margin-top: 3vh;
+  list-style: none;
+}
+
+#loading-page {
+  height: 60vh;
+}
+
+#chat-details {
+  height: 75vh;
+  overflow-y: auto;
+  background-color: antiquewhite;
+  border-radius: 2vh;
+  box-shadow: 0 1vh 3vh 0 rgba(0, 0, 0, 0.1), 0 1vh 2vh 0 rgba(0, 0, 0, 0.06);
+}
+
+.chat-container {
+  margin: 1vh;
+}

@@ -24,6 +24,7 @@ const CoordinatorChat = ({ currentUser }) => {
   const [loadingChats, setLoadingChats] = useState(false);
   const [loadingMessages, setLoadingMessages] = useState(false);
   const [studentChats, setStudentChats] = useState([]);
+  const [originalStudentChats, setOriginalStudentChats] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
@@ -33,6 +34,7 @@ const CoordinatorChat = ({ currentUser }) => {
     try {
       const response = await ChatService.getStudentsInFacultyForChat();
       setStudentChats(response.data);
+      setOriginalStudentChats(response.data);
     } catch (error) {
       console.error(error);
       toast.error("Error fetching students");
@@ -48,19 +50,16 @@ const CoordinatorChat = ({ currentUser }) => {
   const [searchKeyword, setSearchKeyword] = useState("");
 
   const handleSearchStudent = () => {
-    if (searchKeyword.trim() !== "") {
-      setLoadingChats(true);
-      const filteredResults = studentChats.filter(
-        (studentChat) =>
-          studentChat.student.username
-            .toLowerCase()
-            .includes(searchKeyword.toLowerCase()) ||
-          studentChat.student.email
-            .toLowerCase()
-            .includes(searchKeyword.toLowerCase())
+    if (searchKeyword === "") {
+      setStudentChats(originalStudentChats);
+    } else {
+      // Filter the original list, not the state
+      const filteredChats = originalStudentChats.filter((studentChat) =>
+        studentChat.student.username
+          .toLowerCase()
+          .includes(searchKeyword.toLowerCase())
       );
-      setStudentChats(filteredResults);
-      setLoadingChats(false);
+      setStudentChats(filteredChats);
     }
   };
 
@@ -142,6 +141,9 @@ const CoordinatorChat = ({ currentUser }) => {
   return (
     <MDBContainer fluid className="py-5" style={{ backgroundColor: "#eee" }}>
       <ToastContainer />
+      <div className="chat-header">
+        <h2 className="text-center">Chat with students</h2>
+      </div>
       <MDBRow>
         <MDBCol md="6" lg="5" xl="4" className="mb-4 mb-md-0">
           <h5 className="font-weight-bold mb-3 text-center text-lg-start">
@@ -171,7 +173,7 @@ const CoordinatorChat = ({ currentUser }) => {
           </div>
 
           <MDBCard>
-            <MDBCardBody>
+            <MDBCardBody id="chat-list">
               <MDBTypography listUnStyled className="mb-0">
                 {loadingChats ? (
                   <div className="text-center">
@@ -233,6 +235,11 @@ const CoordinatorChat = ({ currentUser }) => {
         <MDBCol md="6" lg="7" xl="8">
           <MDBTypography listUnStyled>
             <div className="messages-container">
+              {selectedChat && (
+                <div className="chat-details">
+                  <h3 id="message-title">Messages</h3>
+                </div>
+              )}
               {loadingMessages ? (
                 <div className="text-center">
                   <div className="spinner-border" role="status">

@@ -1,3 +1,5 @@
+import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import { Ripple, initMDB } from "mdb-ui-kit";
@@ -18,14 +20,18 @@ const StudentContributionIndex = () => {
   const [isShowModalEditContribution, setIsShowModalEditContribution] = useState(false);
   const [isShowModalViewFeedback, setIsShowModalViewFeedback] = useState(false);
   const [selectedContribution, setSelectedContribution] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const fetchContributionsInFaculty = async () => {
     try {
+      setLoading(true);
       const response = await ContributionService.viewContributionsInFaculty();
       setContributions(response.data);
     } catch (error) {
       console.error("Error fetching contributions:", error);
+      toast.error("Failed to fetch contributions!");
     }
+    setLoading(false);
   };
 
   // Handle download document
@@ -108,6 +114,7 @@ const StudentContributionIndex = () => {
       <div className="header">
         <h1>Contributions in your <span>{currentAuthenticatedUser.faculty}</span></h1>
       </div>
+<<<<<<< HEAD
       <div className="student-content">
         {currentItems.map((contribution) => (
           <div className="card" id="contribution-info">
@@ -147,10 +154,55 @@ const StudentContributionIndex = () => {
                 >
                   Download
                 </button>
+=======
+      {loading ? (
+        <Box>
+          <Skeleton />
+          <Skeleton animation="wave" />
+          <Skeleton animation={false} />
+          <Skeleton animation="wave" />
+          <Skeleton />
+          <Skeleton animation={false} />
+          <Skeleton animation="wave" />
+          <Skeleton />
+          <Skeleton animation={false} />
+          <Skeleton />
+          <Skeleton animation="wave" />
+          <Skeleton animation={false} />
+          <Skeleton />
+          <Skeleton animation="wave" />
+          <Skeleton animation={false} />
+        </Box>
+      ) : (
+        <div className="student-content">
+          {currentItems.map((contribution) => (
+            <div className="card" id="contribution-info">
+              <div
+                className="bg-image hover-overlay"
+                data-mdb-ripple-init
+                data-mdb-ripple-color="light"
+              >
+                <img
+                  src={contribution.image}
+                  className="student-contribution-image"
+                  alt="Nature"
+                />
+                <a href="#!">
+                  <div
+                    className="mask"
+                    style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}
+                  ></div>
+                </a>
+>>>>>>> 774459f3696c648453d6f7cb37038ac274ca3c1b
               </div>
-              {currentAuthenticatedUser.email === contribution.submitter && (
-                <div className="only-actions">
+              <div className="card-body">
+                <h5 className="card-title">{contribution.title}</h5>
+                <p className="card-text">
+                  Submitted by: {contribution.submitter}
+                </p>
+                <div className="versatile-actions">
                   <button
+<<<<<<< HEAD
                     className="btn btn-Feedback"
                     style={{ marginRight: "2vh" }}
                     
@@ -160,23 +212,46 @@ const StudentContributionIndex = () => {
                   </button>
                   <button
                     className="btn btn-warning"
+=======
+                    className="btn btn-view"
+>>>>>>> 774459f3696c648453d6f7cb37038ac274ca3c1b
                     style={{ marginRight: "2vh" }}
-                    onClick={() => handleEditContribution(contribution)}
+                    onClick={() => handleViewContribution(contribution)}
                   >
-                    Edit
+                    View
                   </button>
                   <button
-                    className="btn btn-danger"
-                    onClick={() => handleDeleteContribution(contribution.id)}
+                    className="btn btn-dowbload"
+                    onClick={() =>
+                      handleDownloadDocument(contribution.document)
+                    }
                   >
-                    Delete
+                    Download
                   </button>
                 </div>
-              )}
+                {currentAuthenticatedUser.email === contribution.submitter && (
+                  <div className="only-actions">
+                    <button
+                      className="btn btn-warning"
+                      style={{ marginRight: "2vh" }}
+                      onClick={() => handleEditContribution(contribution)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => handleDeleteContribution(contribution.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
+
       <div className="pagination" id="contribution-paging">
         {[1, currentPage - 1, currentPage, currentPage + 1, totalPages]
           .filter((v, i, a) => a.indexOf(v) === i && v >= 1 && v <= totalPages)

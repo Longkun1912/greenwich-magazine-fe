@@ -1,3 +1,7 @@
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import {
@@ -9,22 +13,35 @@ import { AiFillEdit } from "react-icons/ai";
 import { GrView } from "react-icons/gr";
 import { MdAddComment } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
+import "../../css/IndexForCoordinator.css";
+import ContributionInfo from "../../modals/coordinator.ViewDetailContribution";
 import auth from "../../services/auth.service";
 import ContributionService from "../../services/contribution.service";
 import ModalEditContribution from "./coordinator.edit";
+<<<<<<< HEAD
 import ModalCommentContribution from "./coordinator.comment";
 import ContributionInfo from "./coordinator.ViewDetailContribution";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import "../../css/IndexForCoordinator.css";
+=======
+>>>>>>> 774459f3696c648453d6f7cb37038ac274ca3c1b
 
 const IndexForCoordinator = () => {
   const [contributions, setContributions] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [isShowModalEditForCoordinator, setIsShowModalEditForCoordinator] = useState(false);
+  const [isShowModalEditForCoordinator, setIsShowModalEditForCoordinator] =
+    useState(false);
   const [dataEditForCoordinator, setDataEditForCoordinator] = useState({});
+<<<<<<< HEAD
   const [isShowModalViewDetailContribution, setIsShowModalViewDetailContribution] = useState(false);
   const [isShowModalCommentContribution, setIsShowModalCommentContribution] = useState(false);
+=======
+  const [
+    isShowModalViewDetailContribution,
+    setIsShowModalViewDetailContribution,
+  ] = useState(false);
+>>>>>>> 774459f3696c648453d6f7cb37038ac274ca3c1b
   const [selectedContribution, setSelectedContribution] = useState(null);
   const currentUser = auth.getCurrentUser();
 
@@ -41,7 +58,10 @@ const IndexForCoordinator = () => {
       setLoading(false);
       console.error("Error fetching contributions:", error);
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 774459f3696c648453d6f7cb37038ac274ca3c1b
   }, []);
 
   useEffect(() => {
@@ -52,7 +72,7 @@ const IndexForCoordinator = () => {
   const handleViewDetailContribution = (contribution) => {
     setSelectedContribution(contribution);
     setIsShowModalViewDetailContribution(true);
-  }
+  };
 
   //handle Edit Contribiton
   const handleEditForCoordinator = (contribution) => {
@@ -91,7 +111,6 @@ const IndexForCoordinator = () => {
       toast.error("Failed to download document!");
     }
   };
-
 
   //sử dụng để chỉnh màu cho status
   const getStatusColor = (status) => {
@@ -145,7 +164,8 @@ const IndexForCoordinator = () => {
       size: 100,
       Cell: ({ cell }) =>
         cell.row.original.document && (
-          <button className="btn btn-AdminDownload"
+          <button
+            className="btn btn-AdminDownload"
             onClick={() => handleDownloadDocument(cell.row.original.document)}
           >
             <FontAwesomeIcon icon={faDownload} className="fa-solid" />
@@ -158,7 +178,11 @@ const IndexForCoordinator = () => {
       header: "Status",
       size: 100,
       Cell: ({ cell }) => (
-        <button className={`btn btn-Status ${getStatusColor(cell.row.original.status)}`}>
+        <button
+          className={`btn btn-Status ${getStatusColor(
+            cell.row.original.status
+          )}`}
+        >
           {cell.row.original.status}
         </button>
       ),
@@ -173,7 +197,9 @@ const IndexForCoordinator = () => {
       header: "State",
       size: 100,
       Cell: ({ cell }) => (
-        <button className={`btn btn-State ${getStateColor(cell.row.original.state)}`}>
+        <button
+          className={`btn btn-State ${getStateColor(cell.row.original.state)}`}
+        >
           {cell.row.original.state}
         </button>
       ),
@@ -209,8 +235,14 @@ const IndexForCoordinator = () => {
 
   return (
     <div className="content-container">
+<<<<<<< HEAD
       <ToastContainer />  {/* Component này sẽ render ra nơi bạn muốn hiển thị toast */}
       <h1>All Contribution In <span>{currentUser.faculty}</span></h1>
+=======
+      <ToastContainer />{" "}
+      {/* Component này sẽ render ra nơi bạn muốn hiển thị toast */}
+      <h2>All Contribution For Faculty</h2>
+>>>>>>> 774459f3696c648453d6f7cb37038ac274ca3c1b
       {selectedContribution && isShowModalViewDetailContribution && (
         <ContributionInfo
           open={isShowModalViewDetailContribution}
@@ -234,13 +266,28 @@ const IndexForCoordinator = () => {
       />
       <div className="Coordinatorcontribution-table">
         {loading ? (
-          <div className="loading">
-            <span>Loading Contribitons... </span>
-          </div>
+          <Box>
+            <Skeleton />
+            <Skeleton animation="wave" />
+            <Skeleton animation={false} />
+            <Skeleton animation="wave" />
+            <Skeleton />
+            <Skeleton animation={false} />
+            <Skeleton animation="wave" />
+            <Skeleton />
+            <Skeleton animation={false} />
+            <Skeleton />
+            <Skeleton animation="wave" />
+            <Skeleton animation={false} />
+            <Skeleton />
+            <Skeleton animation="wave" />
+            <Skeleton animation={false} />
+          </Box>
         ) : (
           <MaterialReactTable table={table} />
         )}
       </div>
+      <ToastContainer />{" "}
     </div>
   );
 };

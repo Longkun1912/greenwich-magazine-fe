@@ -1,3 +1,7 @@
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import {
@@ -5,13 +9,16 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { MdDelete} from "react-icons/md";
-import { GrView } from "react-icons/gr";
 import { AiFillEdit } from "react-icons/ai";
+import { GrView } from "react-icons/gr";
+import { MdDelete } from "react-icons/md";
+import "../../css/ContributionForAdmin.css";
+import ContributionInfo from "../../modals/coordinator.ViewDetailContribution";
 import auth from "../../services/auth.service";
 import ContributionService from "../../services/contribution.service";
 import ModalCreateContribution from "./CreateContribution";
 import ModalEditContribution from "./EditContribution";
+<<<<<<< HEAD
 import ContributionInfo from "./coordinator.ViewDetailContribution";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,14 +27,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
 
+=======
+>>>>>>> 774459f3696c648453d6f7cb37038ac274ca3c1b
 
 const ContributionManagement = () => {
   const currentUser = auth.getCurrentUser();
   const [contributions, setContributions] = useState([]);
-  const [isShowModalCreateContribution, setIsShowModalCreateContribution] = useState(false);
-  const [isShowModalEditContribution, setIsShowModalEditContribution] = useState(false);
+  const [isShowModalCreateContribution, setIsShowModalCreateContribution] =
+    useState(false);
+  const [isShowModalEditContribution, setIsShowModalEditContribution] =
+    useState(false);
   const [selectedContribution, setSelectedContribution] = useState(null);
-  const [isShowModalViewDetailContribution, setIsShowModalViewDetailContribution] = useState(false);
+  const [
+    isShowModalViewDetailContribution,
+    setIsShowModalViewDetailContribution,
+  ] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const fetchContributions = useCallback(async () => {
@@ -108,15 +122,14 @@ const ContributionManagement = () => {
       case "rejected":
         return "status-rejected";
       case "modified":
-      return "status-modified";
+        return "status-modified";
       default:
         return "";
     }
-  };  
-  
+  };
+
   let columns = useMemo(
     () => [
-      
       {
         accessorKey: "image",
         header: "Image",
@@ -140,7 +153,8 @@ const ContributionManagement = () => {
         size: 100,
         Cell: ({ cell }) =>
           cell.row.original.document && (
-            <button className="btn btn-AdminDownload"
+            <button
+              className="btn btn-AdminDownload"
               onClick={() => handleDownloadDocument(cell.row.original.document)}
             >
               <FontAwesomeIcon icon={faDownload} className="fa-solid" />
@@ -154,12 +168,16 @@ const ContributionManagement = () => {
         header: "Status",
         size: 70,
         Cell: ({ cell }) => (
-          <button className={`btn btn-Status ${getStatusColor(cell.row.original.status)}`}>
+          <button
+            className={`btn btn-Status ${getStatusColor(
+              cell.row.original.status
+            )}`}
+          >
             {cell.row.original.status}
           </button>
         ),
-      },      
-      
+      },
+
       {
         accessorKey: "submitter",
         header: "submitter",
@@ -172,18 +190,18 @@ const ContributionManagement = () => {
               size: 120,
               Cell: ({ row }) => (
                 <div className="action-buttons">
-                    <GrView 
-                      className="act-btn"
-                      onClick={() => handleViewDetailContribution(row.original)}
-                    /> 
-                    <AiFillEdit 
-                      className="act-btn"
-                      onClick={() => handleEditContribution(row.original)}
-                    />
-                    <MdDelete 
-                      className="act-btn"
-                      onClick={() => confirmDelete(row.original.id)}
-                    /> 
+                  <GrView
+                    className="act-btn"
+                    onClick={() => handleViewDetailContribution(row.original)}
+                  />
+                  <AiFillEdit
+                    className="act-btn"
+                    onClick={() => handleEditContribution(row.original)}
+                  />
+                  <MdDelete
+                    className="act-btn"
+                    onClick={() => confirmDelete(row.original.id)}
+                  />
                 </div>
               ),
             },
@@ -231,16 +249,30 @@ const ContributionManagement = () => {
         )}
         {selectedContribution && isShowModalViewDetailContribution && (
           <ContributionInfo
-            open={isShowModalViewDetailContribution} 
-            close={handleCloseModals} 
+            open={isShowModalViewDetailContribution}
+            close={handleCloseModals}
             contribution={selectedContribution}
           />
         )}
         <div className="contribution-table">
           {loading ? (
-            <div className="loading">
-              <span>Loading Contribitons... </span>
-            </div>
+            <Box>
+              <Skeleton />
+              <Skeleton animation="wave" />
+              <Skeleton animation={false} />
+              <Skeleton animation="wave" />
+              <Skeleton />
+              <Skeleton animation={false} />
+              <Skeleton animation="wave" />
+              <Skeleton />
+              <Skeleton animation={false} />
+              <Skeleton />
+              <Skeleton animation="wave" />
+              <Skeleton animation={false} />
+              <Skeleton />
+              <Skeleton animation="wave" />
+              <Skeleton animation={false} />
+            </Box>
           ) : (
             <MaterialReactTable table={table} />
           )}
