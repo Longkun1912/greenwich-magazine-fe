@@ -9,6 +9,8 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import UserService from "../services/user.service";
 import UserValidation from "../validation/user";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UserAddingForm = ({
   open,
@@ -163,6 +165,7 @@ const UserAddingForm = ({
         await UserService.createUser(user);
         await fetchUsers();
         close();
+        toast.success("User Create successfully");
 
         setIsSubmitting(false);
       } catch (error) {

@@ -16,6 +16,8 @@ import auth from "../../services/auth.service";
 import FacultyService from "../../services/faculty.service";
 import RoleService from "../../services/role.service";
 import UserService from "../../services/user.service";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UserIndex = () => {
   const currentUser = auth.getCurrentUser();
@@ -128,8 +130,10 @@ const UserIndex = () => {
       try {
         await UserService.deleteUser(id);
         await fetchUsers();
+        toast.success("User deleted successfully");
       } catch (error) {
         console.error("Error deleting user:", error);
+        toast.error("Failed to delete user" , error);
       }
     },
     [fetchUsers]
@@ -257,6 +261,7 @@ const UserIndex = () => {
           facultyOptions={facultyOptions}
         />
       )}
+      <ToastContainer />
     </div>
   );
 };

@@ -199,7 +199,7 @@ const CreateContribution = (props) => {
       <Modal show={show} onHide={handleClose}>
         <Form onSubmit={handleSubmit}>
           <Modal.Header closeButton>
-            <Modal.Title>Add New Contribution</Modal.Title>
+            <Modal.Title className="modal-title9">Add New Contribution</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="body-add-new-faculty">

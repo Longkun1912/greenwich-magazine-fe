@@ -9,6 +9,8 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import UserService from "../services/user.service";
 import UserValidation from "../validation/user";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EditUserForm = (props) => {
   const { open, close, user, refreshUsers, roleOptions, facultyOptions } =
@@ -147,6 +149,7 @@ const EditUserForm = (props) => {
         await UserService.editUser(updatedUser);
         await refreshUsers();
         close();
+        toast.success("Update user successfully");
 
         setIsSubmitting(false);
       } catch (error) {

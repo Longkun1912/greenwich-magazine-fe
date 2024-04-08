@@ -44,9 +44,6 @@ const Faculty = () => {
       } catch (error) {
         console.error("Error deleting faculty:", error);
         toast.error("Failed to delete faculty" , error);
-
-        // console.error("Error deleting faculty:", error);
-        toast.error("Failed to delete faculty", error);
       }
     },
     [fetchFaculties]

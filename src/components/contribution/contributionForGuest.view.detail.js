@@ -22,7 +22,7 @@ const ContributionForGuestDetails = ({ contribution, open, close }) => {
   return (
     <Modal show={open} onHide={close}>
       <Modal.Header closeButton>
-        <Modal.Title>Contribution Details</Modal.Title>
+        <Modal.Title className="modal-title8">Contribution Details</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>

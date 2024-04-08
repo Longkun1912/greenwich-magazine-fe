@@ -46,7 +46,11 @@
 }
 
 #student-table {
-  margin: 2vh;
+  margin-top: 3vh;
+  margin-left: 1%;
+  margin-right: 1%;
+  border-radius: 5px;
+  border: 2px solid #f1bdb8;
 }
 
 .user-index {

@@ -36,7 +36,7 @@ const CoordinatorComment = (props) => {
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Create New Comment</Modal.Title>
+          <Modal.Title className="modal-title7">Create New Comment</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
