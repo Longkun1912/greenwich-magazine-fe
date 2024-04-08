@@ -99,7 +99,6 @@ a:focus {
   color: #131827;
   background: #cb6565;
   transform: translateY(-5px); /* Di chuyển phần tử lên trên khi hover */
-
 }
 
 #sidebar ul li.active > a,

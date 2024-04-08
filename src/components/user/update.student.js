@@ -106,7 +106,7 @@ const StudentUpdateForm = ({ student, open, close, fetchStudents }) => {
       <Form onSubmit={handleSubmit}>
         <Modal.Body>
           <Form.Group>
-            <Form.Label>Username</Form.Label>
+            <Form.Label>Username:</Form.Label>
             <Form.Control
               type="text"
               name="username"
@@ -120,7 +120,7 @@ const StudentUpdateForm = ({ student, open, close, fetchStudents }) => {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Mobile</Form.Label>
+            <Form.Label>Mobile:</Form.Label>
             <Form.Control
               type="text"
               name="mobile"
@@ -132,7 +132,7 @@ const StudentUpdateForm = ({ student, open, close, fetchStudents }) => {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Password</Form.Label>
+            <Form.Label>Password:</Form.Label>
             <Form.Control
               type="password"
               name="password"
@@ -144,7 +144,7 @@ const StudentUpdateForm = ({ student, open, close, fetchStudents }) => {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Confirm Password</Form.Label>
+            <Form.Label>Confirm Password:</Form.Label>
             <Form.Control
               type="password"
               name="confirmPassword"
@@ -158,7 +158,7 @@ const StudentUpdateForm = ({ student, open, close, fetchStudents }) => {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Avatar</Form.Label>
+            <Form.Label>Avatar:</Form.Label>
             <Form.Control
               type="file"
               name="avatar"

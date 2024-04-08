@@ -1,6 +1,6 @@
 /* Event.css */
 .body-add-new-Event {
-  padding: 20px;
+  padding: 0vh;
 }
 
 .form-label {
@@ -12,31 +12,45 @@
 }
 
 .invalid-feedback {
-  color: #dc3545; /* Màu đỏ */
-  font-size: 0.875rem; /* Kích thước chữ */
-  font-style: italic; /* Kiểu chữ nghiêng */
+  color: #dc3545;
+  /* Màu đỏ */
+  font-size: 0.875rem;
+  /* Kích thước chữ */
+  font-style: italic;
+  /* Kiểu chữ nghiêng */
 }
 
 .name-error {
-  border: 1px solid #dc3545; /* Viền đỏ */
-  padding: 10px; /* Khoảng cách giữa nội dung và viền */
-  border-radius: 5px; /* Bo tròn các góc */
-  background-color: #f8d7da; /* Màu nền */
+  border: 1px solid #dc3545;
+  /* Viền đỏ */
+  padding: 10px;
+  /* Khoảng cách giữa nội dung và viền */
+  border-radius: 5px;
+  /* Bo tròn các góc */
+  background-color: #f8d7da;
+  /* Màu nền */
 }
 
 .btn-secondary {
-  background-color: #6c757d; /* Màu nền */
-  border-color: #6c757d; /* Màu viền */
+  /* background-color: #6c757d; */
+  /* Màu nền */
+  border-color: #6c757d;
+  /* Màu viền */
+  font-weight: bold;
 }
 
 .btn-secondary:hover {
-  background-color: #5a6268; /* Màu nền khi di chuột qua */
-  border-color: #545b62; /* Màu viền khi di chuột qua */
+  background-color: #5a6268;
+  /* Màu nền khi di chuột qua */
+  border-color: #545b62;
+  /* Màu viền khi di chuột qua */
 }
 
 .btn-primary:hover {
-  background-color: #0056b3; /* Màu nền khi di chuột qua */
-  border-color: #0056b3; /* Màu viền khi di chuột qua */
+  background-color: #0056b3;
+  /* Màu nền khi di chuột qua */
+  border-color: #0056b3;
+  /* Màu viền khi di chuột qua */
 }
 
 .event-table {
@@ -44,5 +58,29 @@
   margin-left: 1%;
   margin-right: 1%;
   border-radius: 5px;
-  /* border: 2px solid #ff8a24; */
+  border: 2px solid #f1bdb8;
+}
+
+button.btn.btn-scuccessEvent {
+  background: #14a44d;
+  text-align: center;
+  color: white;
+  transition: background-color 0.3s ease;
+  margin: 1vh;
+  border-radius: 10vh;
+  margin-right: 112vh;
+  font-weight: bold;
+  box-shadow: 1vh 1vh 1vh rgb(185 18 18 / 37%);
+  /* Áp dụng bóng dưới nút */
+  transition: background-color 0.3s ease;
+  /* Tạo hiệu ứng chuyển đổi mượt mà */
+
+  /* Hover */
+  &:hover {
+    background-color: rgb(235, 158, 103);
+    /* Màu nền khi hover */
+    cursor: pointer;
+    /* Đổi con trỏ chuột thành dấu nhấp chuột */
+    transform: translateY(-3px);
+  }
 }

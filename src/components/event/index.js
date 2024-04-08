@@ -11,6 +11,7 @@ import ModalEditEvent from './EditEvent';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment';
+import '../../css/Event.css'; 
 
 
 const EventManagement = () => {
@@ -135,7 +136,7 @@ const EventManagement = () => {
     <div className="content-container">
       <h1>Event Management</h1>
       <div className="event-index">
-      <button className="btn btn-scuccess" onClick={() =>setIsShowModalCreateEvent(true)}>
+      <button className="btn btn-scuccessEvent" onClick={() =>setIsShowModalCreateEvent(true)}>
         Create Event</button>
         <ModalCreateEvent
           show = {isShowModalCreateEvent}

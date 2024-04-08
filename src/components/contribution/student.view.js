@@ -4,19 +4,19 @@ import { Ripple, initMDB } from "mdb-ui-kit";
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../../css/Contribution.css";
+import "../../css/ContributionForStudent.css";
 import auth from "../../services/auth.service";
 import ContributionService from "../../services/contribution.service";
 import StudentUpdateContributionForm from "./student.update";
 import StudentContributionDetails from "./student.view.detail";
+import StudentViewFeedback from "./student.view.comment";
 
 const StudentContributionIndex = () => {
   const currentAuthenticatedUser = auth.getCurrentUser();
   const [contributions, setContributions] = useState([]);
-  const [isShowModalViewContribution, setIsShowModalViewContribution] =
-    useState(false);
-  const [isShowModalEditContribution, setIsShowModalEditContribution] =
-    useState(false);
+  const [isShowModalViewContribution, setIsShowModalViewContribution] = useState(false);
+  const [isShowModalEditContribution, setIsShowModalEditContribution] = useState(false);
+  const [isShowModalViewFeedback, setIsShowModalViewFeedback] = useState(false);
   const [selectedContribution, setSelectedContribution] = useState(null);
 
   const fetchContributionsInFaculty = async () => {
@@ -65,6 +65,17 @@ const StudentContributionIndex = () => {
     setIsShowModalEditContribution(false);
   };
 
+
+  //handle view feedback
+  const handleViewFeeback = (contribution) => {
+    setSelectedContribution(contribution);
+    setIsShowModalViewFeedback(true);
+  }
+
+  const handleCloseModalViewFeeback = () => {
+    setIsShowModalViewFeedback(false);
+  };
+
   // Handle delete contribution
   const handleDeleteContribution = async (id) => {
     try {
@@ -85,7 +96,7 @@ const StudentContributionIndex = () => {
   // Paginate contributions
   const totalPages = 100;
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(3);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -95,7 +106,7 @@ const StudentContributionIndex = () => {
     <div className="student-contribution-container">
       <ToastContainer />
       <div className="header">
-        <h1>Contributions in your faculty</h1>
+        <h1>Contributions in your <span>{currentAuthenticatedUser.faculty}</span></h1>
       </div>
       <div className="student-content">
         {currentItems.map((contribution) => (
@@ -124,7 +135,7 @@ const StudentContributionIndex = () => {
               </p>
               <div className="versatile-actions">
                 <button
-                  className="btn btn-view"
+                  className="btn btn-studentview"
                   style={{ marginRight: "2vh" }}
                   onClick={() => handleViewContribution(contribution)}
                 >
@@ -139,6 +150,14 @@ const StudentContributionIndex = () => {
               </div>
               {currentAuthenticatedUser.email === contribution.submitter && (
                 <div className="only-actions">
+                  <button
+                    className="btn btn-Feedback"
+                    style={{ marginRight: "2vh" }}
+                    
+                    onClick={() => handleViewFeeback(contribution)}
+                  >
+                    Feedback
+                  </button>
                   <button
                     className="btn btn-warning"
                     style={{ marginRight: "2vh" }}
@@ -188,6 +207,14 @@ const StudentContributionIndex = () => {
           close={handleCloseModalViewContribution}
         />
       )}
+      {isShowModalViewFeedback && (
+        <StudentViewFeedback
+          contribution={selectedContribution}
+          open={isShowModalViewFeedback}
+          close={handleCloseModalViewFeeback}
+        />
+      )}
+
     </div>
   );
 };

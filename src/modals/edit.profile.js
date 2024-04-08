@@ -143,7 +143,7 @@ const EditProfileForm = ({ user, open, close, fetchUserDetails }) => {
 
         <Modal.Body>
           <Form.Group>
-            <Form.Label>Username</Form.Label>
+            <Form.Label>Username:</Form.Label>
             <Form.Control
               type="text"
               name="username"
@@ -157,7 +157,7 @@ const EditProfileForm = ({ user, open, close, fetchUserDetails }) => {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Mobile</Form.Label>
+            <Form.Label>Mobile:</Form.Label>
             <Form.Control
               type="text"
               name="mobile"
@@ -169,7 +169,7 @@ const EditProfileForm = ({ user, open, close, fetchUserDetails }) => {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Avatar</Form.Label>
+            <Form.Label>Avatar:</Form.Label>
             <Form.Control
               type="file"
               name="avatar"
@@ -180,7 +180,7 @@ const EditProfileForm = ({ user, open, close, fetchUserDetails }) => {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Password</Form.Label>
+            <Form.Label>Password:</Form.Label>
             <Form.Control
               type="password"
               name="password"
@@ -194,7 +194,7 @@ const EditProfileForm = ({ user, open, close, fetchUserDetails }) => {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Confirm Password</Form.Label>
+            <Form.Label>Confirm Password:</Form.Label>
             <Form.Control
               type="password"
               name="confirmPassword"

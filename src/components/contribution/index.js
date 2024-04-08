@@ -12,7 +12,9 @@ import auth from "../../services/auth.service";
 import ContributionService from "../../services/contribution.service";
 import ModalCreateContribution from "./CreateContribution";
 import ModalEditContribution from "./EditContribution";
-import ContributionInfo from "../../modals/coordinator.ViewDetailContribution";
+import ContributionInfo from "./coordinator.ViewDetailContribution";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "../../css/ContributionForAdmin.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
@@ -48,8 +50,11 @@ const ContributionManagement = () => {
       try {
         await ContributionService.deleteContribution(id);
         fetchContributions(); // Sau khi xóa, cập nhật lại danh sách đóng góp
+        toast.success("Faculty deleted successfully");
       } catch (error) {
         console.error("Error deleting contribution:", error);
+        toast.error("Failed to delete faculty" , error);
+
       }
     },
     [fetchContributions]
@@ -202,6 +207,7 @@ const ContributionManagement = () => {
 
   return (
     <div className="content-container">
+      <ToastContainer />
       <h1>Contribution Management</h1>
       <div className="contribution-index">
         <button

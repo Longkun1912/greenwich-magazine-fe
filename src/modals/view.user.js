@@ -12,7 +12,7 @@ const UserInfo = ({ open, close, user }) => {
     >
       <Modal.Header closeButton>
         <Modal.Title>
-          <div>
+          <div className="modal-title4">
             <img src={user.avatar} alt="avatar" id="user-avatar" />
             <span>{user.email}</span>
           </div>
@@ -21,23 +21,23 @@ const UserInfo = ({ open, close, user }) => {
       <Modal.Body>
         <div className="user-info">
           <div className="info-row">
-            <span className="info-label">Username:</span>
+            <span className="info-label">Username: </span>
             <span className="info-value">{user.username}</span>
           </div>
           <div className="info-row">
-            <span className="info-label">Email:</span>
+            <span className="info-label">Email: </span>
             <span className="info-value">{user.email}</span>
           </div>
           <div className="info-row">
-            <span className="info-label">Mobile:</span>
+            <span className="info-label">Mobile: </span>
             <span className="info-value">{user.mobile}</span>
           </div>
           <div className="info-row">
-            <span className="info-label">Role:</span>
+            <span className="info-label">Role: </span>
             <span className="info-value">{user.role}</span>
           </div>
           <div className="info-row">
-            <span className="info-label">Faculty:</span>
+            <span className="info-label">Faculty: </span>
             <span className="info-value">{user.faculty}</span>
           </div>
         </div>

@@ -1,5 +1,5 @@
 .act-btn {
-  font-size: 2.5vh !important;
+  font-size: 3vh !important;
 }
 
 #user-avatar {
@@ -49,10 +49,34 @@
   margin: 2vh;
 }
 
-.user-index{
+.user-index {
   margin-top: 3vh;
   margin-left: 1%;
   margin-right: 1%;
   border-radius: 5px;
-  /* border: 2px solid #f1bdb8; */
+  border: 2px solid #f1bdb8;
+}
+
+button.btn.btn-successUser {
+  background: #14a44d;
+  text-align: center;
+  color: white;
+  transition: background-color 0.3s ease;
+  margin: 1vh;
+  border-radius: 10vh;
+  margin-right: 109vh;
+  font-weight: bold;
+  box-shadow: 1vh 1vh 1vh rgb(185 18 18 / 37%);
+  /* Áp dụng bóng dưới nút */
+  transition: background-color 0.3s ease;
+  /* Tạo hiệu ứng chuyển đổi mượt mà */
+
+  /* Hover */
+  &:hover {
+    background-color: rgb(235, 158, 103);
+    /* Màu nền khi hover */
+    cursor: pointer;
+    /* Đổi con trỏ chuột thành dấu nhấp chuột */
+    transform: translateY(-3px);
+  }
 }

@@ -14,6 +14,7 @@ import { Form } from "react-bootstrap";
 import "../css/Register.css";
 import auth from "../services/auth.service";
 import UserValidation from "../validation/user";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -166,13 +167,13 @@ const Register = () => {
   } = state;
 
   return (
-    <MDBContainer fluid className="bg-dark" id="register-container">
+    <MDBContainer fluid id="register-container">
       <MDBRow
         className="d-flex justify-content-center align-items-center"
         id="register-background"
       >
         <MDBCol>
-          <MDBCard className="my-4">
+          <MDBCard className="my-42">
             <MDBRow className="g-0" id="register-form">
               <MDBCol md="6" className="d-none d-md-block">
                 <MDBCardImage
@@ -289,7 +290,7 @@ const Register = () => {
                       </MDBCol>
                     </MDBRow>
 
-                    <label style={{ marginBottom: "1vh", display: "flex" }}>
+                    <label style={{ marginBottom: "1.5vh", display: "flex", fontWeight: "bold", color: "#666666", marginLeft:"0.5vh" }}>
                       Upload Avatar:
                     </label>
                     <MDBCol md="12">
@@ -315,6 +316,7 @@ const Register = () => {
                       <MDBBtn
                         color="light"
                         size="lg"
+                        className="ms-1"
                         onClick={() => resetForm()}
                       >
                         Reset all

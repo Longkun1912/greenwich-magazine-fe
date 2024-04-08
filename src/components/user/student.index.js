@@ -102,9 +102,9 @@ const StudentIndex = () => {
   return (
     <div className="container">
       <div className="header">
-        <h2>
+        <h1>
           Students in <span>{currentUser.faculty}</span>
-        </h2>
+        </h1>
       </div>
       <div className="content-container">
         <div id="student-table">

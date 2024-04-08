@@ -10,6 +10,8 @@ const publicApi = {
   dashboard: serverURL + "/api/dashboard/",
   contributionForGuest: serverURL + "/api/guest/contribution/",
   chat: serverURL + "/api/chat-management/",
+  comment: serverURL + "/api/comment-management/comment/",
+  studentComment: serverURL + "/api/student/comment",
 };
 export default publicApi;
 

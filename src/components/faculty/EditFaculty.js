@@ -3,6 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { putUpdateFaculty } from "../../services/faculty.service";
+import "../../css/Faculty.css";
 
 const EditFaculty = (props) => {
   const { show, handleClose, dataFacultyEdit, fetchFaculties } = props;
@@ -59,7 +60,7 @@ const EditFaculty = (props) => {
               {/* Hiển thị thông báo lỗi */}
               <form>
                 <div className="mb-3">
-                  <label className="form-label">Name</label>
+                  <label className="form-label">Name:</label>
                   <input
                     type="text"
                     className="form-control"
@@ -68,7 +69,7 @@ const EditFaculty = (props) => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">Description</label>
+                  <label className="form-label">Description:</label>
                   <input
                     type="text"
                     className="form-control"
@@ -77,7 +78,7 @@ const EditFaculty = (props) => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">Image</label>
+                  <label className="form-label">Image:</label>
                   <input
                     type="file"
                     className="form-control"

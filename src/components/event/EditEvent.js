@@ -69,7 +69,7 @@ const EditEvent = (props) => {
             <div>
               <form>
                 <div className="mb-3">
-                  <label className="form-label">Name</label>
+                  <label className="form-label">Name:</label>
                   <input
                     type="text"
                     className={`form-control ${nameError ? 'is-invalid' : ''}`}
@@ -79,7 +79,7 @@ const EditEvent = (props) => {
                   {nameError && <div className="invalid-feedback name-error"><i className="fas fa-exclamation-circle"></i> Name is required</div>}
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">Description</label>
+                  <label className="form-label">Description:</label>
                   <input
                     type="text"
                     className={`form-control ${descriptionError ? 'is-invalid' : ''}`}
@@ -89,7 +89,7 @@ const EditEvent = (props) => {
                   {descriptionError && <div className="invalid-feedback name-error"><i className="fas fa-exclamation-circle"></i> Description is required</div>}
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">First Deadline Date</label> <br/>
+                  <label className="form-label">First Deadline Date:</label> <br/>
                   <DatePicker
                     className={`form-control ${dateError ? 'is-invalid' : ''}`}
                     selected={firstDeadLineDate}

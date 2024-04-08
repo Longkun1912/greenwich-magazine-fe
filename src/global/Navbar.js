@@ -55,24 +55,26 @@ const GreenwichNavBar = ({ currentUser, handleLogout }) => {
             </div>
           ) : (
             <div className="right-bar">
-              <MDBNavbarItem id="authenticated-options">
-                <MDBNavbarItem>
-                  <img
-                    src={currentUser.avatar}
-                    alt="avatar"
-                    className="profile-img"
-                  />
+              <div className="right-bar1">
+                <MDBNavbarItem id="authenticated-options">
+                  <MDBNavbarItem>
+                    <img
+                      src={currentUser.avatar}
+                      alt="avatar"
+                      className="profile-img"
+                    />
+                  </MDBNavbarItem>
+                  <div style={{ width: "20vh" }}>
+                    <span className="username">{currentUser.username}</span>
+    
+                    <Link>
+                      <Button id="logout-option" onClick={logOut}>
+                        Logout
+                      </Button>
+                    </Link>
+                  </div>
                 </MDBNavbarItem>
-                <div style={{ width: "20vh" }}>
-                  <span>{currentUser.username}</span>
-  
-                  <Link>
-                    <Button id="logout-option" onClick={logOut}>
-                      Logout
-                    </Button>
-                  </Link>
-                </div>
-              </MDBNavbarItem>
+              </div>           
             </div>
           )}
         </MDBNavbarNav>

@@ -11,8 +11,8 @@ import ContributionForGuestDetails from "./contributionForGuest.view.detail";
 const ContributionForGuest = () => {
   const [contributions, setContributions] = useState([]);
   const [selectedContribution, setSelectedContribution] = useState(null);
-  const [isShowModalViewContribution, setIsShowModalViewContribution] =
-    useState(false);
+  const [isShowModalViewContribution, setIsShowModalViewContribution] = useState(false);
+  const currentUser = auth.getCurrentUser();
 
   const fetchContributionsForGuest = async () => {
     try {
@@ -71,7 +71,9 @@ const ContributionForGuest = () => {
     <div className="guest-contribution-container">
       <ToastContainer />
       <div className="header">
-        <h1>View All Contribution For Guest</h1>
+        <h1>
+          View All Contribution In <span>{currentUser.faculty}</span>
+        </h1>
       </div>
       <div className="guest-content">
         {currentItems.map((contribution) => (

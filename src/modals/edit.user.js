@@ -187,7 +187,9 @@ const EditUserForm = (props) => {
     >
       <Form onSubmit={handleSubmit}>
         <Modal.Header closeButton>
-          <Modal.Title>Update User: {user.email}</Modal.Title>
+          <Modal.Title className="modal-tile">Update User: <br/>
+            {user.email}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="input-row">

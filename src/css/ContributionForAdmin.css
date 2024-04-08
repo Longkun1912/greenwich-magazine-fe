@@ -1,5 +1,6 @@
 .sidebar {
-    height: auto; /* Chiều cao là 100% của viewport */
+    height: auto;
+    /* Chiều cao là 100% của viewport */
 }
 
 
@@ -7,10 +8,24 @@ button.btn.btn-success {
     background: #14a44d;
     text-align: center;
     color: white;
-    transition: background-color 0.3s ease; 
+    transition: background-color 0.3s ease;
     margin: 1vh;
     border-radius: 10vh;
-    margin-right: 100vh;
+    margin-right: 104vh;
+    font-weight: bold;
+    box-shadow: 1vh 1vh 1vh rgb(185 18 18 / 37%);
+    /* Áp dụng bóng dưới nút */
+    transition: background-color 0.3s ease;
+    /* Tạo hiệu ứng chuyển đổi mượt mà */
+
+    /* Hover */
+    &:hover {
+        background-color: rgb(235, 158, 103);
+        /* Màu nền khi hover */
+        cursor: pointer;
+        /* Đổi con trỏ chuột thành dấu nhấp chuột */
+        transform: translateY(-3px);
+    }
 }
 
 
@@ -19,21 +34,24 @@ button.btn.btn-success {
     margin-left: 1%;
     margin-right: 1%;
     border-radius: 5px;
-    /* border: 2px solid #37d1e8; */
+    border: 2px solid #f1bdb8;
 }
-  
+
 button.btn.btn-AdminDownload {
     font-size: 11px;
     color: white;
     background-color: black;
     border-radius: 2vh;
     font-weight: bold;
-    transition: background-color 0.3s ease; /* Tạo hiệu ứng chuyển đổi mượt mà */
+    transition: background-color 0.3s ease;
+    /* Tạo hiệu ứng chuyển đổi mượt mà */
 
     /* Hover */
     &:hover {
-        background-color: darkgray; /* Màu nền khi hover */
-        cursor: pointer; /* Đổi con trỏ chuột thành dấu nhấp chuột */
+        background-color: darkgray;
+        /* Màu nền khi hover */
+        cursor: pointer;
+        /* Đổi con trỏ chuột thành dấu nhấp chuột */
     }
 }
 
@@ -43,28 +61,42 @@ svg.svg-inline--fa.fa-download.fa-solid {
 }
 
 .MuiTableContainer-root.css-nhjqqh-MuiTableContainer-root {
-    overflow: hidden; /*ẩn thanh croll ở dưới table*/
+    overflow: hidden;
+    /*ẩn thanh croll ở dưới table*/
 }
 
-button.btn.btn-Status{
+button.btn.btn-Status {
     color: white;
     font-weight: bold;
     border-radius: 1vh;
-} 
+    width: 15vh;
+    height: 5vh;
+}
 
 .status-pending {
     background-color: orange;
 }
-  
+
 .status-approved {
     background-color: green;
 }
-  
+
 .status-rejected {
     background-color: red;
 }
 
 .status-modified {
-    background-color: rgba(66, 173, 8, 0.714);
+    background-color: blue;
 }
-  
+
+/* Edit */
+
+.modal-title2.modal-title.h4 {
+    margin-left: 10vh;
+}
+
+/* View */
+
+.modal-title3 {
+    margin-left: -10vh;
+}

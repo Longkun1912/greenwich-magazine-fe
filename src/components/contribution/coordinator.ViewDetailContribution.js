@@ -1,6 +1,27 @@
+import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
+import CommentService from "../../services/comment.service"; 
+import "../../css/IndexForCoordinator.css";
 
 const ContributionInfo = ({ open, close, contribution }) => {
+  const [comments, setComments] = useState([]); // State để lưu trữ các bình luận
+
+  // Effect hook để lấy các bình luận khi contribution thay đổi hoặc khi Modal được mở
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await CommentService.getAllComment(contribution.id); 
+        setComments(response.data); // Cập nhật state với dữ liệu bình luận từ API
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
+
+    if (open && contribution) {
+      fetchComments(); // Gọi hàm lấy bình luận khi Modal được mở và contribution có giá trị
+    }
+  }, [open, contribution]); // dependency array, sẽ chạy lại effect khi open hoặc contribution thay đổi
+
   return (
     <Modal
       aria-labelledby="contained-modal-title-vcenter"
@@ -12,14 +33,14 @@ const ContributionInfo = ({ open, close, contribution }) => {
     >
       <Modal.Header closeButton>
         <Modal.Title>
-          <div>
+          <div className="modal-title3">
             <span>{contribution.title}</span>
           </div>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="contribution-info">
-        <div className="info-row">
+          <div className="info-row">
             <span className="info-label">Id: </span>
             <span className="info-value">{contribution.id}</span>
           </div>
@@ -43,7 +64,20 @@ const ContributionInfo = ({ open, close, contribution }) => {
             <span className="info-label">Content: </span>
             <span className="info-value">{contribution.content}</span>
           </div>
-          
+          <div className="info-row">
+            <span className="info-label">Feedback: </span>
+            <div className="info-value">
+              {comments.length > 0 ? (
+                comments.map(comment => (
+                  <div key={comment.id}>
+                    <span>{comment.content}</span>
+                  </div>
+                ))
+              ) : (
+                <span>No Feedback!!</span>
+              )}
+            </div>
+          </div>
         </div>
       </Modal.Body>
       <Modal.Footer>
@@ -56,3 +90,5 @@ const ContributionInfo = ({ open, close, contribution }) => {
 };
 
 export default ContributionInfo;
+
+

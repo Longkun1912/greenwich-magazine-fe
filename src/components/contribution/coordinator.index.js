@@ -7,11 +7,13 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { GrView } from "react-icons/gr";
+import { MdAddComment } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import auth from "../../services/auth.service";
 import ContributionService from "../../services/contribution.service";
 import ModalEditContribution from "./coordinator.edit";
-import ContributionInfo from "../../modals/coordinator.ViewDetailContribution";
+import ModalCommentContribution from "./coordinator.comment";
+import ContributionInfo from "./coordinator.ViewDetailContribution";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import "../../css/IndexForCoordinator.css";
@@ -22,7 +24,9 @@ const IndexForCoordinator = () => {
   const [isShowModalEditForCoordinator, setIsShowModalEditForCoordinator] = useState(false);
   const [dataEditForCoordinator, setDataEditForCoordinator] = useState({});
   const [isShowModalViewDetailContribution, setIsShowModalViewDetailContribution] = useState(false);
+  const [isShowModalCommentContribution, setIsShowModalCommentContribution] = useState(false);
   const [selectedContribution, setSelectedContribution] = useState(null);
+  const currentUser = auth.getCurrentUser();
 
   const fetchContributions = useCallback(async () => {
     try {
@@ -37,7 +41,7 @@ const IndexForCoordinator = () => {
       setLoading(false);
       console.error("Error fetching contributions:", error);
     }
-  
+
   }, []);
 
   useEffect(() => {
@@ -57,9 +61,17 @@ const IndexForCoordinator = () => {
     setIsShowModalEditForCoordinator(true);
   };
 
+  //handle Comment Contribution
+  const handleCommentContribution = (contribution) => {
+    console.log("Selected contribution:", contribution);
+    setDataEditForCoordinator(contribution);
+    setIsShowModalCommentContribution(true);
+  }
+
   //handle Close
   const handleClose = () => {
     setIsShowModalEditForCoordinator(false);
+    setIsShowModalCommentContribution(false);
     setSelectedContribution(null);
   };
 
@@ -181,6 +193,10 @@ const IndexForCoordinator = () => {
             className="act-btn"
             onClick={() => handleEditForCoordinator(row.original)}
           />
+          <MdAddComment
+            className="act-btn"
+            onClick={() => handleCommentContribution(row.original)}
+          />
         </div>
       ),
     },
@@ -194,7 +210,7 @@ const IndexForCoordinator = () => {
   return (
     <div className="content-container">
       <ToastContainer />  {/* Component này sẽ render ra nơi bạn muốn hiển thị toast */}
-      <h2>All Contribution For Faculty</h2>
+      <h1>All Contribution In <span>{currentUser.faculty}</span></h1>
       {selectedContribution && isShowModalViewDetailContribution && (
         <ContributionInfo
           open={isShowModalViewDetailContribution}
@@ -204,6 +220,13 @@ const IndexForCoordinator = () => {
       )}
       <ModalEditContribution
         show={isShowModalEditForCoordinator}
+        dataEditForCoordinator={dataEditForCoordinator}
+        handleClose={handleClose}
+        contributionId={dataEditForCoordinator.id}
+        fetchContributions={fetchContributions}
+      />
+      <ModalCommentContribution
+        show={isShowModalCommentContribution}
         dataEditForCoordinator={dataEditForCoordinator}
         handleClose={handleClose}
         contributionId={dataEditForCoordinator.id}

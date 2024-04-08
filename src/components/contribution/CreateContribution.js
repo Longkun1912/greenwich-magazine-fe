@@ -10,6 +10,8 @@ import contributionService from "../../services/contribution.service";
 import eventService from "../../services/event.service";
 import facultyService from "../../services/faculty.service";
 import UserValidation from "../../validation/user";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const statusOptions = ["pending", "approved", "rejected", "modified"];
 
@@ -178,13 +180,15 @@ const CreateContribution = (props) => {
         await fetchContributions();
         setIsSubmitting(false);
         handleClose();
+        toast.success("Contribution created successfully");
       } catch (error) {
         setError(error.response.data.error);
         setContributionForm((prevData) => ({
           ...prevData,
         }));
-
         setIsSubmitting(false);
+        console.error("Error creating Contribution:", error);
+        toast.error("Failed to create Contribution");
         return;
       }
     }
@@ -350,3 +354,4 @@ const CreateContribution = (props) => {
   );
 };
 export default CreateContribution;
+<ToastContainer />

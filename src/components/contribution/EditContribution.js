@@ -9,6 +9,8 @@ import contributionService from "../../services/contribution.service";
 import eventService from "../../services/event.service";
 import facultyService from "../../services/faculty.service";
 import UserValidation from "../../validation/user";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const statusOptions = ["pending", "approved", "rejected", "modified"];
 
@@ -177,12 +179,15 @@ const EditContribution = (props) => {
         await fetchContributions();
         setIsSubmitting(false);
         handleClose();
+        toast.success("Contribution updated successfully");
       } catch (error) {
         setError(error.response.data.error);
         setContributionForm((prevData) => ({
           ...prevData,
         }));
         setIsSubmitting(false);
+        console.error("Error updating Contribution:", error);
+        toast.error("Failed to update Contribution");
         return;
       }
     }
@@ -193,7 +198,7 @@ const EditContribution = (props) => {
       <Modal show={show} onHide={handleClose}>
         <Form onSubmit={handleSubmit}>
           <Modal.Header closeButton>
-            <Modal.Title>Update Contribution</Modal.Title>
+            <Modal.Title className="modal-title2">Update Contribution</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="body-add-new-faculty">
@@ -350,3 +355,4 @@ const EditContribution = (props) => {
   );
 };
 export default EditContribution;
+<ToastContainer />

@@ -34,7 +34,7 @@ const Profile = ({ currentUser }) => {
 
   return (
     <div className="container">
-      <h1 className="mt-4">Profile</h1>
+      <h1 className="mt-4">Profile <span>{user.username}</span></h1>
       <div className="main-body" id="profile-body">
         <div className="row gutters-sm">
           <div className="col-md-4 mb-3">

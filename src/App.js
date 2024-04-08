@@ -50,7 +50,7 @@ function App() {
           />
           <div className="page-content">
             {currentUser && <Sidebar currentUser={currentUser} />}
-            <div style={{ flexBasis: "70%" }}>
+            <div style={{ flexBasis: "100%" }}>
               <Routes>
                 <Route
                   path="/"

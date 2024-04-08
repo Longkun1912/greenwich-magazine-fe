@@ -1,16 +1,23 @@
 .web-brand {
-  display: flex; /* Sử dụng flexbox để căn chỉnh */
-  align-items: center; /* Căn giữa các phần tử theo chiều dọc */
+  display: flex;
+  /* Sử dụng flexbox để căn chỉnh */
+  align-items: center;
+  /* Căn giữa các phần tử theo chiều dọc */
+  margin-left: -3vh;
 }
 
 .logo {
-  width: 50px; /* Độ rộng của logo */
-  height: auto; /* Chiều cao tự động để giữ tỷ lệ khung hình */
-  margin-right: 10px; /* Khoảng cách giữa logo và chữ "Greenwich" */
+  width: 50px;
+  /* Độ rộng của logo */
+  height: auto;
+  /* Chiều cao tự động để giữ tỷ lệ khung hình */
+  margin-right: 10px;
+  /* Khoảng cách giữa logo và chữ "Greenwich" */
 }
 
 #navbar-container {
-  flex-wrap: nowrap; /* Không cho phép các phần tử tràn xuống hàng mới */
+  flex-wrap: nowrap;
+  /* Không cho phép các phần tử tràn xuống hàng mới */
 }
 
 .left-bar {
@@ -21,21 +28,28 @@
 }
 
 .logo {
-  width: 50px; /* Độ rộng của logo */
-  height: auto; /* Chiều cao tự động để giữ tỷ lệ khung hình */
-  margin-right: 10px; /* Khoảng cách giữa logo và chữ "Greenwich" */
+  width: 50px;
+  /* Độ rộng của logo */
+  height: auto;
+  /* Chiều cao tự động để giữ tỷ lệ khung hình */
+  margin-right: 10px;
+  /* Khoảng cách giữa logo và chữ "Greenwich" */
 }
 
 
 .right-bar {
   display: flex;
-  justify-content: flex-end; /* Đẩy phần tử về phía bên phải */
-  align-items: center; /* Căn giữa các phần tử theo chiều dọc */
+  justify-content: flex-end;
+  /* Đẩy phần tử về phía bên phải */
+  align-items: center;
+  /* Căn giữa các phần tử theo chiều dọc */
   font-weight: bold;
+  margin-right: -3vh;
 }
 
 .right-bar .navbar-item {
-  margin-left: 2rem; /* Khoảng cách giữa các navbar item */
+  margin-left: 2rem;
+  /* Khoảng cách giữa các navbar item */
 }
 
 
@@ -46,22 +60,26 @@
 }
 
 #login-option .fa-icon {
-  margin-right: 0.5rem; /* Khoảng cách giữa icon và chữ */ 
+  margin-right: 0.5rem;
+  /* Khoảng cách giữa icon và chữ */
 }
 
 svg.svg-inline--fa.fa-users.fa-icon {
-  margin-right: 0.5rem; /* Khoảng cách giữa icon và chữ */
+  margin-right: 0.5rem;
+  /* Khoảng cách giữa icon và chữ */
 }
 
 
 #login-option:hover,
 #register-option:hover {
-  transform: translateY(-5px); /* Di chuyển phần tử lên trên khi hover */
+  transform: translateY(-5px);
+  /* Di chuyển phần tử lên trên khi hover */
 }
 
 #login-option:hover .fa-icon,
 #register-option:hover .fa-icon {
-  color: #ffffff; /* Đổi màu icon khi hover */
+  color: #ffffff;
+  /* Đổi màu icon khi hover */
 }
 
 #authenticated-options {
@@ -75,6 +93,12 @@ svg.svg-inline--fa.fa-users.fa-icon {
   border: 0.1vh solid;
 }
 
+a.navbar-brand {
+  font-family: monospace;
+  font-size: 4vh;
+  font-weight: bold;
+}
+
 #navbar-container {
   flex-wrap: unset;
 }
@@ -82,4 +106,51 @@ svg.svg-inline--fa.fa-users.fa-icon {
 #navbar-option {
   width: fit-content !important;
   display: contents !important;
+}
+
+nav.navbar-dark.navbar.navbar-expand-lg.bg-primary {
+  background-color: darkslategrey !important;
+}
+
+span.username {
+  margin-right: -2vh;
+  margin-left: -2vh;
+}
+
+li#authenticated-options {
+  margin-left: 20px;
+}
+
+li.nav-item {
+  margin-left: -1vh;
+  margin-right: 2vh;
+}
+
+.right-bar1 {
+  background-color: #f9f9f9;
+  width: 35vh;
+  border-radius: 1vh;
+  height: 8vh;
+  margin-top: 0vh;
+}
+
+
+button#logout-option {
+  background-color: black;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  width: 16vh;
+  height: 4.5vh;
+  border-radius: 3vh;
+  box-shadow: 1vh 0vh 1vh rgb(185 18 18 / 37%);
+  /* Áp dụng bóng dưới nút */
+  
+  /* Hover */
+  &:hover {
+    background-color: darkgray;
+    /* Màu nền khi hover */
+    cursor: pointer;
+    /* Đổi con trỏ chuột thành dấu nhấp chuột */
+    transform: translateY(-4px);
+  }
 }

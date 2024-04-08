@@ -1,35 +1,50 @@
+
+.dashboards {
+  width: auto;
+  height: auto;
+  margin-top: 3vh;
+  margin-left: 1%;
+  margin-right: 1%;
+  border-radius: 5px;
+  border: 2px solid #f1bdb8;
+}
+
 .dashboard-title {
   margin-left: 2vh;
   margin-top: 2vh;
 }
 
 .contribution-number {
-  margin: 2vh;
-  background-color: antiquewhite;
+  margin: 0vh;
+  background-color: white;
   overflow: auto;
-  width: 142vh;
+  width: 100%;
 }
 
 #dashboard-1-intro {
-  margin-top: 2vh;
+  margin-top: 0vh;
   margin-bottom: 2vh;
+  font-family: serif;
 }
 
 .contribution-percentage {
-  width: 142vh;
-  margin: 2vh;
+  width: 100%;;
+  margin: 0vh;
   margin-top: 5vh !important;
-  background-color: antiquewhite;
+  background-color: white;
 }
 
 .pie-chart {
   display: flex;
   justify-content: center;
-  padding-bottom: 2vh;
+  font-family: serif;
+  padding-bottom: 0vh;
 }
 
 #dashboard-2-intro {
   margin-top: 2vh;
   margin-bottom: 2vh;
   padding-top: 2vh;
+  font-family: serif;
+
 }

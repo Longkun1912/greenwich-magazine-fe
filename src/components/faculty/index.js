@@ -40,7 +40,7 @@ const Faculty = () => {
         fetchFaculties(); // Sau khi xóa, cập nhật lại danh sách khoa
         toast.success("Faculty deleted successfully");
       } catch (error) {
-        // console.error("Error deleting faculty:", error);
+        console.error("Error deleting faculty:", error);
         toast.error("Failed to delete faculty" , error);
       }
     },
@@ -134,7 +134,7 @@ const Faculty = () => {
       <h1>Faculties Management</h1>
       <div className="faculty-index">
         <button
-          className="btn btn-success"
+          className="btn btn-successFaculty"
           onClick={() => setIsShowModalCreateFaculty(true)}
         >
           Create Faculty

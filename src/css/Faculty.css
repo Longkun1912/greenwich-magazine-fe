@@ -8,14 +8,28 @@ h1 {
 }
 
 
-button.btn.btn-scuccess {
+button.btn.btn-successFaculty {
   background: #14a44d;
   text-align: center;
   color: white;
   transition: background-color 0.3s ease; 
   margin: 1vh;
   border-radius: 10vh;
-  margin-right: 100vh;
+  margin-right: 110vh;
+  font-weight: bold;
+  box-shadow: 1vh 1vh 1vh rgb(185 18 18 / 37%);
+  /* Áp dụng bóng dưới nút */
+  transition: background-color 0.3s ease;
+  /* Tạo hiệu ứng chuyển đổi mượt mà */
+
+  /* Hover */
+  &:hover {
+    background-color: rgb(235, 158, 103);
+    /* Màu nền khi hover */
+    cursor: pointer;
+    /* Đổi con trỏ chuột thành dấu nhấp chuột */
+    transform: translateY(-3px);
+  }
 }
 
 button.btn.btn-scuccess:hover {
@@ -29,4 +43,31 @@ button.btn.btn-scuccess:hover {
   margin-right: 1%;
   border-radius: 5px;
   border: 2px solid #f1bdb8;
+}
+
+/* All tile when Edit and View */
+.modal-tile.modal-title.h4 {
+  margin-left: 0vh;
+}
+
+.modal-title4 {
+  margin-left: -17.5vh;
+}
+
+.modal-tile5.modal-title.h4 {
+  margin-left: 12vh;
+}
+
+.modal-tile6.modal-title.h4 {
+  margin-left: 10vh;
+}
+
+/*Css Trong Edit Faculty */
+
+.modal-title.h4 {
+  display: flex;
+  margin-left: 17vh;
+  font-size: 5vh;
+  font-weight: bold;
+  font-family: initial;
 }

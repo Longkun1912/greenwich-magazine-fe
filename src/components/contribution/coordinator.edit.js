@@ -99,7 +99,7 @@ const CoordinatorEdit = (props) => {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Edit Contribution</Modal.Title>
+        <Modal.Title className='modal-tile5'>Edit Contribution</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={handleSubmit}>

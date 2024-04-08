@@ -4,7 +4,7 @@ const StudentContributionDetails = ({ contribution, open, close }) => {
   return (
     <Modal show={open} onHide={close}>
       <Modal.Header closeButton>
-        <Modal.Title>Contribution Details</Modal.Title>
+        <Modal.Title className="modal-tile6">Contribution Details</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -21,13 +21,13 @@ const StudentContributionDetails = ({ contribution, open, close }) => {
           <p>Event: {contribution.event}</p>
         </Alert>
         <Alert variant="light">
-          <h5>Content</h5>
+          <h5>Content:</h5>
           <p>
             {contribution.content.length > 49
               ? contribution.content.substring(0, 49) + "..."
               : contribution.content}
           </p>
-          <h5>Document</h5>
+          <h5>Document:</h5>
           <a href={contribution.document.replace(/^http:/, "https:")}>
             {contribution.document.length > 49
               ? contribution.document.substring(0, 49) + "..."

@@ -1,11 +1,22 @@
+.col {
+  margin-right: 22vh;
+}
+
+.img-fluid {
+  width: 62vh;
+  height: 70vh;
+  border-radius: 20px;
+  margin-right: 3vh;
+}
+
 #register-container {
   margin-left: 22%;
   margin-top: 2%;
 }
 
-#register-background {
+/* #register-background {
   height: 80vh !important;
-}
+} */
 
 #register-form {
   height: 70vh;
@@ -14,4 +25,48 @@
 #sign-up-form {
   height: inherit;
   overflow-y: auto;
+}
+
+button.ripple.ripple-surface.btn.btn-light.btn-lg.ms-1 {
+  border-radius: 2vh;
+  font-weight: bold;
+  color: black;
+  transition: background-color 0.3s ease;
+  /* Tạo hiệu ứng chuyển đổi mượt mà */
+
+  /* Hover */
+  &:hover {
+    background-color: rgb(238, 204, 204);
+    /* Màu nền khi hover */
+    cursor: pointer;
+    /* Đổi con trỏ chuột thành dấu nhấp chuột */
+  }
+
+}
+
+button.ripple.ripple-surface.btn.btn-warning.btn-lg.ms-2 {
+  border-radius: 2vh;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  /* Tạo hiệu ứng chuyển đổi mượt mà */
+
+  /* Hover */
+  &:hover {
+    background-color: rgb(197 89 89);
+    /* Màu nền khi hover */
+    cursor: pointer;
+    /* Đổi con trỏ chuột thành dấu nhấp chuột */
+  }
+
+}
+
+.card.my-42 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 2px solid #f1bdb8;
+  border-radius: 1vh;
+  margin-top: 5vh;
+  margin-left: -10vh;
 }
