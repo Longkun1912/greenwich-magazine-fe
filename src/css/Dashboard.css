@@ -9,14 +9,14 @@
   border: 2px solid #f1bdb8;
 }
 
-.dashboard-title {
+/* .dashboard-title {
   margin-left: 2vh;
   margin-top: 2vh;
-}
+} */
 
 .contribution-number {
   margin: 0vh;
-  background-color: white;
+  background-color: antiquewhite;
   overflow: auto;
   width: 100%;
 }
@@ -31,7 +31,7 @@
   width: 100%;;
   margin: 0vh;
   margin-top: 5vh !important;
-  background-color: white;
+  background-color: antiquewhite;
 }
 
 .pie-chart {

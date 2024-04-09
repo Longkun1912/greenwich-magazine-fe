@@ -210,7 +210,7 @@ const UserIndex = () => {
     <div className="content-container">
       <h1>User Management</h1>
       <button className="btn btn-successUser" onClick={() => handleCreateUser()}>
-        Create new user
+        Create User
       </button>
       <div className="user-index">
         {loading ? (

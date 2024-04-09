@@ -68,7 +68,7 @@ button.btn.btn-successUser {
   transition: background-color 0.3s ease;
   margin: 1vh;
   border-radius: 10vh;
-  margin-right: 109vh;
+  margin-right: 112vh;
   font-weight: bold;
   box-shadow: 1vh 1vh 1vh rgb(185 18 18 / 37%);
   /* Áp dụng bóng dưới nút */
@@ -83,4 +83,9 @@ button.btn.btn-successUser {
     /* Đổi con trỏ chuột thành dấu nhấp chuột */
     transform: translateY(-3px);
   }
+}
+
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorPrimary.MuiInputBase-formControl.css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
+  width: 30vh;
+  height: 9vh;
 }

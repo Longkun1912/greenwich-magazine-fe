@@ -105,6 +105,7 @@ const StudentChat = ({ currentUser }) => {
   return (
     <MDBCard>
       <ToastContainer />
+      <h1 className="text-center">Chat with Coordinators</h1>
       <MDBCardBody id="chat">
         <MDBTypography listUnStyled className="mb-0" />
         {loading ? (

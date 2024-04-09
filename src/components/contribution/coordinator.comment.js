@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
-// import { ToastContainer, toast } from "react-toastify"; 
-// import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify"; 
+import "react-toastify/dist/ReactToastify.css";
 import { postComment } from "../../services/comment.service";
 
 const CoordinatorComment = (props) => {
@@ -23,12 +23,12 @@ const CoordinatorComment = (props) => {
         setIsSubmitting(false);
         handleClose();
       }, 2000);
-      // toast.success("Comment created successfully!");
+      toast.success("Comment created successfully!");
       // Fetch comments và đóng modal
     } catch (error) {
       setIsSubmitting(false);
-      console.error("Error creating faculty:", error);
-      // toast.error("Failed to create faculty");
+      console.error("Error creating Comment:", error);
+      toast.error("Failed to create Comment");
     }
     e.preventDefault();
 
@@ -37,10 +37,9 @@ const CoordinatorComment = (props) => {
 
   return (
     <>
-          {/* <ToastContainer/> */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title className="modal-title7">Create New Comment</Modal.Title>
+          <Modal.Title className="modal-title10">Create New Comment</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>

@@ -48,7 +48,7 @@ const Login = ({ onLoginSuccess }) => {
   };
 
   return (
-    <MDBContainer fluid>
+    <MDBContainer fluid className="login">
       <div className="form-container">
         <MDBRow id="form-details">
           <MDBCol sm="6" id="sign-in-form">

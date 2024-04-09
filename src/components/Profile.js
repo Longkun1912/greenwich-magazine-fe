@@ -57,7 +57,7 @@ const Profile = ({ currentUser }) => {
                       onClick={() => openEditProfile()}
                     >
                       <FaEdit id="edit-icon" />
-                      <span>Edit Profile</span>
+                      <span >Edit Profile</span>
                     </Button>
                     {isOpenEditProfile && (
                       <EditProfileForm

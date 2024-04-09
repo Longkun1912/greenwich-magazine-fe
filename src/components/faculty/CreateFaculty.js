@@ -42,7 +42,7 @@ const CreateFaculty = (props) => {
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Faculty</Modal.Title>
+          <Modal.Title className="modal-title10">Add New Faculty</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new-faculty">

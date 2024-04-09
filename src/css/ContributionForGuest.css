@@ -54,6 +54,8 @@ button.btn.btn-view {
     background-color: #0001fc;
     color: white;
     font-weight: bold;
+    margin-left: 1.2vh;
+    width: 15vh;
 }
 
 button.btn.btn-download {

@@ -17,7 +17,7 @@
   height: 60vh;
 }
 
-#chat-details {
+/* #chat-details {
   height: 75vh;
   overflow-y: auto;
   background-color: antiquewhite;
@@ -27,4 +27,27 @@
 
 .chat-container {
   margin: 1vh;
+} */
+
+#chat-details {
+  height: 72vh;
+  overflow-y: auto;
+  background-color: antiquewhite;
+  border-radius: 2vh;
+  box-shadow: 0 1vh 3vh 0 rgba(0, 0, 0, 0.1), 0 1vh 2vh 0 rgba(0, 0, 0, 0.06);
+  width: 70%;
+  /* Điều chỉnh chiều rộng của phần khung chat với admin */
+  margin-left: auto;
+  /* Đảm bảo phần khung chat nằm ở bên phải màn hình */
+  margin-right: 1vh;
+  /* Thêm margin bên phải để tạo khoảng cách với các phần tử khác */
+}
+
+.message-form {
+  background-color: aliceblue;
+  border-radius: 2vh;
+  margin: 1vh;
+  /* Điều chỉnh margin để tạo khoảng cách giữa phần chat và phần input message */
+  width: calc(100% - 4vh);
+  /* Điều chỉnh chiều rộng của phần input message để nó cũng chiếm đúng chiều rộng của phần khung chat */
 }

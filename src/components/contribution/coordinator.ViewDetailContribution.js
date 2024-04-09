@@ -72,10 +72,8 @@ const ContributionInfo = ({ open, close, contribution }) => {
       keyboard={false}
     >
       <Modal.Header closeButton>
-        <Modal.Title>
-          <div className="modal-title3">
+        <Modal.Title className="modal-title10">
             <span>{contribution.title}</span>
-          </div>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>

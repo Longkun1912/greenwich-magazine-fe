@@ -11,7 +11,7 @@ import auth from "../../services/auth.service";
 import ContributionService from "../../services/contribution.service";
 import StudentUpdateContributionForm from "./student.update";
 import StudentContributionDetails from "./student.view.detail";
-import StudentViewFeedback from "./student.view.comment";
+import StudentViewComment from "./student.view.comment";
 
 const StudentContributionIndex = () => {
   const currentAuthenticatedUser = auth.getCurrentUser();
@@ -204,7 +204,7 @@ const StudentContributionIndex = () => {
         />
       )}
       {isShowModalViewFeedback && (
-        <StudentViewFeedback
+        <StudentViewComment
           contribution={selectedContribution}
           open={isShowModalViewFeedback}
           close={handleCloseModalViewFeedback}

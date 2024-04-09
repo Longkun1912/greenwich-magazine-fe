@@ -51,7 +51,7 @@ const EditFaculty = (props) => {
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Faculty</Modal.Title>
+          <Modal.Title className="modal-title10">Edit Faculty</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new-faculty">

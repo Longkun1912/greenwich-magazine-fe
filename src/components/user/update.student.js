@@ -3,6 +3,8 @@ import { Alert, Button, Modal } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import UserService from "../../services/user.service";
 import UserValidation from "../../validation/user";
+import { toast } from "react-toastify"; 
+import "react-toastify/dist/ReactToastify.css";
 
 const StudentUpdateForm = ({ student, open, close, fetchStudents }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -86,10 +88,12 @@ const StudentUpdateForm = ({ student, open, close, fetchStudents }) => {
 
         await UserService.updateStudent(updatedStudent);
         await fetchStudents();
+        toast.success("Update student successfully!");
         setIsSubmitting(false);
         close();
       } catch (error) {
         console.error("Error updating student:", error);
+        toast.success("Error updating student:!");
         setIsSubmitting(false);
       }
     }
@@ -101,7 +105,7 @@ const StudentUpdateForm = ({ student, open, close, fetchStudents }) => {
   return (
     <Modal show={open} onHide={close}>
       <Modal.Header closeButton>
-        <Modal.Title>Update Student</Modal.Title>
+        <Modal.Title className="modal-title10">Update Student</Modal.Title>
       </Modal.Header>
       <Form onSubmit={handleSubmit}>
         <Modal.Body>

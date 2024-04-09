@@ -213,7 +213,7 @@ const UserAddingForm = ({
     >
       <Form onSubmit={handleSubmit}>
         <Modal.Header closeButton>
-          <Modal.Title>Create New User</Modal.Title>
+          <Modal.Title className="modal-title10">Create New User</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="input-row">

@@ -1,17 +1,22 @@
+
 .col {
   margin-right: 22vh;
+  margin-top: 6vh;
 }
 
 .img-fluid {
-  width: 62vh;
-  height: 70vh;
-  border-radius: 20px;
+  width: 67vh;
+  height: 66vh;
+  border-radius: 1vh;
   margin-right: 3vh;
 }
 
 #register-container {
-  margin-left: 22%;
-  margin-top: 2%;
+  margin-top: 5vh;
+  height: 100%;
+  background-image: url("~/public/image3.jpg") !important;
+  background-size: cover;
+  background-position: center;
 }
 
 /* #register-background {
@@ -19,12 +24,20 @@
 } */
 
 #register-form {
-  height: 70vh;
+  height: 66vh;
+  height: max-content;
+  /* background-color: antiquewhite; */
+  box-shadow: 0 0 5vh rgb(83 3 3);
+  background-color: rgba(255, 255, 255, -0.5);
+  /* Màu trắng trong suốt */
 }
 
 #sign-up-form {
   height: inherit;
-  overflow-y: auto;
+  background-color: rgb(255 255 255 / 54%);
+  /* Màu trắng trong suốt */
+  border-radius: 1vh;
+  height: 66vh;
 }
 
 button.ripple.ripple-surface.btn.btn-light.btn-lg.ms-1 {
@@ -61,12 +74,18 @@ button.ripple.ripple-surface.btn.btn-warning.btn-lg.ms-2 {
 }
 
 .card.my-42 {
-  width: 100%;
+  width: 133vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   border: 2px solid #f1bdb8;
   border-radius: 1vh;
   margin-top: 5vh;
-  margin-left: -10vh;
+  margin-left: 30vh;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+h3.mb-5.text-uppercase.fw-bold {
+  margin-left: 2.5vh;
 }

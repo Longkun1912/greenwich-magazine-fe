@@ -62,7 +62,7 @@ const EditEvent = (props) => {
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Event</Modal.Title>
+          <Modal.Title className="modal-title10">Edit Event</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className='body-add-new-Event'>

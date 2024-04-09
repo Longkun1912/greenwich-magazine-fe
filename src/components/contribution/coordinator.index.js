@@ -217,11 +217,8 @@ const IndexForCoordinator = () => {
 
   return (
     <div className="content-container">
-
-      <ToastContainer />  {/* Component này sẽ render ra nơi bạn muốn hiển thị toast */}
+      <ToastContainer />
       <h1>All Contribution In <span>{currentUser.faculty}</span></h1>
-      <ToastContainer />{" "}
-      {/* Component này sẽ render ra nơi bạn muốn hiển thị toast */}
       {selectedContribution && isShowModalViewDetailContribution && (
         <ContributionInfo
           open={isShowModalViewDetailContribution}
@@ -266,7 +263,6 @@ const IndexForCoordinator = () => {
           <MaterialReactTable table={table} />
         )}
       </div>
-      <ToastContainer />{" "}
     </div>
   );
 };

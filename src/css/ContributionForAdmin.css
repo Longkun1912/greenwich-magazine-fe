@@ -88,15 +88,3 @@ button.btn.btn-Status {
 .status-modified {
     background-color: blue;
 }
-
-/* Edit */
-
-.modal-title2.modal-title.h4 {
-    margin-left: 10vh;
-}
-
-/* View */
-
-.modal-title3 {
-    margin-left: -10vh;
-}

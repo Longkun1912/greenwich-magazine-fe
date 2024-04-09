@@ -138,7 +138,7 @@ const EditProfileForm = ({ user, open, close, fetchUserDetails }) => {
     <Modal show={open} onHide={close}>
       <Form onSubmit={handleSubmit}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Profile</Modal.Title>
+          <Modal.Title className="modal-title10">Edit Profile</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>

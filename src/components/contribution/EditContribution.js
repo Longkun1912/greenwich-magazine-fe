@@ -198,7 +198,7 @@ const EditContribution = (props) => {
       <Modal show={show} onHide={handleClose}>
         <Form onSubmit={handleSubmit}>
           <Modal.Header closeButton>
-            <Modal.Title className="modal-title2">Update Contribution</Modal.Title>
+            <Modal.Title className="modal-title10">Update Contribution</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="body-add-new-faculty">

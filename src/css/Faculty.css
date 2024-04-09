@@ -5,8 +5,13 @@
 h1 {
   font-family: fantasy;
   font-weight: bold;
+  margin-top: 2vh;
+  box-shadow: 0vh 0.5vh 5vh 2.2vh rgb(47 79 79);
+  margin-bottom: 4vh;
+  width: 98%;
+  margin-left: 1.5vh;
+  border-radius: 1vh;
 }
-
 
 button.btn.btn-successFaculty {
   background: #14a44d;
@@ -50,36 +55,40 @@ button.btn.btn-scuccess:hover {
   margin-left: 0vh;
 }
 
-.modal-title4 {
-  margin-left: -17.5vh;
-}
-
-.modal-tile5.modal-title.h4 {
-  margin-left: 12vh;
-}
-
-.modal-tile6.modal-title.h4 {
-  margin-left: 10vh;
-}
-
-.modal-title7.modal-title.h4 {
-  margin-left: 6vh;
-}
-
-.modal-title8.modal-title.h4 {
-  margin-left: 9vh;
-}
-
-.modal-title9.modal-title.h4 {
-  margin-left: 7vh;
-}
-
-/*Css Trong Edit Faculty */
 
 .modal-title.h4 {
   display: flex;
-  margin-left: 17vh;
-  font-size: 5vh;
+  /* margin-left: 12vh; */
+  font-size: 4vh;
   font-weight: bold;
   font-family: initial;
+  width: 0vh;
+  height: 9vh;
 }
+
+.modal-title4 {
+  margin-left: 9vh;
+  margin-top: 1vh;
+  display: flex;
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+.modal-title4 span {
+  text-align: center; /* Căn giữa chữ theo chiều ngang */
+  width: 50vh; /* Độ rộng của phần tử span */
+}
+
+
+#user-avatar {
+  margin-left: -10vh !important;
+}
+
+.modal-title10.modal-title.h4 {
+  width: 100%;
+  /* margin-left: 16vh; */
+  justify-content: center;
+  align-items: center;
+}
+
+/*Css Trong Edit Faculty */

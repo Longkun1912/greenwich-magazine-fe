@@ -139,10 +139,10 @@ const CoordinatorChat = ({ currentUser }) => {
   };
 
   return (
-    <MDBContainer fluid className="py-5" style={{ backgroundColor: "#eee" }}>
+    <MDBContainer fluid className="py-5" style={{ backgroundColor: "#eee !important " }}>
       <ToastContainer />
       <div className="chat-header">
-        <h2 className="text-center">Chat with students</h2>
+        <h1 className="text-center">Chat with students</h1>
       </div>
       <MDBRow>
         <MDBCol md="6" lg="5" xl="4" className="mb-4 mb-md-0">

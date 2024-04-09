@@ -10,6 +10,8 @@ import "../../css/User.css";
 import auth from "../../services/auth.service";
 import UserService from "../../services/user.service";
 import StudentUpdateForm from "./update.student";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const StudentIndex = () => {
   const currentUser = auth.getCurrentUser();
@@ -103,6 +105,7 @@ const StudentIndex = () => {
 
   return (
     <div className="container">
+      <ToastContainer />
       <div className="header">
         <h1>
           Students in <span>{currentUser.faculty}</span>

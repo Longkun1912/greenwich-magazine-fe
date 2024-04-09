@@ -4,7 +4,7 @@ const StudentContributionDetails = ({ contribution, open, close }) => {
   return (
     <Modal show={open} onHide={close}>
       <Modal.Header closeButton>
-        <Modal.Title className="modal-tile6">Contribution Details</Modal.Title>
+        <Modal.Title className="modal-title10">Contribution Details</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>

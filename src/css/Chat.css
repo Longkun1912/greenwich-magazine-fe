@@ -95,3 +95,12 @@
   color: orangered;
   cursor: pointer;
 }
+
+button.ripple.ripple-surface.btn.btn-info.btn-rounded.float-end {
+  font-weight: 800;
+}
+
+h5.font-weight-bold.mb-3.text-center.text-lg-start {
+  font-family: initial;
+  font-weight: 800;
+}

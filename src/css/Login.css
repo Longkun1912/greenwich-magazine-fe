@@ -1,9 +1,18 @@
-.container-fluid {
+/* .container-fluid {
   width: auto;
-  background-image: url("~/public/image1.jpg") ; 
+  background-image: url("~/public/image1.jpg") !important; 
   background-size: cover;
   background-position: center;
   height: 84vh;
+} */
+
+.container-fluid.login {
+  width: auto;
+  background-image: url("~/public/image1.jpg") !important; 
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.5); /* Màu trắng với độ trong suốt là 50% */
 }
 
 .form-container {
@@ -38,21 +47,24 @@ label.password {
 }
 
 #sign-in-form {
-
   height: max-content;
   /* background-color: antiquewhite; */
   border-radius: 5%;
-  box-shadow: 0 0 20px rgb(21 21 21);
+  box-shadow: 0 0 5vh rgb(83 3 3);
   overflow: hidden;
   margin-top: 14vh;
   margin-left: -6vh;
 }
 
 .link-info {
-  color: #54b4d3 !important;
+  color: #004258 !important;
   font-weight: 600;
-  border-bottom: 2px solid #54b4d3; /* Thêm gạch chân bên dưới với độ dày là 2px */
-  font-style: italic; /* In nghiêng nội dung của phần tử */
+  border-bottom: 2px solid #1e292d;
+  font-style: italic;
+}
+
+input#formControlLg {
+  color: black;
 }
 
 @media (min-width: 1025px) {

@@ -24,7 +24,8 @@
 }
 
 .card-body {
-    padding: 15px;
+    padding: 1.5vh;
+    text-align: left;
 }
 
 .student-contribution-image {
@@ -36,6 +37,7 @@
 .card-title {
     font-size: 1.25rem;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .card-text {
@@ -58,7 +60,8 @@ button.btn.btn-studentview {
     background-color: blue;
     color: white;
     font-weight: bold;
-    margin-left: 2vh;
+    margin-left: 1.2vh;
+    width: 15vh;
 }
 
 button.btn.btn-download {
@@ -92,4 +95,15 @@ button.btn.btn-Feedback {
 .versatile-actions .btn-download:hover {
     background-color: #e85b35; 
     color: #fff;
+}
+
+
+h1.text-black.mb-44 {
+    margin-bottom: 4vh;
+    margin-top: -4vh;
+}
+
+button.ripple.ripple-surface.btn.btn-primary.btn-lg.my-4 {
+    margin-left: 73vh;
+    font-weight: bold;
 }

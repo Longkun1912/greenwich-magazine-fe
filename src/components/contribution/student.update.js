@@ -162,7 +162,7 @@ const StudentUpdateContributionForm = ({
       <ToastContainer />
       <Form onSubmit={handleSubmit}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Contribution</Modal.Title>
+          <Modal.Title className="modal-title10">Edit Contribution</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>

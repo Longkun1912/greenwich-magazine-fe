@@ -40,11 +40,10 @@
 .right-bar {
   display: flex;
   justify-content: flex-end;
-  /* Đẩy phần tử về phía bên phải */
   align-items: center;
-  /* Căn giữa các phần tử theo chiều dọc */
   font-weight: bold;
   margin-right: -3vh;
+  margin-top: -2vh;
 }
 
 .right-bar .navbar-item {
@@ -115,6 +114,7 @@ nav.navbar-dark.navbar.navbar-expand-lg.bg-primary {
 span.username {
   margin-right: -2vh;
   margin-left: -2vh;
+  color: #ffffff;
 }
 
 li#authenticated-options {
@@ -127,11 +127,16 @@ li.nav-item {
 }
 
 .right-bar1 {
-  background-color: #f9f9f9;
-  width: 35vh;
-  border-radius: 1vh;
-  height: 8vh;
-  margin-top: 0vh;
+  background-color:lightslategrey;
+    width: 35vh;
+    border-radius: 1vh;
+    height: 10vh;
+    margin-top: 0vh;
+}
+
+li#authenticated-options {
+  margin-top: 1vh;
+  margin-bottom: 1vh;
 }
 
 
@@ -142,9 +147,10 @@ button#logout-option {
   width: 16vh;
   height: 4.5vh;
   border-radius: 3vh;
-  box-shadow: 1vh 0vh 1vh rgb(185 18 18 / 37%);
+  box-shadow: 0.2vh 0.5vh 1vh 0.2vh rgb(185 18 18 / 37%);
   /* Áp dụng bóng dưới nút */
-  
+  font-family: initial;
+
   /* Hover */
   &:hover {
     background-color: darkgray;

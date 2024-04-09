@@ -173,7 +173,7 @@ const StudentContributionForm = () => {
     <MDBContainer>
       <MDBRow className="d-flex justify-content-center align-items-center">
         <MDBCol lg="9" className="my-5">
-          <h1 class="text-black mb-4">Contribution Form</h1>
+          <h1 class="text-black mb-44">Contribution Form</h1>
 
           <form onSubmit={handleSubmit}>
             <MDBCard>
