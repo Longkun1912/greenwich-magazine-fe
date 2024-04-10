@@ -112,9 +112,14 @@ nav.navbar-dark.navbar.navbar-expand-lg.bg-primary {
 }
 
 span.username {
-  margin-right: -2vh;
-  margin-left: -2vh;
+  /* margin-right: -2vh;
+  margin-left: -2vh; */
   color: #ffffff;
+  /* xử lý khi chữ dài quá sẽ hiện ... (118-122) */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
 }
 
 li#authenticated-options {
@@ -145,11 +150,13 @@ button#logout-option {
   font-weight: bold;
   transition: background-color 0.3s ease;
   width: 16vh;
-  height: 4.5vh;
+  height: 5vh;
   border-radius: 3vh;
   box-shadow: 0.2vh 0.5vh 1vh 0.2vh rgb(185 18 18 / 37%);
   /* Áp dụng bóng dưới nút */
-  font-family: initial;
+  font-family: inherit;
+  font-size: 1.9vh;
+  text-transform: none !important;
 
   /* Hover */
   &:hover {

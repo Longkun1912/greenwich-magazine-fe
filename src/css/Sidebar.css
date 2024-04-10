@@ -190,11 +190,17 @@ a.article:hover {
   margin-top: 2vh;
   color: #fafafa;
   font-weight: bold;
+  /* xử lý khi chữ dài quá sẽ hiện ...*/
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .profile-info-txt {
   font-size: 2vh;
   color: greenyellow;
+  font-weight: bold;
 }
 
 #collapse-btn {

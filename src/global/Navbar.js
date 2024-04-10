@@ -65,11 +65,11 @@ const GreenwichNavBar = ({ currentUser, handleLogout }) => {
                     />
                   </MDBNavbarItem>
                   <div style={{ width: "20vh" }}>
-                    <span className="username">{currentUser.username}</span>
+                    <span className="username" >{currentUser.username}</span>
     
                     <Link>
                       <Button id="logout-option" onClick={logOut}>
-                        Logout
+                        LogOut
                       </Button>
                     </Link>
                   </div>

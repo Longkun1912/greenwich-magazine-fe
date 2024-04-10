@@ -140,10 +140,9 @@ const StudentUpdateContributionForm = ({
         contributionForm.append("submitter", currentAuthenticatedUser.id);
 
         await contributionService.editContribution(contributionForm);
-        fetchContributions();
+        await fetchContributions();
         toast.success("Contribution submitted successfully");
         close();
-        setIsSubmitting(false);
       } catch (error) {
         setError(error.response.data.error);
         toast.error("Failed to submit contribution");
@@ -159,7 +158,7 @@ const StudentUpdateContributionForm = ({
 
   return (
     <Modal show={open} onHide={close}>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <Form onSubmit={handleSubmit}>
         <Modal.Header closeButton>
           <Modal.Title className="modal-title10">Edit Contribution</Modal.Title>

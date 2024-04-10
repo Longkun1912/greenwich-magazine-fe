@@ -9,8 +9,8 @@
 }
 
 #register-container {
-  margin-top: 5vh;
-  height: 100%;
+  /* margin-top: 5vh; */
+  height: 84vh;
   background-image: url("~/public/image3.jpg") !important;
   background-size: cover;
   background-position: center;

@@ -58,7 +58,7 @@ const ContributionManagement = () => {
         toast.success("Faculty deleted successfully");
       } catch (error) {
         console.error("Error deleting contribution:", error);
-        toast.error("Failed to delete faculty" , error);
+        toast.error("Failed to delete faculty", error);
 
       }
     },
@@ -174,30 +174,30 @@ const ContributionManagement = () => {
         header: "submitter",
         size: 70,
       },
-      ...(currentUser.role === "admin"
-        ? [
-            {
-              header: "Actions",
-              size: 120,
-              Cell: ({ row }) => (
-                <div className="action-buttons">
-                  <GrView
-                    className="act-btn"
-                    onClick={() => handleViewDetailContribution(row.original)}
-                  />
-                  <AiFillEdit
-                    className="act-btn"
-                    onClick={() => handleEditContribution(row.original)}
-                  />
-                  <MdDelete
-                    className="act-btn"
-                    onClick={() => confirmDelete(row.original.id)}
-                  />
-                </div>
-              ),
-            },
-          ]
-        : []),
+      {
+        header: "Actions",
+        size: 120,
+        Cell: ({ row }) => (
+          <div className="action-buttons">
+            <GrView
+              className="act-btn"
+              onClick={() => handleViewDetailContribution(row.original)}
+            />
+            {currentUser.role === "admin" && (
+              <>
+                <AiFillEdit
+                  className="act-btn"
+                  onClick={() => handleEditContribution(row.original)}
+                />
+                <MdDelete
+                  className="act-btn"
+                  onClick={() => confirmDelete(row.original.id)}
+                />
+              </>
+            )}
+          </div>
+        ),
+      }      
     ],
     [currentUser.role, confirmDelete]
   );

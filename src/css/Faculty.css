@@ -54,7 +54,7 @@ button.btn.btn-scuccess:hover {
   display: flex;
   font-size: 4vh;
   font-weight: bold;
-  font-family: initial;
+  /* font-family: initial; */
 }
 
 .modal-title4 {

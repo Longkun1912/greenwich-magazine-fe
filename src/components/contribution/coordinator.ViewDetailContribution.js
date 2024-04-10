@@ -94,10 +94,10 @@ const ContributionInfo = ({ open, close, contribution }) => {
             <span className="info-label">Submitter: </span>
             <span className="info-value">{contribution.submitter}</span>
           </div>
-          <div className="info-row">
+          {/* <div className="info-row">
             <span className="info-label">State: </span>
             <span className="info-value">{contribution.state}</span>
-          </div>
+          </div> */}
           <div className="info-row">
             <span className="info-label">Content: </span>
             <span className="info-value">{contribution.content}</span>
@@ -177,3 +177,5 @@ const ContributionInfo = ({ open, close, contribution }) => {
 
 export default ContributionInfo;
 <ToastContainer />;
+
+
