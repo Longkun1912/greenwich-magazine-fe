@@ -1,23 +1,27 @@
-import Box from "@mui/material/Box";
-import Skeleton from "@mui/material/Skeleton";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import { Ripple, initMDB } from "mdb-ui-kit";
 import React, { useEffect, useState } from "react";
+import { FaRegEdit } from "react-icons/fa";
+import { GrView } from "react-icons/gr";
+import { ImFolderDownload } from "react-icons/im";
+import { MdOutlineFeedback } from "react-icons/md";
+import { RiDeleteBin5Line } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../css/ContributionForStudent.css";
 import auth from "../../services/auth.service";
 import ContributionService from "../../services/contribution.service";
 import StudentUpdateContributionForm from "./student.update";
-import StudentContributionDetails from "./student.view.detail";
 import StudentViewComment from "./student.view.comment";
-
+import StudentContributionDetails from "./student.view.detail";
 const StudentContributionIndex = () => {
   const currentAuthenticatedUser = auth.getCurrentUser();
   const [contributions, setContributions] = useState([]);
-  const [isShowModalViewContribution, setIsShowModalViewContribution] = useState(false);
-  const [isShowModalEditContribution, setIsShowModalEditContribution] = useState(false);
+  const [isShowModalViewContribution, setIsShowModalViewContribution] =
+    useState(false);
+  const [isShowModalEditContribution, setIsShowModalEditContribution] =
+    useState(false);
   const [isShowModalViewFeedback, setIsShowModalViewFeedback] = useState(false);
   const [selectedContribution, setSelectedContribution] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -71,12 +75,11 @@ const StudentContributionIndex = () => {
     setIsShowModalEditContribution(false);
   };
 
-
   //handle view feedback
   const handleViewFeedback = (contribution) => {
     setSelectedContribution(contribution);
     setIsShowModalViewFeedback(true);
-  }
+  };
 
   const handleCloseModalViewFeedback = () => {
     setIsShowModalViewFeedback(false);
@@ -112,21 +115,28 @@ const StudentContributionIndex = () => {
     <div className="student-contribution-container">
       <ToastContainer />
       <div className="header">
-        <h1>Contributions in your <span>{currentAuthenticatedUser.faculty}</span></h1>
+        <h1>
+          Contributions in your <span>{currentAuthenticatedUser.faculty}</span>
+        </h1>
       </div>
       <div className="student-content">
         {currentItems.map((contribution) => (
           <div className="card" id="contribution-info" key={contribution.id}>
-            <div className="bg-image hover-overlay"
+            <div
+              className="bg-image hover-overlay"
               data-mdb-ripple-init
-              data-mdb-ripple-color="light">
-              <img src={contribution.image}
+              data-mdb-ripple-color="light"
+            >
+              <img
+                src={contribution.image}
                 className="student-contribution-image"
-                alt="Nature" />
+                alt="Nature"
+              />
               <a href="#!">
-                <div className="mask"
-                  style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}>
-                </div>
+                <div
+                  className="mask"
+                  style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}
+                ></div>
               </a>
             </div>
             <div className="card-body">
@@ -135,37 +145,40 @@ const StudentContributionIndex = () => {
                 Submitted by: {contribution.submitter}
               </p>
               <div className="versatile-actions">
-                <button className="btn btn-studentview"
-                  style={{ marginRight: "2vh" }}
-                  onClick={() => handleViewContribution(contribution)}>
-                  View
+                <button
+                  className="btn btn-studentview"
+                  onClick={() => handleViewContribution(contribution)}
+                >
+                  <GrView className="action-icon" />
                 </button>
-                <button className="btn btn-download"
-                  onClick={() => handleDownloadDocument(contribution.document)}>
-                  Download
+                <button
+                  className="btn btn-download"
+                  onClick={() => handleDownloadDocument(contribution.document)}
+                >
+                  <ImFolderDownload className="action-icon" />
                 </button>
               </div>
               {currentAuthenticatedUser.email === contribution.submitter && (
                 <div className="only-actions">
                   <button
-                    className="btn btn-Feedback"
+                    className="btn btn-feedback"
                     style={{ marginRight: "2vh" }}
                     onClick={() => handleViewFeedback(contribution)}
                   >
-                    Feedback
+                    <MdOutlineFeedback className="action-icon" />
                   </button>
                   <button
                     className="btn btn-warning"
                     style={{ marginRight: "2vh" }}
                     onClick={() => handleEditContribution(contribution)}
                   >
-                    Edit
+                    <FaRegEdit className="action-icon" />
                   </button>
                   <button
                     className="btn btn-danger"
                     onClick={() => handleDeleteContribution(contribution.id)}
                   >
-                    Delete
+                    <RiDeleteBin5Line className="action-icon" />
                   </button>
                 </div>
               )}

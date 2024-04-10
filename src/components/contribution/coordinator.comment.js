@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
-import { toast } from "react-toastify"; 
+import { Button, Form, Modal } from "react-bootstrap";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { postComment } from "../../services/comment.service";
+import CommentService from "../../services/comment.service";
 
 const CoordinatorComment = (props) => {
   const { show, handleClose, contributionId, fetchContributions } = props;
@@ -17,7 +17,7 @@ const CoordinatorComment = (props) => {
     setIsSubmitting(true);
     try {
       // Gửi comment
-      await postComment(contributionId, commentContent);
+      await CommentService.postComment(contributionId, commentContent);
       await fetchContributions();
       setTimeout(() => {
         setIsSubmitting(false);
@@ -28,18 +28,18 @@ const CoordinatorComment = (props) => {
     } catch (error) {
       setIsSubmitting(false);
       console.error("Error creating Comment:", error);
-      toast.error("Failed to create Comment");
+      toast.error(error.response.data.error);
     }
     e.preventDefault();
-
   };
-
 
   return (
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title className="modal-title10">Create New Comment</Modal.Title>
+          <Modal.Title className="modal-title10">
+            Create New Comment
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>

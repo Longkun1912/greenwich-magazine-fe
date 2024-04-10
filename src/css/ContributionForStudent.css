@@ -6,104 +6,97 @@
 } */
 
 .student-content {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(40vh, 0fr));
-    gap: 20px;
-    overflow: hidden; /* Ngăn chặn cuộn trang */
-    width: 100%;
-    margin-left: 0vh;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(40vh, 0fr));
+  gap: 20px;
+  overflow: hidden; /* Ngăn chặn cuộn trang */
+  width: 100%;
+  margin-left: 0vh;
 }
 
 .card {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border: 2px solid #f1bdb8;
-    border-radius: 1vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 2px solid #f1bdb8;
+  border-radius: 1vh;
 }
 
 .card-body {
-    padding: 1.5vh;
-    text-align: left;
+  padding: 1.5vh;
+  text-align: left;
 }
 
 .student-contribution-image {
-    width: 100%;
-    max-height: 150px;
-    object-fit: cover;
+  width: 100%;
+  max-height: 150px;
+  object-fit: cover;
 }
 
 .card-title {
-    font-size: 1.25rem;
-    margin-bottom: 10px;
-    text-align: center;
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .card-text {
-    font-size: 1rem;
-    margin-bottom: 15px;
+  font-size: 1rem;
+  margin-bottom: 15px;
 }
 
 .versatile-actions {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
 }
 
 .versatile-actions .btn {
-    /* Điều chỉnh khoảng cách giữa các nút */
-    margin-right: 10px;
 }
 
+.action-icon {
+  font-size: x-large;
+}
 
 button.btn.btn-studentview {
-    background-color: blue;
-    color: white;
-    font-weight: bold;
-    margin-left: 1.2vh;
-    width: 15vh;
+  background-color: cornflowerblue;
+  color: white;
 }
 
 button.btn.btn-download {
-    background-color: #28a745;
-    color: white;
-    font-weight: bold;
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
 }
 
 button.btn.btn-warning {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 button.btn.btn-danger {
-    font-weight: 600;
+  font-weight: 600;
 }
 
-button.btn.btn-Feedback {
-    background-color: darkslategrey;
-    color: white;
-    width: 11vh;
-    margin-left: 0vh;
-    font-weight: 600;
+button.btn.btn-feedback {
+  background-color: darkslategrey;
+  color: white;
 }
 
 .btn {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 /* Định dạng khi di chuột qua nút */
 .versatile-actions .btn-view:hover,
 .versatile-actions .btn-download:hover {
-    background-color: #e85b35; 
-    color: #fff;
+  background-color: #e85b35;
+  color: #fff;
 }
 
-
 h1.text-black.mb-44 {
-    margin-bottom: 4vh;
-    margin-top: -4vh;
+  margin-bottom: 4vh;
+  margin-top: -4vh;
 }
 
 button.ripple.ripple-surface.btn.btn-primary.btn-lg.my-4 {
-    margin-left: 73vh;
-    font-weight: bold;
+  margin-left: 73vh;
+  font-weight: bold;
 }

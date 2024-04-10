@@ -99,7 +99,7 @@ const Login = ({ onLoginSuccess }) => {
                   Login
                 </MDBBtn>
                 {message && (
-                  <div className="form-group">
+                  <div className="form-group" id="error-login-message">
                     <div className="alert alert-danger" role="alert">
                       {message}
                     </div>

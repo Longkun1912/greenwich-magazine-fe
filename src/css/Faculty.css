@@ -17,7 +17,7 @@ button.btn.btn-successFaculty {
   background: #14a44d;
   text-align: center;
   color: white;
-  transition: background-color 0.3s ease; 
+  transition: background-color 0.3s ease;
   margin: 1vh;
   border-radius: 10vh;
   margin-right: 110vh;
@@ -38,8 +38,8 @@ button.btn.btn-successFaculty {
 }
 
 button.btn.btn-scuccess:hover {
-  background: darkgreen; 
-  font-weight: bold; 
+  background: darkgreen;
+  font-weight: bold;
 }
 
 .faculty-table {
@@ -50,20 +50,11 @@ button.btn.btn-scuccess:hover {
   border: 2px solid #f1bdb8;
 }
 
-/* All tile when Edit and View */
-.modal-tile.modal-title.h4 {
-  margin-left: 0vh;
-}
-
-
 .modal-title.h4 {
   display: flex;
-  /* margin-left: 12vh; */
   font-size: 4vh;
   font-weight: bold;
   font-family: initial;
-  width: 0vh;
-  height: 9vh;
 }
 
 .modal-title4 {
@@ -78,7 +69,6 @@ button.btn.btn-scuccess:hover {
   text-align: center; /* Căn giữa chữ theo chiều ngang */
   width: 50vh; /* Độ rộng của phần tử span */
 }
-
 
 #user-avatar {
   margin-left: -10vh !important;

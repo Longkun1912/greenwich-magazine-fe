@@ -14,7 +14,6 @@ import { Form } from "react-bootstrap";
 import "../css/Register.css";
 import auth from "../services/auth.service";
 import UserValidation from "../validation/user";
-import { Link } from "react-router-dom";
 
 const Register = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -186,7 +185,10 @@ const Register = () => {
 
               <MDBCol md="6" id="sign-up-form">
                 <MDBCardBody className="text-black d-flex flex-column justify-content-center">
-                  <h3 className="mb-5 text-uppercase fw-bold">
+                  <h3
+                    className="mb-5 text-uppercase fw-bold"
+                    id="register-header"
+                  >
                     Student registration form
                   </h3>
 
@@ -290,7 +292,15 @@ const Register = () => {
                       </MDBCol>
                     </MDBRow>
 
-                    <label style={{ marginBottom: "1.5vh", display: "flex", fontWeight: "bold", color: "#666666", marginLeft:"0.5vh" }}>
+                    <label
+                      style={{
+                        marginBottom: "1.5vh",
+                        display: "flex",
+                        fontWeight: "bold",
+                        color: "#666666",
+                        marginLeft: "0.5vh",
+                      }}
+                    >
                       Upload Avatar:
                     </label>
                     <MDBCol md="12">

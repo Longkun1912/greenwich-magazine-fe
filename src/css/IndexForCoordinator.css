@@ -6,14 +6,13 @@
   border: 2px solid #f1bdb8;
 }
 
-
-button.btn.btn-Status{
+button.btn.btn-Status {
   color: white;
   font-weight: bold;
   border-radius: 1vh;
   width: 15vh;
   height: 5vh;
-} 
+}
 
 /* màu Status */
 .status-pending {
@@ -34,22 +33,21 @@ button.btn.btn-Status{
 
 /* màu State */
 
-button.btn.btn-State{
+button.btn.btn-State {
   color: white;
   font-weight: bold;
   border-radius: 1vh;
   width: 15vh;
   height: 5vh;
-} 
+}
 
-.status-public{
+.status-public {
   background-color: #10d220;
 }
 
-.status-private{
+.status-private {
   background-color: red;
 }
-
 
 /* View Detail Contribution Css */
 span.info-label {
@@ -58,7 +56,6 @@ span.info-label {
 
 .feedback-content {
   position: relative;
-  max-height: 200px;
   overflow-y: auto;
   word-wrap: break-word;
 }
@@ -105,10 +102,14 @@ button.btn-cancel {
   color: white;
 }
 
-/* 
-input[type="text"] {
-  height: 16vh;
-  width: 63vh;
-  word-wrap: break-word;
-  overflow-y: auto;
-} */
+.comment-actions {
+  margin-top: 2vh;
+}
+
+#delete-comment-btn {
+  width: fit-content;
+}
+
+#cancel-edit-btn {
+  width: fit-content;
+}
