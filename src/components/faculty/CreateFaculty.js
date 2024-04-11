@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { postCreateFaculty } from "../../services/faculty.service";
 
@@ -21,17 +21,25 @@ const CreateFaculty = (props) => {
         setDescription("");
         setImage("");
       }
-
       handleClose();
       toast.success("Faculty created successfully");
-
     } catch (error) {
       setIsSubmitting(false);
       console.error("Error creating faculty:", error);
+      if (error.response && error.response.data) {
+        // Kiểm tra nếu thông điệp lỗi chứa "Faculty with this name already exists."
+        if (error.response.data) {
+          // Hiển thị thông báo trên giao diện
+          toast.error("Faculty with this name already exists.");
+          return; // Dừng xử lý tiếp tục
+        }
+      }
+      // Nếu không có thông điệp lỗi hoặc không phải lỗi trùng tên, hiển thị thông báo mặc định
       toast.error("Failed to create faculty");
+      toast.error(error.message);
     }
   };
-
+  
   // Function to handle image upload
   const handleImageChange = (event) => {
     const file = event.target.files[0]; // Assuming only one file is selected
@@ -92,4 +100,3 @@ const CreateFaculty = (props) => {
   );
 };
 export default CreateFaculty;
-<ToastContainer />

@@ -141,11 +141,11 @@ const StudentUpdateContributionForm = ({
 
         await contributionService.editContribution(contributionForm);
         await fetchContributions();
-        toast.success("Contribution submitted successfully");
+        toast.success("Update Contribution successfully");
         close();
       } catch (error) {
         setError(error.response.data.error);
-        toast.error("Failed to submit contribution");
+        toast.error("Failed to update contribution");
         setContributionSubmission((prevData) => ({
           ...prevData,
         }));

@@ -3,38 +3,57 @@ import publicApi from "../services/api.service";
 import auth from "./auth.service";
 
 // all faculty
-const getAllFaculties = () => {
-  return axios.get(publicApi.faculty);
+const getAllFaculties = async () => {
+  try {
+    return axios.get(publicApi.faculty);
+  } catch (error) {
+    console.error("Error fetching all faculties:", error);
+    throw error;
+  }
 };
 
 // create faculty
-export const postCreateFaculty = (name, description, image) => {
-  let facultyForm = new FormData();
-  facultyForm.append("name", name);
-  facultyForm.append("description", description);
-  facultyForm.append("image", image);
+export const postCreateFaculty = async (name, description, image) => {
+  try {
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("image", image);
 
-  return axios.post(publicApi.faculty + "create", facultyForm, {
-    headers: {
-      "x-access-token": auth.getCurrentAccessToken(),
-      "Content-Type": "multipart/form-data",
-    },
-  });
+    const token = auth.getCurrentAccessToken();
+    const response = await axios.post(publicApi.faculty + "create", formData, {
+      headers: {
+        "x-access-token": token,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating faculty:", error);
+    throw error;
+  }
 };
 
 // update faculty
-export const putUpdateFaculty = (id, name, description, image) => {
-  let facultyForm = new FormData();
-  facultyForm.append("name", name);
-  facultyForm.append("description", description);
-  facultyForm.append("image", image);
+export const putUpdateFaculty = async (id, name, description, image) => {
+  try {
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("image", image);
 
-  return axios.put(publicApi.faculty + `update/${id}`, facultyForm, {
-    headers: {
-      "x-access-token": auth.getCurrentAccessToken(),
-      "Content-Type": "multipart/form-data",
-    },
-  });
+    const token = auth.getCurrentAccessToken();
+    const response = await axios.put(publicApi.faculty + `update/${id}`, formData, {
+      headers: {
+        "x-access-token": token,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating faculty:", error);
+    throw error;
+  }
 };
 
 // delete faculty
