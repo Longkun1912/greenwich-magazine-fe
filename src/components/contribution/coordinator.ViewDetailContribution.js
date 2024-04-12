@@ -4,9 +4,11 @@ import Modal from "react-bootstrap/Modal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../css/IndexForCoordinator.css";
+import auth from "../../services/auth.service";
 import CommentService from "../../services/comment.service";
 
 const ContributionInfo = ({ open, close, contribution }) => {
+  const currentUser = auth.getCurrentUser(); // Lấy thông tin user hiện tại từ localStorage
   const [comments, setComments] = useState([]); // State để lưu trữ các bình luận
   const [editingCommentId, setEditingCommentId] = useState(null); // State để lưu trữ ID của bình luận đang chỉnh sửa
   const [editedCommentContent, setEditedCommentContent] = useState(""); // State để lưu trữ nội dung của bình luận đang chỉnh sửa
@@ -94,76 +96,74 @@ const ContributionInfo = ({ open, close, contribution }) => {
             <span className="info-label">Submitter: </span>
             <span className="info-value">{contribution.submitter}</span>
           </div>
-          {/* <div className="info-row">
-            <span className="info-label">State: </span>
-            <span className="info-value">{contribution.state}</span>
-          </div> */}
           <div className="info-row">
             <span className="info-label">Content: </span>
             <span className="info-value">{contribution.content}</span>
           </div>
-          <div className="info-row feedback-content">
-            <span className="info-label">Comment: </span>
-            <div className="info-value">
-              {comments.length > 0 ? (
-                comments.map((comment) => (
-                  <div key={comment.id}>
-                    {editingCommentId === comment.id ? (
-                      <div style={{ marginTop: "2vh" }}>
-                        <TextField
-                          fullWidth
-                          label="Feedback"
-                          id="fullWidth"
-                          value={editedCommentContent}
-                          onChange={(e) =>
-                            setEditedCommentContent(e.target.value)
-                          }
-                        />
-                        <div className="comment-actions">
-                          <button
-                            className="btn-save"
-                            onClick={() => handleSaveComment(comment._id)}
-                          >
-                            Save
-                          </button>
-                          <button
-                            className="btn-cancel"
-                            id="cancel-edit-btn"
-                            onClick={() => setEditingCommentId(null)}
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
-                      <div style={{ marginTop: "2vh" }}>
-                        <span>{comment.content}</span>
-                        <div className="comment-actions">
-                          <button
-                            className="btn-edit"
-                            onClick={() =>
-                              handleEditComment(comment.id, comment.content)
+          {currentUser.role === "coordinator" && (
+            <div className="info-row feedback-content">
+              <span className="info-label">Comment: </span>
+              <div className="info-value">
+                {comments.length > 0 ? (
+                  comments.map((comment) => (
+                    <div key={comment.id}>
+                      {editingCommentId === comment.id ? (
+                        <div style={{ marginTop: "2vh" }}>
+                          <TextField
+                            fullWidth
+                            label="Feedback"
+                            id="fullWidth"
+                            value={editedCommentContent}
+                            onChange={(e) =>
+                              setEditedCommentContent(e.target.value)
                             }
-                          >
-                            Edit
-                          </button>
-                          <button
-                            id="delete-comment-btn"
-                            className="btn-delete"
-                            onClick={() => handleDeleteComment(comment._id)}
-                          >
-                            Delete
-                          </button>
+                          />
+                          <div className="comment-actions">
+                            <button
+                              className="btn-save"
+                              onClick={() => handleSaveComment(comment._id)}
+                            >
+                              Save
+                            </button>
+                            <button
+                              className="btn-cancel"
+                              id="cancel-edit-btn"
+                              onClick={() => setEditingCommentId(null)}
+                            >
+                              Cancel
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
-                ))
-              ) : (
-                <span>No Feedback!!</span>
-              )}
+                      ) : (
+                        <div style={{ marginTop: "2vh" }}>
+                          <span>{comment.content}</span>
+                          <div className="comment-actions">
+                            <button
+                              className="btn-edit"
+                              onClick={() =>
+                                handleEditComment(comment.id, comment.content)
+                              }
+                            >
+                              Edit
+                            </button>
+                            <button
+                              id="delete-comment-btn"
+                              className="btn-delete"
+                              onClick={() => handleDeleteComment(comment._id)}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  <span>No Feedback!!</span>
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </Modal.Body>
       <Modal.Footer>
@@ -177,5 +177,3 @@ const ContributionInfo = ({ open, close, contribution }) => {
 
 export default ContributionInfo;
 <ToastContainer />;
-
-

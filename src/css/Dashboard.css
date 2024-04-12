@@ -1,4 +1,3 @@
-
 .dashboards {
   width: auto;
   height: auto;
@@ -16,22 +15,22 @@
 
 .contribution-number {
   margin: 0vh;
-  background-color: antiquewhite;
+  background-color: ghostwhite;
   overflow: auto;
   width: 100%;
 }
 
 #dashboard-1-intro {
-  margin-top: 0vh;
+  margin-top: 2vh;
   margin-bottom: 2vh;
-  font-family: serif;
+  font-size: 4vh;
 }
 
 .contribution-percentage {
-  width: 100%;;
+  width: 100%;
   margin: 0vh;
   margin-top: 5vh !important;
-  background-color: antiquewhite;
+  background-color: ghostwhite;
 }
 
 .pie-chart {
@@ -45,6 +44,5 @@
   margin-top: 2vh;
   margin-bottom: 2vh;
   padding-top: 2vh;
-  font-family: serif;
-
+  font-size: 4vh;
 }

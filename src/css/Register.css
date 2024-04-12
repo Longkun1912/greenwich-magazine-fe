@@ -5,6 +5,8 @@
 
 .img-fluid {
   width: 67vh;
+  width: 67vh;
+  object-fit: cover;
   height: 65vh;
 }
 

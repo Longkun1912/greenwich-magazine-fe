@@ -27,7 +27,11 @@ const Sidebar = ({ currentUser }) => {
             id={isExpanded ? "user-profile-img" : "collapsed-field"}
           />
           <div className={isExpanded ? "profile-info" : "collapsed-field"}>
-            <p className="profile-username-txt">{currentUser.username}</p>
+            <p className="profile-username-txt">
+              {currentUser.username.length > 10
+                ? `${currentUser.username.substring(0, 10)}...`
+                : currentUser.username}
+            </p>
             <p className="profile-info-txt">Role: {currentUser.role}</p>
           </div>
         </Link>

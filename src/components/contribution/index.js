@@ -12,14 +12,14 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { GrView } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../../css/ContributionForAdmin.css";
 import auth from "../../services/auth.service";
 import ContributionService from "../../services/contribution.service";
 import ModalCreateContribution from "./CreateContribution";
 import ModalEditContribution from "./EditContribution";
 import ContributionInfo from "./coordinator.ViewDetailContribution";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const ContributionManagement = () => {
   const currentUser = auth.getCurrentUser();
@@ -59,7 +59,6 @@ const ContributionManagement = () => {
       } catch (error) {
         console.error("Error deleting contribution:", error);
         toast.error("Failed to delete faculty", error);
-
       }
     },
     [fetchContributions]
@@ -197,7 +196,7 @@ const ContributionManagement = () => {
             )}
           </div>
         ),
-      }      
+      },
     ],
     [currentUser.role, confirmDelete]
   );
@@ -219,17 +218,22 @@ const ContributionManagement = () => {
       <ToastContainer />
       <h1>Contribution Management</h1>
       <div className="contribution-index">
-        <button
-          className="btn btn-success"
-          onClick={() => setIsShowModalCreateContribution(true)}
-        >
-          Create Contribution
-        </button>
-        <ModalCreateContribution
-          show={isShowModalCreateContribution}
-          handleClose={handleCloseModals}
-          fetchContributions={fetchContributions}
-        />
+        {currentUser.role === "admin" && (
+          <div>
+            <button
+              className="btn btn-success"
+              onClick={() => setIsShowModalCreateContribution(true)}
+            >
+              Create Contribution
+            </button>
+            <ModalCreateContribution
+              show={isShowModalCreateContribution}
+              handleClose={handleCloseModals}
+              fetchContributions={fetchContributions}
+            />
+          </div>
+        )}
+
         {selectedContribution && (
           <ModalEditContribution
             show={isShowModalEditContribution}
