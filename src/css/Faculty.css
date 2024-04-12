@@ -68,6 +68,9 @@ button.btn.btn-scuccess:hover {
 .modal-title4 span {
   text-align: center; /* Căn giữa chữ theo chiều ngang */
   width: 50vh; /* Độ rộng của phần tử span */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #user-avatar {
@@ -79,6 +82,31 @@ button.btn.btn-scuccess:hover {
   /* margin-left: 16vh; */
   justify-content: center;
   align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* display: block; */
 }
 
+.modal-title9.modal-title.h4 {
+  width: 100%;
+  /* margin-left: 16vh; */
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.modal-title8.modal-title.h4 {
+  width: 100%;
+  /* margin-left: 16vh; */
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* display: block; */
+}
 /*Css Trong Edit Faculty */

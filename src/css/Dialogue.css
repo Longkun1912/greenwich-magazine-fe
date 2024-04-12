@@ -17,6 +17,10 @@
   height: 60vh;
 }
 
+.row.studentchat {
+  margin-top: -8vh;
+}
+
 /* #chat-details {
   height: 75vh;
   overflow-y: auto;

@@ -113,3 +113,14 @@ button.btn-cancel {
 #cancel-edit-btn {
   width: fit-content;
 }
+
+.modal-title10.modal-title.h4 {
+  width: 100%;
+  /* margin-left: 16vh; */
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* display: block; */
+}

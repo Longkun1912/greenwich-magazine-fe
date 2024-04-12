@@ -103,7 +103,7 @@ const ContributionInfo = ({ open, close, contribution }) => {
             <span className="info-value">{contribution.content}</span>
           </div>
           <div className="info-row feedback-content">
-            <span className="info-label">Feedback: </span>
+            <span className="info-label">Comment: </span>
             <div className="info-value">
               {comments.length > 0 ? (
                 comments.map((comment) => (

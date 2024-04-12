@@ -59,8 +59,8 @@ const StudentViewComment = ({ open, close, contribution }) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>
-            <div className="modal-title3">
+          <Modal.Title className="modal-title10">
+            <div>
               <span>
                 {loadingTitle
                   ? "Loading..."
@@ -74,10 +74,10 @@ const StudentViewComment = ({ open, close, contribution }) => {
         <Modal.Body>
           <div className="contribution-info">
             <div className="info-row feedback-content">
-              <span className="info-label">Feedback: </span>
+              <span className="info-label">Comment: </span>
               <div className="info-value">
                 {loadingComments ? (
-                  <span>Loading feedback...</span>
+                  <span>Loading comment...</span>
                 ) : comments.length > 0 ? (
                   comments.map((comment, index) => (
                     <div key={index}>
@@ -85,7 +85,7 @@ const StudentViewComment = ({ open, close, contribution }) => {
                     </div>
                   ))
                 ) : (
-                  <span>No Feedback yet!!</span>
+                  <span>No comment yet!!</span>
                 )}
               </div>
             </div>

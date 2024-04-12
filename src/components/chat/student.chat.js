@@ -130,7 +130,7 @@ const StudentChat = ({ currentUser }) => {
           </MDBContainer>
         ) : (
           <MDBContainer>
-            <MDBRow>
+            <MDBRow className="studentchat">
               <MDBCol id="compose-message-container">
                 <div className="message-form">
                   <MDBTypography tag="h5">Chat with Coordinator</MDBTypography>

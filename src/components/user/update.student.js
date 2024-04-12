@@ -105,7 +105,7 @@ const StudentUpdateForm = ({ student, open, close, fetchStudents }) => {
   return (
     <Modal show={open} onHide={close}>
       <Modal.Header closeButton>
-        <Modal.Title className="modal-title10">Update Student</Modal.Title>
+        <Modal.Title className="modal-title8">Update Student</Modal.Title>
       </Modal.Header>
       <Form onSubmit={handleSubmit}>
         <Modal.Body>
