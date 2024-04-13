@@ -7,13 +7,23 @@ import { postCreateFaculty } from "../../services/faculty.service";
 const CreateFaculty = (props) => {
   const { show, handleClose, fetchFaculties } = props;
   const [name, setName] = useState("");
+  const [nameError, setNameError] = useState(false); 
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
+  const [imageError, setImageError] = useState(false); 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
 
   const handleSaveFaculty = async () => {
     setIsSubmitting(true);
     try {
+      // Check if Name and Image are provided
+      if (!name || !image) {
+        setNameError(!name);
+        setImageError(!image);
+        throw new Error("Please provide Name and Image.");
+      }
+
       let res = await postCreateFaculty(name, description, image);
       await fetchFaculties();
       if (res && res.id) {
@@ -27,15 +37,11 @@ const CreateFaculty = (props) => {
       setIsSubmitting(false);
       console.error("Error creating faculty:", error);
       if (error.response && error.response.data) {
-        // Kiểm tra nếu thông điệp lỗi chứa "Faculty with this name already exists."
         if (error.response.data) {
-          // Hiển thị thông báo trên giao diện
           toast.error("Faculty with this name already exists.");
-          return; // Dừng xử lý tiếp tục
+          return; 
         }
       }
-      // Nếu không có thông điệp lỗi hoặc không phải lỗi trùng tên, hiển thị thông báo mặc định
-      toast.error("Failed to create faculty");
       toast.error(error.message);
     }
   };
@@ -56,13 +62,16 @@ const CreateFaculty = (props) => {
           <div className="body-add-new-faculty">
             <div>
               <form>
-                <div className="mb-3">
-                  <label className="form-label">Name</label>
+              <div className="mb-3">
+                  <label className="form-label" style={{color: nameError ? 'red' : 'initial'}}>Name</label>
                   <input
                     type="text"
-                    className="form-control"
+                    className={`form-control ${nameError ? 'border border-danger' : ''}`}
                     value={name}
-                    onChange={(event) => setName(event.target.value)}
+                    onChange={(event) => {
+                      setName(event.target.value);
+                      setNameError(false); // Reset Name error when typing in the input
+                    }}
                   />
                 </div>
                 <div className="mb-3">
@@ -75,10 +84,10 @@ const CreateFaculty = (props) => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">Image</label>
+                  <label className="form-label" style={{color: imageError ? 'red' : 'initial'}}>Image</label>
                   <input
                     type="file"
-                    className="form-control"
+                    className={`form-control ${imageError ? 'border border-danger' : ''}`}
                     accept="image/*"
                     onChange={(e) => handleImageChange(e)}
                   />
