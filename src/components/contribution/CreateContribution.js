@@ -174,6 +174,7 @@ const CreateContribution = (props) => {
         }));
         setImageFiles([]);
         setDocumentFiles([]);
+        setError("");
       } catch (error) {
         setError(error.response.data.error);
         setContributionForm((prevData) => ({

@@ -1,5 +1,3 @@
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import { saveAs } from "file-saver";
@@ -9,25 +7,30 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import { useCallback, useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 import { AiFillEdit } from "react-icons/ai";
 import { GrView } from "react-icons/gr";
 import { MdAddComment } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
+import "../../css/IndexForCoordinator.css";
 import auth from "../../services/auth.service";
 import ContributionService from "../../services/contribution.service";
-import ModalEditContribution from "./coordinator.edit";
-import ModalCommentContribution from "./coordinator.comment";
 import ContributionInfo from "./coordinator.ViewDetailContribution";
-import "../../css/IndexForCoordinator.css";
-
+import ModalCommentContribution from "./coordinator.comment";
+import ModalEditContribution from "./coordinator.edit";
 
 const IndexForCoordinator = () => {
   const [contributions, setContributions] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [isShowModalEditForCoordinator, setIsShowModalEditForCoordinator] = useState(false);
+  const [isShowModalEditForCoordinator, setIsShowModalEditForCoordinator] =
+    useState(false);
   const [dataEditForCoordinator, setDataEditForCoordinator] = useState({});
-  const [isShowModalViewDetailContribution, setIsShowModalViewDetailContribution] = useState(false);
-  const [isShowModalCommentContribution, setIsShowModalCommentContribution] = useState(false);
+  const [
+    isShowModalViewDetailContribution,
+    setIsShowModalViewDetailContribution,
+  ] = useState(false);
+  const [isShowModalCommentContribution, setIsShowModalCommentContribution] =
+    useState(false);
   const [selectedContribution, setSelectedContribution] = useState(null);
   const currentUser = auth.getCurrentUser();
 
@@ -68,7 +71,7 @@ const IndexForCoordinator = () => {
     console.log("Selected contribution:", contribution);
     setDataEditForCoordinator(contribution);
     setIsShowModalCommentContribution(true);
-  }
+  };
 
   //handle Close
   const handleClose = () => {
@@ -124,16 +127,9 @@ const IndexForCoordinator = () => {
 
   const columns = [
     {
-      accessorKey: "image",
-      header: "Image",
-      size: 100,
-      Cell: ({ cell }) => (
-        <img
-          src={cell.row.original.image}
-          alt="Contribution"
-          style={{ width: "15vh", height: "15vh", borderRadius: "3vh" }}
-        />
-      ),
+      accessorKey: "id",
+      header: "ID",
+      size: 200,
     },
     {
       accessorKey: "title",
@@ -141,19 +137,21 @@ const IndexForCoordinator = () => {
       size: 100,
     },
     {
-      accessorKey: "document",
-      header: "Document",
-      size: 100,
-      Cell: ({ cell }) =>
-        cell.row.original.document && (
-          <button
-            className="btn btn-AdminDownload"
-            onClick={() => handleDownloadDocument(cell.row.original.document)}
-          >
-            <FontAwesomeIcon icon={faDownload} className="fa-solid" />
-            Download
-          </button>
-        ),
+      header: "Download",
+      Cell: ({ cell }) => (
+        <div style={{ maxWidth: "10vh" }}>
+          {cell.row.original.documents || cell.row.original.images ? (
+            <Button
+              className="btn btn-success"
+              // onClick={() => handleDownloadContribution(cell.row.original)}
+            >
+              Available
+            </Button>
+          ) : (
+            <Button className="btn btn-danger">Unavailable</Button>
+          )}
+        </div>
+      ),
     },
     {
       accessorKey: "status",
@@ -218,7 +216,9 @@ const IndexForCoordinator = () => {
   return (
     <div className="content-container">
       <ToastContainer />
-      <h1>All Contribution In <span>{currentUser.faculty}</span></h1>
+      <h1>
+        All Contribution In <span>{currentUser.faculty}</span>
+      </h1>
       {selectedContribution && isShowModalViewDetailContribution && (
         <ContributionInfo
           open={isShowModalViewDetailContribution}

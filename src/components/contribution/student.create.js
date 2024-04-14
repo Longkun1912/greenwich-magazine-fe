@@ -154,6 +154,7 @@ const StudentContributionForm = () => {
         setImageFiles([]);
         setDocumentFiles([]);
         setIsSubmitting(false);
+        setError("");
       } catch (error) {
         setError(error.response.data.error);
         toast.error("Failed to submit contribution");
