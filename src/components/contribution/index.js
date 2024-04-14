@@ -1,5 +1,4 @@
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import { saveAs } from "file-saver";
@@ -88,15 +87,26 @@ const ContributionManagement = () => {
   };
 
   // Handle download document
-  const handleDownloadDocument = async (documentName) => {
+  const handleDownloadContribution = async (contribution) => {
     try {
-      console.log("Downloading document:", documentName);
       // Send file to download
-      const response = await ContributionService.downloadDocument(documentName);
+      const response = await ContributionService.downloadFiles(
+        contribution.documents,
+        contribution.images
+      );
+
+      console.log("REsponse", response);
+
+      // Create a zip file for all files
       const zip = new JSZip();
-      zip.file(documentName, response.data);
-      const content = await zip.generateAsync({ type: "blob" });
-      saveAs(content, `${documentName}.zip`);
+      const blob = await response.blob();
+      const zipName = contribution.title + ".zip";
+      zip.file(zipName, blob);
+
+      // Download zip file
+      zip.generateAsync({ type: "blob" }).then((content) => {
+        saveAs(content, zipName);
+      });
     } catch (error) {
       console.error("Error downloading document:", error);
     }
@@ -121,38 +131,32 @@ const ContributionManagement = () => {
   let columns = useMemo(
     () => [
       {
-        accessorKey: "image",
-        header: "Image",
-        size: 100,
-        Cell: ({ cell }) => (
-          <img
-            src={cell.row.original.image}
-            alt="Contribution"
-            style={{ width: "15vh", height: "15vh", borderRadius: "3vh" }}
-          />
-        ),
+        accessorKey: "id",
+        header: "ID",
+        size: 200,
       },
       {
         accessorKey: "title",
         header: "Title",
-        size: 100,
+        size: 200,
       },
       {
-        accessorKey: "document",
-        header: "Document",
-        size: 100,
-        Cell: ({ cell }) =>
-          cell.row.original.document && (
-            <button
-              className="btn btn-AdminDownload"
-              onClick={() => handleDownloadDocument(cell.row.original.document)}
-            >
-              <FontAwesomeIcon icon={faDownload} className="fa-solid" />
-              Download
-            </button>
-          ),
+        header: "Download",
+        Cell: ({ cell }) => (
+          <div style={{ maxWidth: "10vh" }}>
+            {cell.row.original.documents || cell.row.original.images ? (
+              <Button
+                className="btn btn-success"
+                onClick={() => handleDownloadContribution(cell.row.original)}
+              >
+                Available
+              </Button>
+            ) : (
+              <Button className="btn btn-danger">Unavailable</Button>
+            )}
+          </div>
+        ),
       },
-
       {
         accessorKey: "status",
         header: "Status",

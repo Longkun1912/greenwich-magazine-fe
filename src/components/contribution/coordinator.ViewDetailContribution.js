@@ -96,10 +96,6 @@ const ContributionInfo = ({ open, close, contribution }) => {
             <span className="info-label">Submitter: </span>
             <span className="info-value">{contribution.submitter}</span>
           </div>
-          <div className="info-row">
-            <span className="info-label">Content: </span>
-            <span className="info-value">{contribution.content}</span>
-          </div>
           {currentUser.role === "coordinator" && (
             <div className="info-row feedback-content">
               <span className="info-label">Comment: </span>

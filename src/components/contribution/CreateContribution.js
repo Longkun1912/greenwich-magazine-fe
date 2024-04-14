@@ -1,3 +1,4 @@
+import { Dropzone, FileMosaic } from "@dropzone-ui/react";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -5,13 +6,13 @@ import Select from "@mui/material/Select";
 import { useEffect, useState } from "react";
 import { Alert, Button, Modal } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import auth from "../../services/auth.service";
 import contributionService from "../../services/contribution.service";
 import eventService from "../../services/event.service";
 import facultyService from "../../services/faculty.service";
 import UserValidation from "../../validation/user";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const statusOptions = ["pending", "approved", "rejected", "modified"];
 
@@ -23,6 +24,8 @@ const CreateContribution = (props) => {
   const [error, setError] = useState("");
   const [events, setEvents] = useState([]);
   const [faculties, setFaculties] = useState([]);
+  const [imageFiles, setImageFiles] = useState([]);
+  const [documentFiles, setDocumentFiles] = useState([]);
 
   const fetchEvents = async () => {
     try {
@@ -49,20 +52,16 @@ const CreateContribution = (props) => {
 
   const [contributionForm, setContributionForm] = useState({
     title: "",
-    content: "",
     status: "",
     faculty: "",
     event: null,
-    image: null,
-    document: null,
+    images: [],
+    documents: [],
     // Validation
     titleError: "",
-    contentError: "",
     statusError: "",
     eventError: "",
     facultyError: "",
-    imageError: "",
-    documentError: "",
   });
 
   const handleChange = (e) => {
@@ -94,24 +93,22 @@ const CreateContribution = (props) => {
     }));
   };
 
-  const handleImageChange = (e) => {
-    if (e.target.files.length) {
-      const file = e.target.files[0];
-      setContributionForm((prevData) => ({
-        ...prevData,
-        image: file,
-      }));
-    }
+  // Handle uploading multiple image files
+  const handleUploadImages = (files) => {
+    setImageFiles(files);
+    setContributionForm((prevData) => ({
+      ...prevData,
+      images: files,
+    }));
   };
 
-  const handleDocumentChange = (e) => {
-    if (e.target.files.length) {
-      const file = e.target.files[0];
-      setContributionForm((prevData) => ({
-        ...prevData,
-        document: file,
-      }));
-    }
+  // Handle uploading multiple document files
+  const handleUploadDocuments = (files) => {
+    setDocumentFiles(files);
+    setContributionForm((prevData) => ({
+      ...prevData,
+      documents: files,
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -121,59 +118,44 @@ const CreateContribution = (props) => {
     setContributionForm((prevData) => ({
       ...prevData,
       titleError: "",
-      contentError: "",
       statusError: "",
       eventError: "",
       facultyError: "",
-      imageError: "",
-      documentError: "",
     }));
 
-    const { title, content, status, event, faculty, image, document } =
-      contributionForm;
+    const { title, status, event, faculty } = contributionForm;
 
     const titleError = UserValidation.requiredField(title);
-    const contentError = UserValidation.requiredField(content);
     const statusError = !status ? "Status is required" : "";
     const eventError = !event ? "Event is required" : "";
     const facultyError = !faculty ? "Faculty is required" : "";
-    const imageError = !image ? "Image is required" : "";
-    const documentError = !document ? "Document is required" : "";
 
-    if (
-      titleError ||
-      contentError ||
-      statusError ||
-      eventError ||
-      facultyError ||
-      imageError ||
-      documentError
-    ) {
+    if (titleError || statusError || eventError || facultyError) {
       setContributionForm((prevData) => ({
         ...prevData,
         titleError,
-        contentError,
         statusError,
         eventError,
         facultyError,
-        imageError,
-        documentError,
       }));
       setIsSubmitting(false);
       return;
     } else {
       try {
         const contribution = new FormData();
-
-        console.log("Event:", contributionForm.event);
-
         contribution.append("title", contributionForm.title);
-        contribution.append("content", contributionForm.content);
         contribution.append("status", contributionForm.status);
         contribution.append("event", contributionForm.event._id);
         contribution.append("faculty", contributionForm.faculty._id);
-        contribution.append("image", contributionForm.image);
-        contribution.append("document", contributionForm.document);
+        // Loop through image files and append them
+        for (const image of [...new Set(contributionForm.images)]) {
+          contribution.append("image", image.file); // Use image.file for actual file data
+        }
+
+        // Loop through document files and append them
+        for (const document of [...new Set(contributionForm.documents)]) {
+          contribution.append("document", document.file); // Use document.file for actual file data
+        }
         contribution.append("submitter", currentAuthenticatedUser.id);
 
         await contributionService.createContribution(contribution);
@@ -181,6 +163,17 @@ const CreateContribution = (props) => {
         setIsSubmitting(false);
         handleClose();
         toast.success("Contribution created successfully");
+        setContributionForm((prevData) => ({
+          ...prevData,
+          title: "",
+          status: "",
+          event: null,
+          faculty: "",
+          images: [],
+          documents: [],
+        }));
+        setImageFiles([]);
+        setDocumentFiles([]);
       } catch (error) {
         setError(error.response.data.error);
         setContributionForm((prevData) => ({
@@ -199,7 +192,9 @@ const CreateContribution = (props) => {
       <Modal show={show} onHide={handleClose}>
         <Form onSubmit={handleSubmit}>
           <Modal.Header closeButton>
-            <Modal.Title className="modal-title10">Add New Contribution</Modal.Title>
+            <Modal.Title className="modal-title10">
+              Add New Contribution
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="body-add-new-faculty">
@@ -217,22 +212,6 @@ const CreateContribution = (props) => {
                   {contributionForm.titleError && (
                     <div className="error-message">
                       {contributionForm.titleError}
-                    </div>
-                  )}
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">Content</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={contributionForm.content}
-                    name="content"
-                    onChange={handleChange}
-                    validations={contributionForm.contentError}
-                  />
-                  {contributionForm.contentError && (
-                    <div className="error-message">
-                      {contributionForm.contentError}
                     </div>
                   )}
                 </div>
@@ -310,31 +289,27 @@ const CreateContribution = (props) => {
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Image</label>
-                  <input
-                    type="file"
-                    className="form-control"
+                  <Dropzone
+                    onChange={(files) => handleUploadImages(files)}
+                    multiple
                     accept="image/*"
-                    onChange={(e) => handleImageChange(e)}
-                  />
-                  {contributionForm.imageError && (
-                    <Alert variant="danger">
-                      {contributionForm.imageError}
-                    </Alert>
-                  )}
+                  >
+                    {imageFiles.map((file) => (
+                      <FileMosaic {...file} preview />
+                    ))}
+                  </Dropzone>
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Document</label>
-                  <input
-                    type="file"
-                    className="form-control"
+                  <Dropzone
+                    onChange={(files) => handleUploadDocuments(files)}
+                    multiple
                     accept=".doc,.docx"
-                    onChange={(e) => handleDocumentChange(e)}
-                  />
-                  {contributionForm.documentError && (
-                    <Alert variant="danger">
-                      {contributionForm.documentError}
-                    </Alert>
-                  )}
+                  >
+                    {documentFiles.map((file) => (
+                      <FileMosaic {...file} preview />
+                    ))}
+                  </Dropzone>
                 </div>
               </div>
             </div>
@@ -354,4 +329,4 @@ const CreateContribution = (props) => {
   );
 };
 export default CreateContribution;
-<ToastContainer />
+<ToastContainer />;

@@ -128,10 +128,11 @@ const StudentContributionIndex = () => {
               data-mdb-ripple-color="light"
             >
               <img
-                src={contribution.image}
+                src={contribution.images[0]}
                 className="student-contribution-image"
                 alt="Nature"
               />
+
               <a href="#!">
                 <div
                   className="mask"

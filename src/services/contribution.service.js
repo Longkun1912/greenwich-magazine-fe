@@ -2,16 +2,14 @@ import axios from "axios";
 import publicApi from "./api.service";
 import auth from "./auth.service";
 
-const downloadDocument = (documentName) => {
-  return axios.get(
-    publicApi.contribution + "contribution/download/" + documentName,
-    {
-      headers: {
-        "x-access-token": auth.getCurrentAccessToken(),
-      },
-      responseType: "blob",
-    }
-  );
+const downloadFiles = (documents, images) => {
+  return axios.get(publicApi.contribution + "contribution/download", {
+    params: { documents, images },
+    headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
+    },
+    responseType: "blob",
+  });
 };
 
 //all Contribution
@@ -120,19 +118,14 @@ const EditForCoordinator = (contributionId, editForm) => {
   );
 };
 
-
 //Edit Event For Coordinator
 const updateEventForCoordinator = (eventId, eventDetails) => {
-  return axios.put(
-    publicApi.event + `/${eventId}`,
-    eventDetails,
-    {
-      headers: {
-        "x-access-token": auth.getCurrentAccessToken(),
-        "Content-Type": "application/json", // Đặt Content-Type là application/json cho dữ liệu gửi đi
-      },
-    }
-  );
+  return axios.put(publicApi.event + `/${eventId}`, eventDetails, {
+    headers: {
+      "x-access-token": auth.getCurrentAccessToken(),
+      "Content-Type": "application/json", // Đặt Content-Type là application/json cho dữ liệu gửi đi
+    },
+  });
 };
 
 const getAllEvents = () => {
@@ -142,7 +135,6 @@ const getAllEvents = () => {
     },
   });
 };
-
 
 //Guest
 const getAllContributionForGuest = (facultyId) => {
@@ -154,7 +146,7 @@ const getAllContributionForGuest = (facultyId) => {
 };
 
 const contributionService = {
-  downloadDocument,
+  downloadFiles,
   getAllContribution,
   viewContributionsInFaculty,
   createContribution,

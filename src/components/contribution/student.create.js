@@ -1,3 +1,4 @@
+import { Dropzone, FileMosaic } from "@dropzone-ui/react";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import {
@@ -7,10 +8,8 @@ import {
   MDBCheckbox,
   MDBCol,
   MDBContainer,
-  MDBFile,
   MDBInput,
   MDBRow,
-  MDBTextArea,
 } from "mdb-react-ui-kit";
 import { useEffect, useState } from "react";
 import { Alert } from "react-bootstrap";
@@ -26,6 +25,8 @@ const StudentContributionForm = () => {
   const [error, setError] = useState("");
   const [events, setEvents] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
+  const [imageFiles, setImageFiles] = useState([]);
+  const [documentFiles, setDocumentFiles] = useState([]);
 
   const currentAuthenticatedUser = auth.getCurrentUser();
 
@@ -44,16 +45,12 @@ const StudentContributionForm = () => {
 
   const [contributionSubmission, setContributionSubmission] = useState({
     title: "",
-    content: "",
     event: null,
-    image: null,
-    document: null,
+    images: [],
+    documens: [],
     // Validation
     titleError: "",
-    contentError: "",
     eventError: "",
-    imageError: "",
-    documentError: "",
     checkboxError: "",
   });
 
@@ -64,22 +61,22 @@ const StudentContributionForm = () => {
     });
   };
 
-  const handleImageChange = (e) => {
-    if (e.target.files.length) {
-      setContributionSubmission({
-        ...contributionSubmission,
-        image: e.target.files[0],
-      });
-    }
+  // Handle uploading multiple image files
+  const handleUploadImages = (files) => {
+    setImageFiles(files);
+    setContributionSubmission((prevData) => ({
+      ...prevData,
+      images: files,
+    }));
   };
 
-  const handleDocumentChange = (e) => {
-    if (e.target.files.length) {
-      setContributionSubmission({
-        ...contributionSubmission,
-        document: e.target.files[0],
-      });
-    }
+  // Handle uploading multiple document files
+  const handleUploadDocuments = (files) => {
+    setDocumentFiles(files);
+    setContributionSubmission((prevData) => ({
+      ...prevData,
+      documents: files,
+    }));
   };
 
   const handleCheckboxChange = (e) => {
@@ -101,41 +98,25 @@ const StudentContributionForm = () => {
     setContributionSubmission((prevData) => ({
       ...prevData,
       titleError: "",
-      contentError: "",
       eventError: "",
-      imageError: "",
-      documentError: "",
       checkboxError: "",
     }));
 
     console.log("Check?", isChecked);
 
-    const { title, content, event, image, document } = contributionSubmission;
+    const { title, event } = contributionSubmission;
 
     const titleError = UserValidation.requiredField(title);
-    const contentError = UserValidation.requiredField(content);
     const eventError = !event ? "Event is required" : "";
-    const imageError = !image ? "Image is required" : "";
-    const documentError = !document ? "Document is required" : "";
     const checkboxError = !isChecked
       ? "You must agree to the terms and conditions"
       : "";
 
-    if (
-      titleError ||
-      contentError ||
-      eventError ||
-      imageError ||
-      documentError ||
-      checkboxError
-    ) {
+    if (titleError || eventError || checkboxError) {
       setContributionSubmission((prevData) => ({
         ...prevData,
         titleError,
-        contentError,
         eventError,
-        imageError,
-        documentError,
         checkboxError,
       }));
       setIsSubmitting(false);
@@ -147,14 +128,31 @@ const StudentContributionForm = () => {
         console.log("Event:", contributionSubmission.event);
 
         contribution.append("title", contributionSubmission.title);
-        contribution.append("content", contributionSubmission.content);
         contribution.append("event", contributionSubmission.event._id);
-        contribution.append("image", contributionSubmission.image);
-        contribution.append("document", contributionSubmission.document);
+
+        // Loop through image files and append them
+        for (const image of [...new Set(contributionSubmission.images)]) {
+          contribution.append("image", image.file); // Use image.file for actual file data
+        }
+
+        // Loop through document files and append them
+        for (const document of [...new Set(contributionSubmission.documents)]) {
+          contribution.append("document", document.file); // Use document.file for actual file data
+        }
+
         contribution.append("submitter", currentAuthenticatedUser.id);
 
         await contributionService.submitContribution(contribution);
         toast.success("Contribution submitted successfully");
+        setContributionSubmission((prevData) => ({
+          ...prevData,
+          title: "",
+          event: null,
+          images: [],
+          documents: [],
+        }));
+        setImageFiles([]);
+        setDocumentFiles([]);
         setIsSubmitting(false);
       } catch (error) {
         setError(error.response.data.error);
@@ -232,49 +230,19 @@ const StudentContributionForm = () => {
 
                 <MDBRow className="align-items-center pt-4 pb-3">
                   <MDBCol md="3" className="ps-5">
-                    <h6 className="mb-0">Write content</h6>
-                  </MDBCol>
-
-                  <MDBCol md="9" className="pe-5">
-                    <MDBTextArea
-                      label="Content"
-                      id="textAreaExample"
-                      rows={5}
-                      value={contributionSubmission.content}
-                      name="content"
-                      onChange={handleChange}
-                      validations={contributionSubmission.contentError}
-                    />
-                    {contributionSubmission.contentError && (
-                      <div className="error-message">
-                        {contributionSubmission.contentError}
-                      </div>
-                    )}
-                  </MDBCol>
-                </MDBRow>
-
-                <hr className="mx-n3" />
-
-                <MDBRow className="align-items-center pt-4 pb-3">
-                  <MDBCol md="3" className="ps-5">
                     <h6 className="mb-0">Upload Image</h6>
                   </MDBCol>
 
                   <MDBCol md="9" className="pe-5">
-                    <MDBFile
-                      size="lg"
-                      id="customFile"
+                    <Dropzone
+                      onChange={(files) => handleUploadImages(files)}
+                      multiple
                       accept="image/*"
-                      onChange={(e) => handleImageChange(e)}
-                    />
-                    <div className="small text-muted mt-2">
-                      Upload your image here
-                    </div>
-                    {contributionSubmission.imageError && (
-                      <Alert variant="danger">
-                        {contributionSubmission.imageError}
-                      </Alert>
-                    )}
+                    >
+                      {imageFiles.map((file) => (
+                        <FileMosaic {...file} preview />
+                      ))}
+                    </Dropzone>
                   </MDBCol>
                 </MDBRow>
 
@@ -286,20 +254,15 @@ const StudentContributionForm = () => {
                   </MDBCol>
 
                   <MDBCol md="9" className="pe-5">
-                    <MDBFile
-                      size="lg"
-                      id="customFile"
+                    <Dropzone
+                      onChange={(files) => handleUploadDocuments(files)}
+                      multiple
                       accept=".doc,.docx"
-                      onChange={(e) => handleDocumentChange(e)}
-                    />
-                    <div className="small text-muted mt-2">
-                      Upload your document here
-                    </div>
-                    {contributionSubmission.documentError && (
-                      <Alert variant="danger">
-                        {contributionSubmission.documentError}
-                      </Alert>
-                    )}
+                    >
+                      {documentFiles.map((file) => (
+                        <FileMosaic {...file} preview />
+                      ))}
+                    </Dropzone>
                   </MDBCol>
                 </MDBRow>
 
