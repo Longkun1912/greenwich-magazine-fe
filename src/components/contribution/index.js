@@ -1,8 +1,6 @@
 import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
-import { saveAs } from "file-saver";
-import JSZip from "jszip";
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -86,27 +84,27 @@ const ContributionManagement = () => {
     setIsShowModalEditContribution(true);
   };
 
-  // Handle download document
   const handleDownloadContribution = async (contribution) => {
     try {
-      // Send file to download
       const response = await ContributionService.downloadFiles(
         contribution.documents,
         contribution.images
       );
 
-      console.log("REsponse", response);
+      // Check response status (optional)
+      if (!response.ok) {
+        throw new Error("Error downloading files: " + response.statusText);
+      }
 
-      // Create a zip file for all files
-      const zip = new JSZip();
-      const blob = await response.blob();
-      const zipName = contribution.title + ".zip";
-      zip.file(zipName, blob);
+      const blob = await response.blob(); // Assuming response contains the zip blob
 
-      // Download zip file
-      zip.generateAsync({ type: "blob" }).then((content) => {
-        saveAs(content, zipName);
-      });
+      // Create a downloadable link or use a library like FileSaver.js
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "files.zip";
+      a.click();
+      window.URL.revokeObjectURL(url); // Cleanup
     } catch (error) {
       console.error("Error downloading document:", error);
     }

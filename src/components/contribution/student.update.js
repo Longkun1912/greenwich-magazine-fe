@@ -144,7 +144,7 @@ const StudentUpdateContributionForm = ({
         close();
       } catch (error) {
         console.log(error);
-        setError("Failed to update contribution");
+        setError(error.response.data.error);
         toast.error("Failed to update contribution");
         setContributionSubmission((prevData) => ({
           ...prevData,
