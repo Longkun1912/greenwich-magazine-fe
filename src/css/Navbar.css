@@ -84,8 +84,9 @@ svg.svg-inline--fa.fa-users.fa-icon {
 
 .profile-img {
   border-radius: 50%;
-  width: 8vh;
-  height: 8vh;
+  width: 10vh;
+  height: 10vh;
+  margin-right: -1vh;
   border: 0.1vh solid;
 }
 
