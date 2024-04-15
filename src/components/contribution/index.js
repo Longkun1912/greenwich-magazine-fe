@@ -91,22 +91,24 @@ const ContributionManagement = () => {
         contribution.images
       );
 
-      // Check response status (optional)
-      if (!response.ok) {
-        throw new Error("Error downloading files: " + response.statusText);
-      }
+      const blob = await response.data; // Get the blob data from response
+      const url = window.URL.createObjectURL(blob); // Create a temporary URL for the blob
 
-      const blob = await response.blob(); // Assuming response contains the zip blob
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", contribution.title); // Set download filename
+      link.style.display = "none"; // Hide the link element
 
-      // Create a downloadable link or use a library like FileSaver.js
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "files.zip";
-      a.click();
-      window.URL.revokeObjectURL(url); // Cleanup
+      document.body.appendChild(link); // Temporarily append to body
+      link.click(); // Simulate a click to trigger download
+      toast.success("Downloaded successfully");
+
+      // Cleanup: Remove the temporary link
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Error downloading document:", error);
+      toast.error("Failed to download document");
     }
   };
 

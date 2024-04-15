@@ -191,6 +191,7 @@ const CreateContribution = (props) => {
   return (
     <>
       <Modal show={show} onHide={handleClose}>
+        <ToastContainer />
         <Form onSubmit={handleSubmit}>
           <Modal.Header closeButton>
             <Modal.Title className="modal-title10">
@@ -330,4 +331,3 @@ const CreateContribution = (props) => {
   );
 };
 export default CreateContribution;
-<ToastContainer />;

@@ -12,7 +12,7 @@ const StudentContributionDetails = ({ contribution, open, close }) => {
       <Modal.Body>
         <div id="img-container">
           <img
-            src={contribution.images[0]}
+            src="https://newjerseylawyernow.com/wp-content/uploads/2020/06/quill-pen-writing-scaled.jpg"
             className="student-contribution-image"
             alt="Nature"
           />

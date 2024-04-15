@@ -1,5 +1,3 @@
-import { saveAs } from "file-saver";
-import JSZip from "jszip";
 import { Ripple, initMDB } from "mdb-ui-kit";
 import React, { useEffect, useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
@@ -39,19 +37,31 @@ const StudentContributionIndex = () => {
   };
 
   // Handle download document
-  const handleDownloadDocument = async (documentName) => {
+  const handleDownloadContribution = async (contribution) => {
     try {
-      // Send file to download
-      const response = await ContributionService.downloadDocument(documentName);
-      const zip = new JSZip();
-      zip.file(documentName, response.data);
-      const content = await zip.generateAsync({ type: "blob" });
-      saveAs(content, `${documentName}.zip`);
+      const response = await ContributionService.downloadFiles(
+        contribution.documents,
+        contribution.images
+      );
 
-      toast.success("Document downloaded successfully!");
+      const blob = await response.data; // Get the blob data from response
+      const url = window.URL.createObjectURL(blob); // Create a temporary URL for the blob
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", contribution.title); // Set download filename
+      link.style.display = "none"; // Hide the link element
+
+      document.body.appendChild(link); // Temporarily append to body
+      link.click(); // Simulate a click to trigger download
+      toast.success("Downloaded successfully");
+
+      // Cleanup: Remove the temporary link
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Error downloading document:", error);
-      toast.error("Failed to download document!");
+      toast.error("Failed to download document");
     }
   };
 
@@ -128,7 +138,7 @@ const StudentContributionIndex = () => {
               data-mdb-ripple-color="light"
             >
               <img
-                src={contribution.images[0]}
+                src="https://newjerseylawyernow.com/wp-content/uploads/2020/06/quill-pen-writing-scaled.jpg"
                 className="student-contribution-image"
                 alt="Nature"
               />
@@ -154,7 +164,7 @@ const StudentContributionIndex = () => {
                 </button>
                 <button
                   className="btn btn-download"
-                  onClick={() => handleDownloadDocument(contribution.document)}
+                  onClick={() => handleDownloadContribution(contribution)}
                 >
                   <ImFolderDownload className="action-icon" />
                 </button>
