@@ -29,11 +29,14 @@ const GreenwichNavBar = ({ currentUser, handleLogout }) => {
     <MDBNavbar expand="lg" dark bgColor="primary">
       <MDBContainer id="navbar-container">
         <div className="web-brand">
-          <img
+          {/* <img
             src="https://res.cloudinary.com/dokyaftrm/image/upload/v1713418936/greenwich-magazine/Our%20logo.png"
             alt="Logo"
             className="logo"
-          />
+          /> */}
+          
+          <img src="/logoGreenwich.jpg" alt="Logo" id="header-logo" />
+
           <MDBNavbarBrand href="#">EduCollab</MDBNavbarBrand>
         </div>
         <MDBNavbarNav id="navbar-option">

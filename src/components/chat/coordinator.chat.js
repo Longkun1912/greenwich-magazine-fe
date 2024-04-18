@@ -154,7 +154,7 @@ const CoordinatorChat = ({ currentUser }) => {
             <input
               type="search"
               class="form-control rounded"
-              placeholder="Name or email"
+              placeholder="Search by name"
               aria-label="Search"
               aria-describedby="search-addon"
               id="search-student-input"

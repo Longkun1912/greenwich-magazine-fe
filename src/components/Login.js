@@ -53,11 +53,13 @@ const Login = ({ onLoginSuccess }) => {
         <MDBRow id="form-details">
           <MDBCol sm="6" id="sign-in-form">
             <div style={{ marginTop: "4vh" }}>
-              <img
+              {/* <img
                 src="https://res.cloudinary.com/dokyaftrm/image/upload/v1713418936/greenwich-magazine/Our%20logo.png"
                 alt="Logo"
                 id="header-logo"
-              />
+              /> */}
+              {/* <img src="/logoGreenwich.jpg" alt="Logo" id="header-logo" /> */}
+
               <MDBIcon
                 fas
                 icon="crow fa-3x me-3"

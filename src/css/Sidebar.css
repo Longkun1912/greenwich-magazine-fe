@@ -62,7 +62,7 @@ a:focus {
 
 #sidebar {
   min-height: 100vh;
-  background: #4a4a4d;
+  background: #778899;
   color: #fff;
   transition: all 0.3s;
   margin-left: 0 !important;
@@ -74,7 +74,7 @@ a:focus {
 
 #sidebar .sidebar-header {
   padding: 3vh;
-  background: #4a4a4d;
+  background: #778899;
   display: flex !important;
 }
 

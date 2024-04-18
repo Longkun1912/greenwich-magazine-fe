@@ -1,7 +1,7 @@
 .web-brand {
   display: flex;
   align-items: center;
-  margin-left: -10vh;
+  margin-left: 0vh;
 }
 
 .logo {
@@ -31,7 +31,7 @@
 }
 
 .right-bar {
-  right: -10vh;
+  right: -4vh;
   top: -1vh;
   position: relative;
   display: flex;
@@ -88,6 +88,7 @@ a.navbar-brand {
   font-family: monospace;
   font-size: 4vh;
   font-weight: bold;
+  color: #2d1d5b;
 }
 
 #navbar-container {
@@ -100,7 +101,7 @@ a.navbar-brand {
 }
 
 nav.navbar-dark.navbar.navbar-expand-lg.bg-primary {
-  background-color: darkslategrey !important;
+  background-color: #ffffff !important;
 }
 
 span.username {
@@ -156,4 +157,13 @@ button#logout-option {
     /* Đổi con trỏ chuột thành dấu nhấp chuột */
     transform: translateY(-4px);
   }
+}
+
+a.navbar-brand {
+  font-size: 5vh;
+  margin-top: -3.5vh;
+}
+
+a.nav-link {
+  color: #2d1d5b;
 }
