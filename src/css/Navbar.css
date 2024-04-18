@@ -1,9 +1,7 @@
 .web-brand {
   display: flex;
-  /* Sử dụng flexbox để căn chỉnh */
   align-items: center;
-  /* Căn giữa các phần tử theo chiều dọc */
-  margin-left: -3vh;
+  margin-left: -10vh;
 }
 
 .logo {
@@ -28,12 +26,8 @@
 }
 
 .logo {
-  width: 50px;
-  /* Độ rộng của logo */
-  height: auto;
-  /* Chiều cao tự động để giữ tỷ lệ khung hình */
-  margin-right: 10px;
-  /* Khoảng cách giữa logo và chữ "Greenwich" */
+  margin-right: 7%;
+  width: 10vh;
 }
 
 .right-bar {

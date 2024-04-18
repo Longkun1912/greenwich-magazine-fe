@@ -1,10 +1,9 @@
-/* .container-fluid {
-  width: auto;
-  background-image: url("~/public/image1.jpg") !important; 
-  background-size: cover;
-  background-position: center;
-  height: 84vh;
-} */
+#header-logo {
+  width: 10vh;
+  height: auto;
+  margin-right: 2vh;
+  margin-top: -2vh;
+}
 
 .container-fluid.login {
   width: auto;
@@ -97,7 +96,7 @@ input#formControlLg {
   -webkit-text-fill-color: transparent;
   animation: textclip 2s linear infinite;
   display: inline-block;
-  font-size: 4vh;
+  font-size: 5vh;
   margin-left: -2vh;
 }
 

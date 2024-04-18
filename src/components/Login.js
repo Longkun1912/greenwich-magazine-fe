@@ -53,12 +53,17 @@ const Login = ({ onLoginSuccess }) => {
         <MDBRow id="form-details">
           <MDBCol sm="6" id="sign-in-form">
             <div style={{ marginTop: "4vh" }}>
+              <img
+                src="https://res.cloudinary.com/dokyaftrm/image/upload/v1713418936/greenwich-magazine/Our%20logo.png"
+                alt="Logo"
+                id="header-logo"
+              />
               <MDBIcon
                 fas
                 icon="crow fa-3x me-3"
                 style={{ color: "#709085" }}
               />
-              <span className="animate-character">Greenwich Magazine</span>
+              <span className="animate-character">EduCollab</span>
             </div>
 
             <div className="d-flex flex-column justify-content-center h-custom-2 w-75 pt-4">

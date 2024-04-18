@@ -1,3 +1,5 @@
+import { faUserLock, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   MDBContainer,
   MDBNavbar,
@@ -11,8 +13,6 @@ import { Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/Navbar.css";
 import AuthService from "../services/auth.service";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserLock, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 const GreenwichNavBar = ({ currentUser, handleLogout }) => {
   const navigator = useNavigate();
@@ -29,13 +29,17 @@ const GreenwichNavBar = ({ currentUser, handleLogout }) => {
     <MDBNavbar expand="lg" dark bgColor="primary">
       <MDBContainer id="navbar-container">
         <div className="web-brand">
-          <img src={process.env.PUBLIC_URL + '/logo192.png'} alt="Logo" className="logo" />
-          <MDBNavbarBrand href="#">Greenwich</MDBNavbarBrand>
+          <img
+            src="https://res.cloudinary.com/dokyaftrm/image/upload/v1713418936/greenwich-magazine/Our%20logo.png"
+            alt="Logo"
+            className="logo"
+          />
+          <MDBNavbarBrand href="#">EduCollab</MDBNavbarBrand>
         </div>
         <MDBNavbarNav id="navbar-option">
           {!currentUser ? (
             <div className="right-bar">
-             <MDBNavbarItem id="login-option">
+              <MDBNavbarItem id="login-option">
                 <Link to="/login">
                   <MDBNavbarLink>
                     <FontAwesomeIcon icon={faUserLock} className="fa-icon" />
@@ -65,8 +69,8 @@ const GreenwichNavBar = ({ currentUser, handleLogout }) => {
                     />
                   </MDBNavbarItem>
                   <div style={{ width: "20vh" }}>
-                    <span className="username" >{currentUser.username}</span>
-    
+                    <span className="username">{currentUser.username}</span>
+
                     <Link>
                       <Button id="logout-option" onClick={logOut}>
                         LogOut
@@ -74,7 +78,7 @@ const GreenwichNavBar = ({ currentUser, handleLogout }) => {
                     </Link>
                   </div>
                 </MDBNavbarItem>
-              </div>           
+              </div>
             </div>
           )}
         </MDBNavbarNav>
