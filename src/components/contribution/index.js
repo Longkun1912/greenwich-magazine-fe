@@ -17,6 +17,7 @@ import ContributionService from "../../services/contribution.service";
 import ModalCreateContribution from "./CreateContribution";
 import ModalEditContribution from "./EditContribution";
 import ContributionInfo from "./coordinator.ViewDetailContribution";
+import { ImFolderDownload } from "react-icons/im";
 
 const ContributionManagement = () => {
   const currentUser = auth.getCurrentUser();
@@ -149,7 +150,7 @@ const ContributionManagement = () => {
                 className="btn btn-success"
                 onClick={() => handleDownloadContribution(cell.row.original)}
               >
-                Available
+                <ImFolderDownload className="action-icon" />
               </Button>
             ) : (
               <Button className="btn btn-danger">Unavailable</Button>

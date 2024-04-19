@@ -176,7 +176,7 @@ const Register = () => {
             <MDBRow className="g-0" id="register-form">
               <MDBCol md="6" className="d-none d-md-block">
                 <MDBCardImage
-                  src="/gif/image3.gif"
+                  src="/gif/image4.gif"
                   alt="Sample photo"
                   className="rounded-start"
                   fluid
