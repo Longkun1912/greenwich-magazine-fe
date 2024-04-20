@@ -1,8 +1,8 @@
 #header-logo {
   width: 12vh;
-    height: auto;
-    margin-right: 2vh;
-    margin-top: -3vh;
+  height: auto;
+  margin-right: 2vh;
+  margin-top: -3vh;
 }
 
 .container-fluid.login {
@@ -10,7 +10,6 @@
   background-image: url("~/public/greenwich-9.jpg") !important;
   background-size: cover;
   background-position: center;
-  height: 90vh;
   background-color: rgba(
     255,
     255,
@@ -40,7 +39,7 @@ label.email {
   margin-right: 10vh;
   font-size: 2.5vh;
   font-weight: bold;
-  color:#2d1d5b;
+  color: #2d1d5b;
 }
 
 label.password {
@@ -107,7 +106,7 @@ input#formControlLg {
 }
 
 #error-login-message {
-  margin-left: 4.5vh;
-  width: 45vh;
+  margin-left: 6vh;
   text-align: center;
+  width: 46vh;
 }

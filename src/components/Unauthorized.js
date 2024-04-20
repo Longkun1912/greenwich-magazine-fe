@@ -17,7 +17,9 @@ const UnAuthorizedPage = () => {
         </div>
       </div>
       <div className="message">
-        <h1 style={{ color: "black" }}>Unauthorized - You Shall Not Pass</h1>
+        <h1 style={{ color: "darkslategray" }}>
+          Unauthorized - You Shall Not Pass
+        </h1>
         <p>
           Uh oh, this way is blocked!
           <br />
