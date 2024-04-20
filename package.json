@@ -50,6 +50,8 @@
     ]
   },
   "devDependencies": {
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.75.0",
     "serve": "^11.3.2"
   },
   "browserslist": {

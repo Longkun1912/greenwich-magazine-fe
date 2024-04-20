@@ -65,57 +65,143 @@ function App() {
                 />
                 <Route
                   path="/profile"
-                  element={<Profile currentUser={currentUser} />}
+                  element={
+                    currentUser ? (
+                      <Profile currentUser={currentUser} />
+                    ) : (
+                      <UnAuthorizedPage />
+                    )
+                  }
                 />
-                <Route path="/unauthorized" element={<UnAuthorizedPage />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route
+                  path="/dashboard"
+                  element={
+                    currentUser && currentUser.role === "manager" ? (
+                      <Dashboard />
+                    ) : (
+                      <UnAuthorizedPage />
+                    )
+                  }
+                />
                 <Route
                   path="/login"
                   element={<Login onLoginSuccess={handleLoginSuccess} />}
                 />
                 <Route path="/register" element={<Register />} />
-                <Route path="/faculty" element={<FacultyIndex />} />
+                <Route
+                  path="/faculty"
+                  element={
+                    currentUser && currentUser.role === "admin" ? (
+                      <FacultyIndex />
+                    ) : (
+                      <UnAuthorizedPage />
+                    )
+                  }
+                />
                 <Route
                   path="/contributionIndex"
-                  element={<ContributionIndex />}
+                  element={
+                    currentUser &&
+                    (currentUser.role === "admin" ||
+                      currentUser.role === "manager") ? (
+                      <ContributionIndex />
+                    ) : (
+                      <UnAuthorizedPage />
+                    )
+                  }
                 />
                 <Route
                   path="/IndexForCoordinator"
-                  element={<IndexForCoordinator />}
+                  element={
+                    currentUser && currentUser.role === "coordinator" ? (
+                      <IndexForCoordinator />
+                    ) : (
+                      <UnAuthorizedPage />
+                    )
+                  }
                 />
                 <Route
                   path="/ContributionForGuest"
-                  element={<ContributionForGuest />}
+                  element={
+                    currentUser && currentUser.role === "guest" ? (
+                      <ContributionForGuest />
+                    ) : (
+                      <UnAuthorizedPage />
+                    )
+                  }
                 />
-                <Route path="/eventIndex" element={<EventIndex />} />
+                <Route
+                  path="/eventIndex"
+                  element={
+                    currentUser && currentUser.role === "admin" ? (
+                      <EventIndex currentUser={currentUser} />
+                    ) : (
+                      <UnAuthorizedPage />
+                    )
+                  }
+                />
 
                 <Route
                   path="/user-management"
-                  element={<UserIndex currentUser={currentUser} />}
+                  element={
+                    currentUser &&
+                    (currentUser.role === "admin" ||
+                      currentUser.role === "manager") ? (
+                      <UserIndex currentUser={currentUser} />
+                    ) : (
+                      <UnAuthorizedPage />
+                    )
+                  }
                 />
                 <Route
                   path="/student/contributions"
                   element={
-                    <StudentContributionIndex currentUser={currentUser} />
+                    currentUser && currentUser.role === "student" ? (
+                      <StudentContributionIndex currentUser={currentUser} />
+                    ) : (
+                      <UnAuthorizedPage />
+                    )
                   }
                 />
                 <Route
                   path="/student/contribution"
                   element={
-                    <StudentContributionForm currentUser={currentUser} />
+                    currentUser && currentUser.role === "student" ? (
+                      <StudentContributionForm currentUser={currentUser} />
+                    ) : (
+                      <UnAuthorizedPage />
+                    )
                   }
                 />
                 <Route
                   path="/coordinator/students"
-                  element={<StudentIndex currentUser={currentUser} />}
+                  element={
+                    currentUser && currentUser.role === "coordinator" ? (
+                      <StudentIndex currentUser={currentUser} />
+                    ) : (
+                      <UnAuthorizedPage />
+                    )
+                  }
                 />
                 <Route
                   path="/coordinator/chat"
-                  element={<CoordinatorChat currentUser={currentUser} />}
+                  element={
+                    currentUser && currentUser.role === "coordinator" ? (
+                      <CoordinatorChat currentUser={currentUser} />
+                    ) : (
+                      <UnAuthorizedPage />
+                    )
+                  }
                 />
                 <Route
                   path="/student/chat"
-                  element={<StudentChat currentUser={currentUser} />}
+                  element={
+                    currentUser && currentUser.role === "student" ? (
+                      <StudentChat currentUser={currentUser} />
+                    ) : (
+                      <UnAuthorizedPage />
+                    )
+                  }
                 />
               </Routes>
             </div>

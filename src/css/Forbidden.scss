@@ -1,0 +1,270 @@
+$black: #000;
+$semi-black: #1a2130;
+$white: #fff;
+$dress: #ededed;
+$dress-dark: darken($dress, 10%);
+$sword: #e6e6e6;
+$staff: #bf5507;
+$skin: #ffd8ad;
+$hair: #c2beb5;
+$hair-dark: darken($hair, 10%);
+$lips: pink;
+$fire: black, #6c1305, #de8531, #efac41;
+$fire-reverse: #efac41, #de8531, #6c1305, black;
+
+@keyframes floating {
+  to {
+    top: 1.5rem;
+  }
+}
+
+body {
+  background-color: $black;
+  color: $white;
+  text-align: center;
+  font-family: "Open Sans";
+  font-size: 1.3rem;
+  h1 {
+    font-size: 2.5rem;
+  }
+}
+
+.message {
+  max-width: 100%;
+  margin: 5rem auto 0 auto;
+}
+
+.gandalf {
+  position: relative;
+  width: 50vh;
+  height: 50vh;
+  margin: 0 auto;
+  top: 1rem;
+  animation: floating 1s infinite alternate ease-in-out;
+  div {
+    position: absolute;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 55vh;
+    height: 55vh;
+    background-color: $semi-black;
+    border-radius: 50%;
+  }
+  .fireball {
+    bottom: -1vh;
+    left: 7vh;
+    width: 41vh;
+    height: 15vh;
+    border-radius: 50%;
+    background: radial-gradient($fire-reverse);
+    border: 0.7vh solid $black;
+  }
+  .skirt {
+    bottom: 7vh;
+    left: 13.5vh;
+    border-bottom: 31vh solid $dress;
+    border-left: 13.5vh solid transparent;
+    border-right: 13.5vh solid transparent;
+    filter: drop-shadow(0 0 1vh $dress-dark);
+
+    &::before {
+      content: "";
+      position: absolute;
+      background-color: $dress;
+      width: 13.4vh;
+      height: 3.8vh;
+      top: 30.9vh;
+      left: 0vh;
+      border-bottom-right-radius: 180%;
+      border-bottom-left-radius: 100%;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      background-color: $dress;
+      width: 13.4vh;
+      height: 3.8vh;
+      top: 30.9vh;
+      left: -13.4vh;
+      border-bottom-right-radius: 80%;
+      border-bottom-left-radius: 180%;
+    }
+  }
+  .sleeves {
+    &::before,
+    &::after {
+      // sleeves
+      content: "";
+      position: absolute;
+      border-bottom: 10vh solid $dress;
+      filter: drop-shadow(0 0 1vh $dress-dark);
+    }
+    &::before {
+      // sleeve left
+      top: 17.5vh;
+      left: 25vh;
+      border-left: 13vh solid transparent;
+      border-right: 7vh solid transparent;
+      transform: rotate(-34deg);
+    }
+    &::after {
+      // sleeve right
+      top: 18vh;
+      left: 9vh;
+      border-left: 6vh solid transparent;
+      border-right: 14vh solid transparent;
+      transform: rotate(41deg);
+    }
+  }
+  .shoulders {
+    background-color: $dress;
+    border-radius: 50%;
+    width: 13vh;
+    height: 30vh;
+    left: 20vh;
+    top: 16vh;
+    .hand {
+      width: 4.5vh;
+      height: 3.5vh;
+      border-radius: 50%;
+      background-color: $skin;
+      top: -1vh;
+    }
+    .left {
+      left: -9vh;
+      transform: rotate(-20deg);
+      &::after {
+        // sword
+        content: "";
+        position: absolute;
+        background-color: #e6e6e6;
+        width: 19vh;
+        height: 1vh;
+        border-radius: 1vh;
+        transform: rotate(-105deg);
+        transform-origin: bottom;
+        top: -5vh;
+        left: -8vh;
+      }
+    }
+    .right {
+      right: -9vh;
+      transform: rotate(20deg);
+      &::after {
+        // staff
+        content: "";
+        position: absolute;
+        background-color: $staff;
+        width: 29vh;
+        height: 1vh;
+        border-radius: 1vh;
+        transform: rotate(-78deg);
+        transform-origin: left;
+        bottom: -9vh;
+        left: 0;
+      }
+    }
+  }
+  .head {
+    width: 11vh;
+    height: 13vh;
+    top: 10vh;
+    left: 22vh;
+    background-color: #ffd8ad;
+    border-radius: 50%;
+
+    &::before,
+    &::after {
+      // eyes
+      content: "";
+      position: absolute;
+      background-color: $black;
+    }
+
+    &::before {
+      width: 1.8vh;
+      height: 0.6vh;
+      border-radius: 1vh;
+      top: 5.5vh;
+      left: 3vh;
+      transform: rotate(19deg);
+    }
+    &::after {
+      width: 1.8vh;
+      height: 0.6vh;
+      border-radius: 1vh;
+      top: 5.5vh;
+      right: 3vh;
+      transform: rotate(-19deg);
+    }
+
+    .hair {
+      width: 9.5vh;
+      height: 4.5vh;
+      background-color: $hair;
+      border-radius: 50%;
+      top: 0vh;
+      left: 0.5vh;
+
+      &::before,
+      &::after {
+        // hair sides
+        content: "";
+        position: absolute;
+        background-color: $hair;
+        filter: drop-shadow(0.3vh 0.3vh 0 $hair-dark);
+      }
+
+      &::before {
+        // hair left
+        top: 2vh;
+        left: -2vh;
+        width: 3.5vh;
+        height: 13vh;
+        border-top-left-radius: 4vh;
+        border-top-right-radius: 4vh;
+        border-bottom-left-radius: 5vh;
+        border-bottom-right-radius: 2vh;
+        transform: rotate(8deg);
+      }
+      &::after {
+        // hair right
+        top: 2vh;
+        right: -2vh;
+        width: 3vh;
+        height: 13vh;
+        border-top-left-radius: 4vh;
+        border-top-right-radius: 4vh;
+        border-bottom-left-radius: 2vh;
+        border-bottom-right-radius: 5vh;
+        transform: rotate(-10deg);
+      }
+    }
+    .beard {
+      top: 8.5vh;
+      left: 0.8vh;
+      border-top: 10vh solid $hair;
+      border-left: 4.7vh solid transparent;
+      border-right: 4.7vh solid transparent;
+      border-radius: 4vh;
+      filter: drop-shadow(0.3vh 0.6vh 0 $hair-dark);
+
+      &::before {
+        // mouth
+        content: "";
+        position: absolute;
+        background-color: $lips;
+        width: 2.5vh;
+        height: 1vh;
+        border-radius: 40%;
+        top: -9vh;
+        left: -1vh;
+      }
+    }
+  }
+}
