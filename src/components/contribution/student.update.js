@@ -124,7 +124,7 @@ const StudentUpdateContributionForm = ({
 
         contributionForm.append("id", contribution.id);
         contributionForm.append("title", contributionSubmission.title);
-        contributionForm.append("event", contributionSubmission.event._id);
+        contributionForm.append("event", contributionSubmission.event);
         // Loop through image files and append them
         for (const image of [...new Set(contributionSubmission.images)]) {
           contributionForm.append("image", image.file);
@@ -171,12 +171,16 @@ const StudentUpdateContributionForm = ({
             </MDBCol>
 
             <MDBCol md="9" className="pe-5">
-              <Select fullWidth onChange={(e) => handleSelectEvent(e)}>
+              <Select
+                fullWidth
+                value={contributionSubmission.event}
+                onChange={(e) => handleSelectEvent(e)}
+              >
                 <MenuItem value="" disabled>
                   <em>Select an event</em>
                 </MenuItem>
                 {events.map((event) => (
-                  <MenuItem key={event.id} value={event}>
+                  <MenuItem key={event._id} value={event.name}>
                     {event.name}
                   </MenuItem>
                 ))}

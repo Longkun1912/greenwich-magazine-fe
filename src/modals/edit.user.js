@@ -7,10 +7,10 @@ import { useState } from "react";
 import { Alert } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import UserService from "../services/user.service";
-import UserValidation from "../validation/user";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import UserService from "../services/user.service";
+import UserValidation from "../validation/user";
 
 const EditUserForm = (props) => {
   const { open, close, user, refreshUsers, roleOptions, facultyOptions } =
@@ -143,7 +143,10 @@ const EditUserForm = (props) => {
       updatedUser.append("avatar_image", userForm.avatar);
       updatedUser.append("role", userForm.role);
       updatedUser.append("faculty", userForm.faculty);
-      updatedUser.append("password", userForm.password);
+
+      if (userForm.password) {
+        updatedUser.append("password", userForm.password);
+      }
 
       try {
         await UserService.editUser(updatedUser);
@@ -190,7 +193,8 @@ const EditUserForm = (props) => {
     >
       <Form onSubmit={handleSubmit}>
         <Modal.Header closeButton>
-          <Modal.Title className="modal-title9">Update User: <br/>
+          <Modal.Title className="modal-title9">
+            Update User: <br />
             {user.email}
           </Modal.Title>
         </Modal.Header>

@@ -61,10 +61,7 @@ body {
   margin-bottom: 0.5vh;
 }
 
-
 h4 {
-  width: 31vh;
-  height: 5vh;
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;

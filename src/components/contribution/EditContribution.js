@@ -47,8 +47,6 @@ const EditContribution = (props) => {
     fetchFaculties();
   }, []);
 
-  console.log("Selected contribution:", contribution);
-
   const [contributionForm, setContributionForm] = useState({
     id: contribution.id,
     title: contribution.title,
@@ -63,6 +61,8 @@ const EditContribution = (props) => {
     eventError: "",
     facultyError: "",
   });
+
+  console.log("Contribution:", contributionForm.faculty);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -143,14 +143,12 @@ const EditContribution = (props) => {
       return;
     } else {
       try {
-        console.log("Event:", JSON.stringify(contributionForm.event._id));
-
         const contribution = new FormData();
         contribution.append("id", contributionForm.id);
         contribution.append("title", contributionForm.title);
         contribution.append("status", contributionForm.status);
-        contribution.append("event", contributionForm.event._id);
-        contribution.append("faculty", contributionForm.faculty._id);
+        contribution.append("event", contributionForm.event);
+        contribution.append("faculty", contributionForm.faculty);
 
         // Loop through image files and append them
         for (const image of [...new Set(contributionForm.images)]) {
@@ -241,14 +239,14 @@ const EditContribution = (props) => {
                     <Select
                       label="Event"
                       fullWidth
+                      value={contributionForm.event}
                       onChange={(e) => handleSelectEvent(e)}
-                      defaultValue={contribution.event}
                     >
                       <MenuItem value="" disabled>
                         <em>Select an event</em>
                       </MenuItem>
                       {events.map((event) => (
-                        <MenuItem key={event.id} value={event}>
+                        <MenuItem key={event.id} value={event.name}>
                           {event.name}
                         </MenuItem>
                       ))}
@@ -265,6 +263,7 @@ const EditContribution = (props) => {
                     <InputLabel>Faculties</InputLabel>
                     <Select
                       label="Faculty"
+                      value={contributionForm.faculty}
                       fullWidth
                       onChange={(e) => handleSelectFaculty(e)}
                     >
@@ -272,7 +271,7 @@ const EditContribution = (props) => {
                         <em>Select a faculty</em>
                       </MenuItem>
                       {faculties.map((faculty) => (
-                        <MenuItem key={faculty.id} value={faculty}>
+                        <MenuItem key={faculty._id} value={faculty.name}>
                           {faculty.name}
                         </MenuItem>
                       ))}
